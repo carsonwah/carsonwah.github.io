@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Carson&#39;s Tech Note</title>
+    <title>那些年我踩過的坑 | Carson&#39;s Tech Note</title>
     <link>http://localhost:1313/post/</link>
-    <description>Recent content on Carson&#39;s Tech Note</description>
+    <description>Recent content on 那些年我踩過的坑 | Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
     <lastBuildDate>Sat, 21 Oct 2017 02:03:29 +0800</lastBuildDate>
