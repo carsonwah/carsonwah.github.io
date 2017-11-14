@@ -18,9 +18,9 @@
 
 <meta name="author" content="Carson Wah" />
   <meta name="description" content=" 甚麼是Hugo? Hugo是一款static site generator，讓你可以專注撰寫內容，然後自動compile成網站。
-為什麼不用google blogger, medium, wordpress, etc?  可以寫Markdown，方便轉移content
+為甚麼不用google blogger, medium, wordpress, etc?  可以寫Markdown，方便轉移content
  可以用別人的theme，同時又可以自己改HTML/CSS/JS
- 沒有Dependency（只需要Go） Compile速度極快   
+  為甚麼不用Jekyll / Hexos?  沒有Dependency（只需要Go） Compile速度極快   
 " />
 
   <meta name="keywords" content="Hugo, theme, even" />
@@ -54,11 +54,16 @@
 
 Hugo是一款static site generator，讓你可以專注撰寫內容，然後自動compile成網站。
 
-為什麼不用google blogger, medium, wordpress, etc?
+為甚麼不用google blogger, medium, wordpress, etc?
 
 
 可以寫Markdown，方便轉移content
 可以用別人的theme，同時又可以自己改HTML/CSS/JS
+
+
+為甚麼不用Jekyll / Hexos?
+
+
 沒有Dependency（只需要Go）
 Compile速度極快
 
@@ -90,11 +95,16 @@ Compile速度極快
 
 Hugo是一款static site generator，讓你可以專注撰寫內容，然後自動compile成網站。
 
-為什麼不用google blogger, medium, wordpress, etc?
+為甚麼不用google blogger, medium, wordpress, etc?
 
 
 可以寫Markdown，方便轉移content
 可以用別人的theme，同時又可以自己改HTML/CSS/JS
+
+
+為甚麼不用Jekyll / Hexos?
+
+
 沒有Dependency（只需要Go）
 Compile速度極快
 
@@ -105,7 +115,7 @@ Compile速度極快
 
 <meta itemprop="datePublished" content="2017-11-13T15:05:52&#43;08:00" />
 <meta itemprop="dateModified" content="2017-11-13T15:05:52&#43;08:00" />
-<meta itemprop="wordCount" content="628">
+<meta itemprop="wordCount" content="646">
 
 
 
@@ -116,11 +126,16 @@ Compile速度極快
 
 Hugo是一款static site generator，讓你可以專注撰寫內容，然後自動compile成網站。
 
-為什麼不用google blogger, medium, wordpress, etc?
+為甚麼不用google blogger, medium, wordpress, etc?
 
 
 可以寫Markdown，方便轉移content
 可以用別人的theme，同時又可以自己改HTML/CSS/JS
+
+
+為甚麼不用Jekyll / Hexos?
+
+
 沒有Dependency（只需要Go）
 Compile速度極快
 
@@ -216,9 +231,17 @@ Compile速度極快
 <li>
 <ul>
 <li><a href="#甚麼是hugo">甚麼是Hugo?</a></li>
-<li><a href="#為什麼不用google-blogger-medium-wordpress-etc">為什麼不用google blogger, medium, wordpress, etc?</a></li>
+<li><a href="#為甚麼不用google-blogger-medium-wordpress-etc">為甚麼不用google blogger, medium, wordpress, etc?</a></li>
+<li><a href="#為甚麼不用jekyll-hexos">為甚麼不用Jekyll / Hexos?</a></li>
 </ul></li>
-<li><a href="#快速建立網站">快速建立網站</a></li>
+<li><a href="#快速建立網站">快速建立網站</a>
+<ul>
+<li><a href="#1-安裝hugo">1. 安裝hugo:</a></li>
+<li><a href="#2-建立網站">2. 建立網站:</a></li>
+<li><a href="#3-加入主題">3. 加入主題:</a></li>
+<li><a href="#4-新增內容">4. 新增內容:</a></li>
+<li><a href="#5-開啟hugo-server">5. 開啟hugo server:</a></li>
+</ul></li>
 </ul>
 </nav>
   </div>
@@ -231,11 +254,16 @@ Compile速度極快
 
 <p>Hugo是一款static site generator，讓你可以專注撰寫內容，然後自動compile成網站。</p>
 
-<h2 id="為什麼不用google-blogger-medium-wordpress-etc">為什麼不用google blogger, medium, wordpress, etc?</h2>
+<h2 id="為甚麼不用google-blogger-medium-wordpress-etc">為甚麼不用google blogger, medium, wordpress, etc?</h2>
 
 <ul>
 <li>可以寫Markdown，方便轉移content<br /></li>
 <li>可以用別人的theme，同時又可以自己改HTML/CSS/JS<br /></li>
+</ul>
+
+<h2 id="為甚麼不用jekyll-hexos">為甚麼不用Jekyll / Hexos?</h2>
+
+<ul>
 <li>沒有Dependency（只需要Go）</li>
 <li>Compile速度極快</li>
 </ul>
@@ -245,20 +273,19 @@ Compile速度極快
 
 <h1 id="快速建立網站">快速建立網站</h1>
 
-<ol>
-<li><p>安裝hugo:</p>
+<h2 id="1-安裝hugo">1. 安裝hugo:</h2>
 
 <pre><code class="language-sh">brew install hugo
 </code></pre>
 
-<p>（macOS，其他系統可參考<a href="https://gohugo.io/getting-started/installing">官網</a>）</p></li>
+<p>（macOS，其他系統可參考<a href="https://gohugo.io/getting-started/installing">官網</a>）</p>
 
-<li><p>建立網站:</p>
+<h2 id="2-建立網站">2. 建立網站:</h2>
 
 <pre><code class="language-sh">hugo new site quickstart # quickstart只是新folder的名稱
-</code></pre></li>
+</code></pre>
 
-<li><p>加入主題:</p>
+<h2 id="3-加入主題">3. 加入主題:</h2>
 
 <pre><code class="language-sh">cd quickstart
 git init
@@ -270,9 +297,9 @@ echo 'theme = &quot;ananke&quot;' &gt;&gt; config.toml # 在config中設定使�
 <li><a href="https://themes.gohugo.io/gohugo-theme-ananke/">ananke</a>是一個hugo的theme，官網還有很多theme可以選擇。<br /></li>
 <li>官方建議用<code>git submodule</code>的方法來加入theme，但如果你需要改動它的話，可以選擇<code>git clone</code>，但一般改layout都不用直接改theme。<br /></li>
 <li><code>config.toml</code>中的<code>theme=&quot;xxx&quot;</code>代表你要使用<code>themes/xxx</code>。<br /></li>
-</ul></li>
+</ul>
 
-<li><p>新增內容:</p>
+<h2 id="4-新增內容">4. 新增內容:</h2>
 
 <pre><code class="language-sh">hugo new posts/my-first-post.md
 </code></pre>
@@ -280,17 +307,16 @@ echo 'theme = &quot;ananke&quot;' &gt;&gt; config.toml # 在config中設定使�
 <ul>
 <li>這會新增一個markdown檔在<code>content/posts/</code>裡面。<br /></li>
 <li>日後寫blog也是這樣新增，他會自動幫你填好日期時間之類的資料。</li>
-</ul></li>
+</ul>
 
-<li><p>開啟hugo server:</p>
+<h2 id="5-開啟hugo-server">5. 開啟hugo server:</h2>
 
 <pre><code class="language-sh">hugo server -D # `-D`代表包括所有draft=true的內容
 # ...
 # Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 </code></pre>
 
-<p>之後看到提示可以到127.0.0.1:1313看看你的新網站了！</p></li>
-</ol>
+<p>之後看到提示可以到127.0.0.1:1313看看你的新網站了！</p>
 
 <p>大概是這個樣子：</p>
 
@@ -326,7 +352,21 @@ echo 'theme = &quot;ananke&quot;' &gt;&gt; config.toml # 在config中設定使�
   </article>
         </div>
         
-  
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
 
   
       </div>  

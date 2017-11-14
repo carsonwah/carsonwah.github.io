@@ -22,11 +22,16 @@
 
 &lt;p&gt;Hugo是一款static site generator，讓你可以專注撰寫內容，然後自動compile成網站。&lt;/p&gt;
 
-&lt;h2 id=&#34;為什麼不用google-blogger-medium-wordpress-etc&#34;&gt;為什麼不用google blogger, medium, wordpress, etc?&lt;/h2&gt;
+&lt;h2 id=&#34;為甚麼不用google-blogger-medium-wordpress-etc&#34;&gt;為甚麼不用google blogger, medium, wordpress, etc?&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;可以寫Markdown，方便轉移content&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;可以用別人的theme，同時又可以自己改HTML/CSS/JS&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;為甚麼不用jekyll-hexos&#34;&gt;為甚麼不用Jekyll / Hexos?&lt;/h2&gt;
+
+&lt;ul&gt;
 &lt;li&gt;沒有Dependency（只需要Go）&lt;/li&gt;
 &lt;li&gt;Compile速度極快&lt;/li&gt;
 &lt;/ul&gt;
