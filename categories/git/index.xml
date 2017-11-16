@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Carson&#39;s Tech Note</title>
+    <link>http://localhost:1313/categories/git/</link>
+    <description>Recent content in Git on Carson&#39;s Tech Note</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-hk</language>
+    <lastBuildDate>Thu, 16 Nov 2017 17:07:24 +0800</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>git pull或push不用再打密碼</title>
+      <link>http://localhost:1313/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</link>
+      <pubDate>Thu, 16 Nov 2017 17:07:24 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</guid>
+      <description>&lt;p&gt;快速設置Git，以後&lt;code&gt;git pull&lt;/code&gt; &lt;code&gt;git push&lt;/code&gt;都不用再打帳號密碼了。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

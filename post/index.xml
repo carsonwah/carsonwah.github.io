@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
-    <lastBuildDate>Sat, 21 Oct 2017 02:03:29 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 16 Nov 2017 17:07:24 +0800</lastBuildDate>
     
 	<atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>git pull或push不用再打密碼</title>
+      <link>http://localhost:1313/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</link>
+      <pubDate>Thu, 16 Nov 2017 17:07:24 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</guid>
+      <description>&lt;p&gt;快速設置Git，以後&lt;code&gt;git pull&lt;/code&gt; &lt;code&gt;git push&lt;/code&gt;都不用再打帳號密碼了。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>在Jupyter同時使用Python2 &#43; Python3</title>
