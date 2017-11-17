@@ -1,113 +1,113 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<?xml-stylesheet type="text/xsl" href="http://localhost:1313/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://carsonwah.github.io/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://localhost:1313/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</loc>
+    <loc>https://carsonwah.github.io/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://carsonwah.github.io/about/</loc>
     <lastmod>2017-11-13T15:05:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/blogging/hugo/2017-11-13-set-up-hugo/</loc>
+    <loc>https://carsonwah.github.io/post/blogging/hugo/2017-11-13-set-up-hugo/</loc>
     <lastmod>2017-11-13T15:05:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/languages/python/2017-10-22-set-up-jupyter-python3/</loc>
+    <loc>https://carsonwah.github.io/post/languages/python/2017-10-22-set-up-jupyter-python3/</loc>
     <lastmod>2017-10-21T02:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/blogging/hugo/2017-10-21-choosing-tools/</loc>
+    <loc>https://carsonwah.github.io/post/blogging/hugo/2017-10-21-choosing-tools/</loc>
     <lastmod>2017-10-21T02:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/google40804992d2bfad31/</loc>
+    <loc>https://carsonwah.github.io/google40804992d2bfad31/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/categories/blogging/</loc>
+    <loc>https://carsonwah.github.io/categories/blogging/</loc>
     <lastmod>2017-11-13T15:05:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://carsonwah.github.io/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://carsonwah.github.io/categories/</loc>
     <lastmod>2017-11-13T15:05:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/categories/developer-tools/</loc>
+    <loc>https://carsonwah.github.io/categories/developer-tools/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/git/</loc>
+    <loc>https://carsonwah.github.io/categories/git/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/categories/git/</loc>
+    <loc>https://carsonwah.github.io/tags/git/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/github/</loc>
+    <loc>https://carsonwah.github.io/tags/github/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/hugo/</loc>
+    <loc>https://carsonwah.github.io/tags/hugo/</loc>
     <lastmod>2017-11-13T15:05:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>https://carsonwah.github.io/post/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://carsonwah.github.io/tags/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>

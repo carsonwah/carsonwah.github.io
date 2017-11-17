@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogging on Carson&#39;s Tech Note</title>
-    <link>http://localhost:1313/categories/blogging/</link>
+    <link>https://carsonwah.github.io/categories/blogging/</link>
     <description>Recent content in Blogging on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
     <lastBuildDate>Mon, 13 Nov 2017 15:05:52 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/categories/blogging/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://carsonwah.github.io/categories/blogging/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>透過Hugo快速建置個人Blog</title>
-      <link>http://localhost:1313/post/blogging/hugo/2017-11-13-set-up-hugo/</link>
+      <link>https://carsonwah.github.io/post/blogging/hugo/2017-11-13-set-up-hugo/</link>
       <pubDate>Mon, 13 Nov 2017 15:05:52 +0800</pubDate>
       
-      <guid>http://localhost:1313/post/blogging/hugo/2017-11-13-set-up-hugo/</guid>
+      <guid>https://carsonwah.github.io/post/blogging/hugo/2017-11-13-set-up-hugo/</guid>
       <description>&lt;blockquote&gt;
 &lt;h2 id=&#34;甚麼是hugo&#34;&gt;甚麼是Hugo?&lt;/h2&gt;
 
@@ -42,10 +42,10 @@
     
     <item>
       <title>選擇個人Blogging工具</title>
-      <link>http://localhost:1313/post/blogging/hugo/2017-10-21-choosing-tools/</link>
+      <link>https://carsonwah.github.io/post/blogging/hugo/2017-10-21-choosing-tools/</link>
       <pubDate>Sat, 21 Oct 2017 02:03:29 +0800</pubDate>
       
-      <guid>http://localhost:1313/post/blogging/hugo/2017-10-21-choosing-tools/</guid>
+      <guid>https://carsonwah.github.io/post/blogging/hugo/2017-10-21-choosing-tools/</guid>
       <description>&lt;p&gt;作為一個IT狗（程序猿），經常都要研究一堆新技術、新框架，很多時候花一整天折騰了出來，過一陣子就全忘了。所以我決定開個blog來記錄我踩過的坑，也希望幫助其他人不用步我的後塵。&lt;/p&gt;
 
 &lt;p&gt;第一篇就先記錄一下我建置前的Research吧。&lt;/p&gt;

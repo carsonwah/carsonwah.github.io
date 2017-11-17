@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Carson&#39;s Tech Note</title>
-    <link>http://localhost:1313/categories/</link>
+    <link>https://carsonwah.github.io/categories/</link>
     <description>Recent content in Categories on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
     <lastBuildDate>Mon, 13 Nov 2017 15:05:52 +0800</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://carsonwah.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Blogging</title>
-      <link>http://localhost:1313/categories/blogging/</link>
+      <link>https://carsonwah.github.io/categories/blogging/</link>
       <pubDate>Mon, 13 Nov 2017 15:05:52 +0800</pubDate>
       
-      <guid>http://localhost:1313/categories/blogging/</guid>
+      <guid>https://carsonwah.github.io/categories/blogging/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Developer Tools</title>
-      <link>http://localhost:1313/categories/developer-tools/</link>
+      <link>https://carsonwah.github.io/categories/developer-tools/</link>
       <pubDate>Thu, 16 Nov 2017 17:07:24 +0800</pubDate>
       
-      <guid>http://localhost:1313/categories/developer-tools/</guid>
+      <guid>https://carsonwah.github.io/categories/developer-tools/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Git</title>
-      <link>http://localhost:1313/categories/git/</link>
+      <link>https://carsonwah.github.io/categories/git/</link>
       <pubDate>Thu, 16 Nov 2017 17:07:24 +0800</pubDate>
       
-      <guid>http://localhost:1313/categories/git/</guid>
+      <guid>https://carsonwah.github.io/categories/git/</guid>
       <description></description>
     </item>
     
