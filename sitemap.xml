@@ -38,6 +38,12 @@
   </url>
   
   <url>
+    <loc>http://localhost:1313/google40804992d2bfad31/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://localhost:1313/post/blogging/</loc>
     <lastmod>2017-11-13T15:05:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
