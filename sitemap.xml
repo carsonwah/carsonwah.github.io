@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://carsonwah.github.io/post/blogging/hugo/2017-12-18-hugo-file-structure/</loc>
+    <lastmod>2017-12-18T21:49:08+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/post/developer_tools/git/2017-11-16-set-up-passwordless-git/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -52,7 +59,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/categories/blogging/</loc>
-    <lastmod>2017-11-13T15:05:52+08:00</lastmod>
+    <lastmod>2017-12-18T21:49:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -66,7 +73,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/categories/</loc>
-    <lastmod>2017-11-13T15:05:52+08:00</lastmod>
+    <lastmod>2017-12-18T21:49:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -79,14 +86,14 @@
   </url>
   
   <url>
-    <loc>https://carsonwah.github.io/categories/git/</loc>
+    <loc>https://carsonwah.github.io/tags/git/</loc>
     <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://carsonwah.github.io/tags/git/</loc>
+    <loc>https://carsonwah.github.io/categories/git/</loc>
     <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -101,7 +108,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/tags/hugo/</loc>
-    <lastmod>2017-11-13T15:05:52+08:00</lastmod>
+    <lastmod>2017-12-18T21:49:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

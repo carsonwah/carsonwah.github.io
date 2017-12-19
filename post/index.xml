@@ -30,6 +30,19 @@ $ git push -u origin master
     </item>
     
     <item>
+      <title>Hugo的專案結構</title>
+      <link>https://carsonwah.github.io/post/blogging/hugo/2017-12-18-hugo-file-structure/</link>
+      <pubDate>Mon, 18 Dec 2017 21:49:08 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/blogging/hugo/2017-12-18-hugo-file-structure/</guid>
+      <description>&lt;p&gt;完成Hugo的基本&lt;a href=&#34;{{&amp;lt; ref &amp;quot;post/blogging/hugo/2017-11-13-set-up-hugo.md&amp;quot; &amp;gt;}}&#34;&gt;setup&lt;/a&gt;後，我們來看看Hugo的project structure吧。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;(強烈建議花點時間理解Hugo的整個結構，不然遇上問題會很迷茫)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>git pull或push不用再打密碼</title>
       <link>https://carsonwah.github.io/post/developer_tools/git/2017-11-16-set-up-passwordless-git/</link>
       <pubDate>Thu, 16 Nov 2017 17:07:24 +0800</pubDate>
