@@ -3,7 +3,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://carsonwah.github.io/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</loc>
+    <loc>https://carsonwah.github.io/post/developer_tools/git/2017-12-19-add-project-to-github/</loc>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://carsonwah.github.io/post/developer_tools/git/2017-11-16-set-up-passwordless-git/</loc>
     <lastmod>2017-11-16T17:07:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -52,7 +59,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/</loc>
-    <lastmod>2017-11-16T17:07:24+08:00</lastmod>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -66,28 +73,28 @@
   
   <url>
     <loc>https://carsonwah.github.io/categories/developer-tools/</loc>
-    <lastmod>2017-11-16T17:07:24+08:00</lastmod>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://carsonwah.github.io/categories/git/</loc>
-    <lastmod>2017-11-16T17:07:24+08:00</lastmod>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://carsonwah.github.io/tags/git/</loc>
-    <lastmod>2017-11-16T17:07:24+08:00</lastmod>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://carsonwah.github.io/tags/github/</loc>
-    <lastmod>2017-11-16T17:07:24+08:00</lastmod>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -101,14 +108,14 @@
   
   <url>
     <loc>https://carsonwah.github.io/post/</loc>
-    <lastmod>2017-11-16T17:07:24+08:00</lastmod>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://carsonwah.github.io/tags/</loc>
-    <lastmod>2017-11-16T17:07:24+08:00</lastmod>
+    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

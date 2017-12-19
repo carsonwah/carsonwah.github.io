@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>將本地Project放到Github - Carson&#39;s Tech Note</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Carson Wah" />
+  <meta name="description" content="TL;DR $ git init $ git add . $ git commit -m &amp;quot;First commit&amp;quot; $ git remote add origin https://github.com/NAME/REPO.git $ git push -u origin master  
+" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="https://carsonwah.github.io/post/developer_tools/git/2017-12-19-add-project-to-github/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.4" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="將本地Project放到Github" />
+<meta property="og:description" content="TL;DR
+
+$ git init
+$ git add .
+$ git commit -m &quot;First commit&quot;
+$ git remote add origin https://github.com/NAME/REPO.git
+$ git push -u origin master
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carsonwah.github.io/post/developer_tools/git/2017-12-19-add-project-to-github/" />
+
+
+
+<meta property="article:published_time" content="2017-12-19T16:12:25&#43;08:00"/>
+
+<meta property="article:modified_time" content="2017-12-19T16:12:25&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="將本地Project放到Github">
+<meta itemprop="description" content="TL;DR
+
+$ git init
+$ git add .
+$ git commit -m &quot;First commit&quot;
+$ git remote add origin https://github.com/NAME/REPO.git
+$ git push -u origin master
+
+
+">
+
+
+<meta itemprop="datePublished" content="2017-12-19T16:12:25&#43;08:00" />
+<meta itemprop="dateModified" content="2017-12-19T16:12:25&#43;08:00" />
+<meta itemprop="wordCount" content="1185">
+
+
+
+<meta itemprop="keywords" content="git,github," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="將本地Project放到Github"/>
+<meta name="twitter:description" content="TL;DR
+
+$ git init
+$ git add .
+$ git commit -m &quot;First commit&quot;
+$ git remote add origin https://github.com/NAME/REPO.git
+$ git push -u origin master
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Carson&#39;s Tech Note</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About Me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+<div class="logo-wrapper">
+  <a href="/" class="logo" style="font-size:40px;">Carson&#39;s Tech Note</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About Me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">將本地Project放到Github</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-12-19 </span>
+        <div class="post-category">
+            <a href="/categories/developer-tools/">Developer Tools</a><a href="/categories/git/">, Git</a>
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目錄</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#tl-dr">TL;DR</a></li>
+<li><a href="#詳細步驟">詳細步驟</a>
+<ul>
+<li><a href="#1-initialize-git">1. Initialize git</a></li>
+<li><a href="#2-加入git-push目的地">2. 加入git push目的地</a></li>
+<li><a href="#3-push到目的地">3. push到目的地</a></li>
+<li><a href="#4-git-pull">4. git pull</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="tl-dr">TL;DR</h1>
+
+<pre><code class="language-shell">$ git init
+$ git add .
+$ git commit -m &quot;First commit&quot;
+$ git remote add origin https://github.com/NAME/REPO.git
+$ git push -u origin master
+</code></pre>
+
+<p></p>
+
+<hr />
+
+<h1 id="詳細步驟">詳細步驟</h1>
+
+<h2 id="1-initialize-git">1. Initialize git</h2>
+
+<pre><code class="language-shell">$ git init # 新增.git資料夾
+$ git status # 查看檔案狀態
+$ git add . # 加入所有檔案到下個commit
+$ git commit -m &quot;First commit&quot; # commit已加入的檔案
+</code></pre>
+
+<h2 id="2-加入git-push目的地">2. 加入git push目的地</h2>
+
+<p>先在Github新增一個repo，並複製remote url (clone或download那裡)。</p>
+
+<pre><code class="language-shell">$ git remote add origin https://github.com/NAME/REPO.git
+</code></pre>
+
+<p><strong><em>Remote</em></strong>是一個git directory的遠端位置，在這個情況，我們的<strong>remote</strong>就是放在github上的repository網址。</p>
+
+<p>現在可以執行<code>git remote -v</code>看一看。</p>
+
+<pre><code>origin  https://github.com/NAME/REPO.git (fetch)
+origin  https://github.com/NAME/REPO.git (push)
+</code></pre>
+
+<p><em>（這些都是git的configuration，儲存在<code>.git/config</code>裡面）</em></p>
+
+<h2 id="3-push到目的地">3. push到目的地</h2>
+
+<p>所有檔案都加入並commit好了，remote url也設置好了，這時可以push到github了。</p>
+
+<pre><code class="language-shell">$ git push
+
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin master
+</code></pre>
+
+<p>此時會出現fatal error，因為我們的push沒有指明push到甚麼remote和branch。</p>
+
+<p>這是個防護機制，一個git專案可以有多個remote和branch，所以我們第一次push要指明現在這個 <em>local branch</em> 要push到哪個 <em>remote branch</em> 。</p>
+
+<p>我們現在是由 <em>local</em> 的 <em>master</em> push到 <em>github</em> 的 <em>master</em> ：</p>
+
+<pre><code class="language-sh">$ git push origin master # push到origin(剛剛新增的remote)的master branch
+</code></pre>
+
+<p>而<code>--set-upstream</code>或<code>-u</code>就是代表以後 <em>local master</em> 都是直接push到 <em>origin master</em> ，下次就直接打<code>git push</code>可以了。</p>
+
+<h2 id="4-git-pull">4. git pull</h2>
+
+<p><code>git pull</code>也是同樣情況，如果push的時候local branch不夠remote branch up-to-date的話，會有以下error：</p>
+
+<pre><code>! [rejected]        master -&gt; master (fetch first)
+error: failed to push some refs to 'https://github.com/carsonwah/gohugo-demo.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</code></pre>
+
+<p>意思是要先<code>git fetch</code> remote branch的東西下來，然後<code>merge</code>到local branch讓它up-to-date，最後才能<code>push</code>。</p>
+
+<p><code>git pull</code>就是<code>fetch</code>和<code>merge</code>的合體，但直接<code>git pull</code>又會有以下error：</p>
+
+<pre><code> * [new branch]      master     -&gt; origin/master
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull &lt;remote&gt; &lt;branch&gt;
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/&lt;branch&gt; master
+</code></pre>
+
+<p>原來<code>git pull</code>也要和<code>git push</code>一樣，設置對應的remote branch。剛才還沒完成<code>git push --set-upstream</code>，所以還未有upstream目的地。pull不能用<code>-u</code>(不知道為甚麼)，要透過<code>git branch</code> 直接設置：</p>
+
+<pre><code class="language-sh">$ git branch --set-upstream-to=origin/master master  # 或 git branch -u origin/master master
+# 然後pull
+$ git pull --allow-unrelated-histories  # 需要加上--allow-unrelated-histories，因為local和remote完全沒有共同history，git default是不允許的
+</code></pre>
+
+<p>這時填好merge的commit message就可以直接<code>git push</code>了。</p>
+
+<p><em>(老實說直接在某處<code>git clone</code>，然後手動將project搬家好像更方便)</em></p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/git/">git</a>
+          
+          <a href="/tags/github/">github</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/developer_tools/git/2017-11-16-set-up-passwordless-git/">
+            <span class="next-text nav-default">git pull或push不用再打密碼</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:carsonwah@gmail.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://github.com/carsonwah" class="iconfont icon-github" title="github" target="_blank"></a>
+  <a href="https://carsonwah.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss" target="_blank"></a>
+</div>
+
+<div class="copyright">
+  
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+  
+  <span class="copyright-year">
+    &copy; 
+    2017
+    <span>&nbsp;|&nbsp;</span>
+    <span class="author">Carson Wah</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.4"></script>
+
+
+
+
+</body>
+</html>

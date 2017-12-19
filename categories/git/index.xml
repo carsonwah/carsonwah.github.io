@@ -6,17 +6,35 @@
     <description>Recent content in Git on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
-    <lastBuildDate>Thu, 16 Nov 2017 17:07:24 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 19 Dec 2017 16:12:25 +0800</lastBuildDate>
     
 	<atom:link href="https://carsonwah.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>將本地Project放到Github</title>
+      <link>https://carsonwah.github.io/post/developer_tools/git/2017-12-19-add-project-to-github/</link>
+      <pubDate>Tue, 19 Dec 2017 16:12:25 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/developer_tools/git/2017-12-19-add-project-to-github/</guid>
+      <description>&lt;h1 id=&#34;tl-dr&#34;&gt;TL;DR&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;$ git init
+$ git add .
+$ git commit -m &amp;quot;First commit&amp;quot;
+$ git remote add origin https://github.com/NAME/REPO.git
+$ git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>git pull或push不用再打密碼</title>
-      <link>https://carsonwah.github.io/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</link>
+      <link>https://carsonwah.github.io/post/developer_tools/git/2017-11-16-set-up-passwordless-git/</link>
       <pubDate>Thu, 16 Nov 2017 17:07:24 +0800</pubDate>
       
-      <guid>https://carsonwah.github.io/post/developer_tools/git/2017_11_16_set_up_passwordless_git/</guid>
+      <guid>https://carsonwah.github.io/post/developer_tools/git/2017-11-16-set-up-passwordless-git/</guid>
       <description>&lt;p&gt;快速設置Git，以後&lt;code&gt;git pull&lt;/code&gt; &lt;code&gt;git push&lt;/code&gt;都不用再打帳號密碼了。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
