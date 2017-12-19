@@ -86,7 +86,7 @@ $ git push -u origin master
       <pubDate>Sat, 21 Oct 2017 02:03:29 +0800</pubDate>
       
       <guid>https://carsonwah.github.io/post/blogging/hugo/2017-10-21-choosing-tools/</guid>
-      <description>&lt;p&gt;作為一個IT狗（程序猿），經常都要研究一堆新技術、新框架，很多時候花一整天折騰了出來，過一陣子就全忘了。所以我決定開個blog來記錄我踩過的坑，也希望幫助其他人不用步我的後塵。&lt;/p&gt;
+      <description>&lt;p&gt;作為一隻IT狗（程序猿），經常都要研究一堆新技術、新框架，很多時候花一整天折騰了出來，過一陣子就全忘了。所以我決定開個blog來記錄我踩過的坑，也希望幫助其他人不用步我的後塵。&lt;/p&gt;
 
 &lt;p&gt;第一篇就先記錄一下我建置前的Research吧。&lt;/p&gt;
 
