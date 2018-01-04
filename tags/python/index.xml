@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Carson&#39;s Tech Note</title>
+    <link>https://carsonwah.github.io/tags/python/</link>
+    <description>Recent content in Python on Carson&#39;s Tech Note</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-hk</language>
+    <lastBuildDate>Fri, 05 Jan 2018 00:25:05 +0800</lastBuildDate>
+    
+	<atom:link href="https://carsonwah.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>建置python虛擬環境(Virtual Environment)</title>
+      <link>https://carsonwah.github.io/post/languages/python/2018-01-05-set-up-virtual-environment/</link>
+      <pubDate>Fri, 05 Jan 2018 00:25:05 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/languages/python/2018-01-05-set-up-virtual-environment/</guid>
+      <description>&lt;p&gt;多人共同協作一個project的時候非常需要各人的開發環境統一，才不會發生「我run不了你的code」這些情況。&lt;/p&gt;
+
+&lt;p&gt;「python的pip」不像「node js的npm」那樣有&lt;code&gt;node_modules&lt;/code&gt;、&lt;code&gt;package.json&lt;/code&gt;這些規範，所以統一開發環境需要比較low level地做，一般都是使用&lt;code&gt;virtualenv&lt;/code&gt;這個pip package。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>在Jupyter同時使用Python2 &#43; Python3</title>
+      <link>https://carsonwah.github.io/post/languages/python/2017-10-22-set-up-jupyter-python3/</link>
+      <pubDate>Sat, 21 Oct 2017 02:03:29 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/languages/python/2017-10-22-set-up-jupyter-python3/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://jupyter.org/&#34;&gt;Jupyter Notebook&lt;/a&gt; (前身ipython notebook)是個很好用的coding工具，它可以：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;用作快速prototyping：分段execute、即時修改memory中的variables&lt;/li&gt;
+&lt;li&gt;用作寫報告：內容可以包括code、執行結果、圖表等等&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
