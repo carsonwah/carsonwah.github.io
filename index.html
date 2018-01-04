@@ -52,7 +52,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-01-05T00:25:05&#43;08:00"/>
+<meta property="og:updated_time" content="2018-01-05T02:56:19&#43;08:00"/>
 
 
 
@@ -137,6 +137,37 @@
   <section id="posts" class="posts">
     
     
+    
+      <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/web/backend/2018-01-05-wsgi/">入門理解WSGI</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-01-05 </span>
+      
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <h1 id="簡介">簡介</h1>
+
+<p>WSGI全名是&rdquo;Web Server Gateway Interface&rdquo;，就是一個規範python server的interface。</p>
+
+<p>傳統Web server如Apache+php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。</p>
+
+<p>但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。</p>
+
+<p>簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/web/backend/2018-01-05-wsgi/" class="read-more-link">閱讀更多</a>
+    </div>
+  </div>
+</article>
+
     
       <article class="post">
   <header class="post-header">

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>入門理解WSGI - Carson&#39;s Tech Note</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Carson Wah" />
+  <meta name="description" content="簡介 WSGI全名是&amp;rdquo;Web Server Gateway Interface&amp;rdquo;，就是一個規範python server的interface。
+傳統Web server如Apache&#43;php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。
+但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。
+簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。
+
+" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="https://carsonwah.github.io/post/web/backend/2018-01-05-wsgi/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.4" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="入門理解WSGI" />
+<meta property="og:description" content="簡介
+
+WSGI全名是&rdquo;Web Server Gateway Interface&rdquo;，就是一個規範python server的interface。
+
+傳統Web server如Apache&#43;php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。
+
+但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。
+
+簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carsonwah.github.io/post/web/backend/2018-01-05-wsgi/" />
+
+
+
+<meta property="article:published_time" content="2018-01-05T02:56:19&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-01-05T02:56:19&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="入門理解WSGI">
+<meta itemprop="description" content="簡介
+
+WSGI全名是&rdquo;Web Server Gateway Interface&rdquo;，就是一個規範python server的interface。
+
+傳統Web server如Apache&#43;php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。
+
+但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。
+
+簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-01-05T02:56:19&#43;08:00" />
+<meta itemprop="dateModified" content="2018-01-05T02:56:19&#43;08:00" />
+<meta itemprop="wordCount" content="619">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="入門理解WSGI"/>
+<meta name="twitter:description" content="簡介
+
+WSGI全名是&rdquo;Web Server Gateway Interface&rdquo;，就是一個規範python server的interface。
+
+傳統Web server如Apache&#43;php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。
+
+但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。
+
+簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Carson&#39;s Tech Note</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About Me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+<div class="logo-wrapper">
+  <a href="/" class="logo" style="font-size:40px;">Carson&#39;s Tech Note</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About Me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">入門理解WSGI</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-01-05 </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目錄</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#簡介">簡介</a></li>
+<li><a href="#例子">例子</a></li>
+<li><a href="#補充連結">補充連結</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <h1 id="簡介">簡介</h1>
+
+<p>WSGI全名是&rdquo;Web Server Gateway Interface&rdquo;，就是一個規範python server的interface。</p>
+
+<p>傳統Web server如Apache+php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。</p>
+
+<p>但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。</p>
+
+<p>簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。</p>
+
+<p></p>
+
+<h1 id="例子">例子</h1>
+
+<p>假設你的server由以下部分組成：</p>
+
+<ol>
+<li>Web proxy (nginx/apache&hellip;)</li>
+<li>WSGI server (gunicorn/uWSGI&hellip;)</li>
+<li>Python server (django/flask&hellip;)</li>
+</ol>
+
+<p>WSGI有兩部分協議：</p>
+
+<ol>
+<li>For WSGI server: 當你處理任何incoming requests，你可以call這些function。</li>
+<li>For python server: 你需要提供這些function給WSGI server。</li>
+</ol>
+
+<p>最基本的WSGI Application：</p>
+
+<pre><code class="language-python"># wsgi.py
+def application(env, start_response):
+    start_response('200 OK', [('Content-Type', 'text/html')])
+    return [&quot;Hello!&quot;]
+</code></pre>
+
+<p>然後WSGI server就可以call <code>application(environ, start_response)</code>去處理requests。</p>
+
+<p>當然你的python server不會這麼簡單，所以django等frameworks會幫你自動處理好成為一個WSGI application。</p>
+
+<h1 id="補充連結">補充連結</h1>
+
+<ul>
+<li>萬惡之源：<a href="https://www.python.org/dev/peps/pep-3333/">PEP 3333</a></li>
+<li><a href="https://www.fullstackpython.com/wsgi-servers.html">一些詳細歷史</a></li>
+<li><a href="https://stackoverflow.com/a/5120610/6025730">傳統Web server vs Python WSGI Application</a></li>
+<li><a href="https://stackoverflow.com/questions/2089271/what-is-common-gateway-interface-cgi">What is Common Gateway Interface (CGI)?</a></li>
+</ul>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/languages/python/2018-01-05-set-up-virtual-environment/">
+            <span class="next-text nav-default">建置python虛擬環境(Virtual Environment)</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:carsonwah@gmail.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://github.com/carsonwah" class="iconfont icon-github" title="github" target="_blank"></a>
+  <a href="https://carsonwah.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss" target="_blank"></a>
+</div>
+
+<div class="copyright">
+  
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+  
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span>&nbsp;|&nbsp;</span>
+    <span class="author">Carson Wah</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.4"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111343902-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

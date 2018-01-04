@@ -6,10 +6,29 @@
     <description>Recent content on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
-    <lastBuildDate>Fri, 05 Jan 2018 00:25:05 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jan 2018 02:56:19 +0800</lastBuildDate>
     
 	<atom:link href="https://carsonwah.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>入門理解WSGI</title>
+      <link>https://carsonwah.github.io/post/web/backend/2018-01-05-wsgi/</link>
+      <pubDate>Fri, 05 Jan 2018 02:56:19 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/web/backend/2018-01-05-wsgi/</guid>
+      <description>&lt;h1 id=&#34;簡介&#34;&gt;簡介&lt;/h1&gt;
+
+&lt;p&gt;WSGI全名是&amp;rdquo;Web Server Gateway Interface&amp;rdquo;，就是一個規範python server的interface。&lt;/p&gt;
+
+&lt;p&gt;傳統Web server如Apache+php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。&lt;/p&gt;
+
+&lt;p&gt;但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。&lt;/p&gt;
+
+&lt;p&gt;簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>建置python虛擬環境(Virtual Environment)</title>
