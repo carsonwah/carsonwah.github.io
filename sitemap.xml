@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://carsonwah.github.io/post/frameworks/nodejs/2018-01-16-set-up-eslint/</loc>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/post/frameworks/nodejs/2018-01-08-set-up-absolute-import/</loc>
     <lastmod>2018-01-08T18:11:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -87,7 +94,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/</loc>
-    <lastmod>2018-01-08T18:11:22+08:00</lastmod>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -102,6 +109,13 @@
   <url>
     <loc>https://carsonwah.github.io/categories/developer-tools/</loc>
     <lastmod>2017-12-19T16:12:25+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://carsonwah.github.io/tags/eslint/</loc>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -135,6 +149,13 @@
   </url>
   
   <url>
+    <loc>https://carsonwah.github.io/tags/javascript/</loc>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/tags/jupyter/</loc>
     <lastmod>2017-10-21T02:03:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -143,28 +164,28 @@
   
   <url>
     <loc>https://carsonwah.github.io/tags/nodejs/</loc>
-    <lastmod>2018-01-08T18:11:22+08:00</lastmod>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://carsonwah.github.io/categories/nodejs/</loc>
-    <lastmod>2018-01-08T18:11:22+08:00</lastmod>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://carsonwah.github.io/tags/npm/</loc>
-    <lastmod>2018-01-08T18:11:22+08:00</lastmod>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://carsonwah.github.io/post/</loc>
-    <lastmod>2018-01-08T18:11:22+08:00</lastmod>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -184,8 +205,15 @@
   </url>
   
   <url>
+    <loc>https://carsonwah.github.io/tags/sublime/</loc>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/tags/</loc>
-    <lastmod>2017-12-19T16:12:25+08:00</lastmod>
+    <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

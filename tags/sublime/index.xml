@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Npm on Carson&#39;s Tech Note</title>
-    <link>https://carsonwah.github.io/tags/npm/</link>
-    <description>Recent content in Npm on Carson&#39;s Tech Note</description>
+    <title>Sublime on Carson&#39;s Tech Note</title>
+    <link>https://carsonwah.github.io/tags/sublime/</link>
+    <description>Recent content in Sublime on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
     <lastBuildDate>Tue, 16 Jan 2018 18:39:11 +0800</lastBuildDate>
     
-	<atom:link href="https://carsonwah.github.io/tags/npm/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://carsonwah.github.io/tags/sublime/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -24,22 +24,6 @@
 &lt;/blockquote&gt;
 
 &lt;p&gt;這時候我們可以使用&lt;code&gt;eslint&lt;/code&gt;，來規範整個project的code，雖不能統一各人的個人風格，但它可以確保所有code都consistently follow某些syntax，不會亂糟糟。&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>解決nodejs的relative import地獄</title>
-      <link>https://carsonwah.github.io/post/frameworks/nodejs/2018-01-08-set-up-absolute-import/</link>
-      <pubDate>Mon, 08 Jan 2018 18:11:22 +0800</pubDate>
-      
-      <guid>https://carsonwah.github.io/post/frameworks/nodejs/2018-01-08-set-up-absolute-import/</guid>
-      <description>&lt;p&gt;nodejs和npm是很模組化(modular)的framework，經常需要import其他package和檔案，但隨著專案規模越來越大，一不小心就會進入relative import的地獄：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { Something } from &#39;../../../../../../../../../HelloWorld&#39;;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;以下是這個情況的解決良方。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
