@@ -90,7 +90,7 @@
 
 <meta itemprop="datePublished" content="2018-01-16T18:39:11&#43;08:00" />
 <meta itemprop="dateModified" content="2018-01-16T18:39:11&#43;08:00" />
-<meta itemprop="wordCount" content="1908">
+<meta itemprop="wordCount" content="2054">
 
 
 
@@ -194,7 +194,10 @@
 <li><a href="#1-前言">1. 前言</a></li>
 <li><a href="#2-建置流程">2. 建置流程</a>
 <ul>
-<li><a href="#安裝eslint">安裝eslint</a></li>
+<li><a href="#安裝eslint">安裝eslint</a>
+<ul>
+<li><a href="#題外話-babel">題外話：babel</a></li>
+</ul></li>
 <li><a href="#初始化">初始化</a></li>
 <li><a href="#檢查">檢查</a></li>
 </ul></li>
@@ -246,12 +249,17 @@ $ yarn add babel-eslint --dev  # 如果你有用babel (i.e. 有個.babelrc的con
 </code></pre>
 
 <ul>
-<li>建議安裝eslint到project，而不是global environment</li>
-<li>我偏好使用<a href="https://yarnpkg.com/zh-Hans/">yarn</a>來安裝，你也可以照舊使用<code>npm install --dev</code></li>
+<li>建議安裝eslint到project的<code>node_modules/</code>，而不是global environment</li>
+<li>我偏好使用<a href="https://yarnpkg.com/zh-Hans/">yarn</a>來安裝，你也可以使用<code>npm install --save-dev</code></li>
 <li>使用<code>--dev</code>會安裝到<code>package.json</code>裡的<code>devDependencies</code>，代表只會在開發時用到，不會bundle進你的application</li>
 </ul>
 
-<p><a href="https://eslint.org/docs/user-guide/getting-started">Reference</a></p>
+<p><a href="https://eslint.org/docs/user-guide/getting-started">eslint: getting-started</a></p>
+
+<h3 id="題外話-babel">題外話：babel</h3>
+
+<p><a href="https://babeljs.io"><em>babel</em></a> 是一個&rdquo;Javascript compiler&rdquo;，在nodejs的project中很常見，一般需要用到 <a href="https://babeljs.io/learn-es2015/">ES6 (ES2015)</a> 的語法或功能時，
+都會使用 <em>babel</em> compile回ES5的javascript，來確保舊browser也可以運行你的code。</p>
 
 <h2 id="初始化">初始化</h2>
 
