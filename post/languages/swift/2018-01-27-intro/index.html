@@ -77,7 +77,7 @@
 
 <meta itemprop="datePublished" content="2018-01-27T16:04:52&#43;08:00" />
 <meta itemprop="dateModified" content="2018-01-27T16:04:52&#43;08:00" />
-<meta itemprop="wordCount" content="1519">
+<meta itemprop="wordCount" content="1657">
 
 
 
@@ -176,6 +176,7 @@
 <li><a href="#swift的誕生">Swift的誕生</a>
 <ul>
 <li><a href="#特點">特點</a></li>
+<li><a href="#pointer">Pointer</a></li>
 <li><a href="#optional">Optional</a></li>
 </ul></li>
 <li><a href="#後記">後記</a>
@@ -218,7 +219,7 @@
 <li><p>因此OS X也繼承了NeXT傳統，使用了Objective-C為官方開發工具的語言，並把新的framework命名為Cocoa。</p></li>
 </ol>
 
-<p>自此基本奠定了Objective-C在Apple生態中的地位，而及後的iOS也是從OS X借用了很多工具和規範，OS X的Cocoa也變成了iOS的Cocoa Touch（顧名思義了）。</p>
+<p>自此基本上奠定了Objective-C在Apple生態中的地位，而及後的iOS也是從OS X借用了很多工具和規範，OS X的Cocoa也變成了iOS的Cocoa Touch（顧名思義了）。</p>
 
 <p>所以我們寫iOS App會用Objective-C，全都由於以上的歷史原因。</p>
 
@@ -231,12 +232,18 @@
 <h2 id="特點">特點</h2>
 
 <ol>
-<li><strong>安全</strong>：Swift是一個strong-typed language，它希望盡可能在開發的時候就能發現到unexpected的bug。</li>
-<li><strong>快速</strong>：在支援各種fancy功能的同時，也要有比得上C-based languages(C, C++, ObjC)的速度。</li>
+<li><strong>安全</strong>：Swift是一個strong-typed language，它希望盡可能在開發的時候就能發現到unexpected的bug</li>
+<li><strong>快速</strong>：在支援各種fancy功能的同時，也要有比得上C-based languages(C, C++, ObjC)的速度</li>
 <li><strong>易於表達</strong>：簡化語法，方便開發人員，學習門檻也降低</li>
 </ol>
 
-<p><a href="https://swift.org/about/#swiftorg-and-open-source">Reference</a></p>
+<p><a href="https://swift.org/about/#swiftorg-and-open-source">About Swift</a></p>
+
+<h2 id="pointer">Pointer</h2>
+
+<p>另外，由於Objective-C來自C family，語法上經常會使用pointer reference。
+Swift就像是<a href="https://stackoverflow.com/questions/40248021/what-does-swift-is-build-on-top-of-c-and-objective-c-without-constraints-of-c-c?rq=1">Objective-C without C</a>
+，收起各種到處飛的pointer，轉用更簡潔更安全的語法。要用的話，只能用<a href="https://developer.apple.com/documentation/swift/unsafepointer"><code>UnsafePointer</code></a>，<del>強行無時無刻都提醒你不要用</del>。</p>
 
 <h2 id="optional">Optional</h2>
 
