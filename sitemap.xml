@@ -3,7 +3,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://carsonwah.github.io/post/languages/swift/2018-01-27-intro-1/</loc>
+    <loc>https://carsonwah.github.io/post/languages/swift/2018-01-27-intro/</loc>
     <lastmod>2018-01-27T16:04:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -156,6 +156,13 @@
   </url>
   
   <url>
+    <loc>https://carsonwah.github.io/tags/ios/</loc>
+    <lastmod>2018-01-27T16:04:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/tags/javascript/</loc>
     <lastmod>2018-01-16T18:39:11+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -214,6 +221,20 @@
   <url>
     <loc>https://carsonwah.github.io/tags/sublime/</loc>
     <lastmod>2018-01-16T18:39:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://carsonwah.github.io/tags/swift/</loc>
+    <lastmod>2018-01-27T16:04:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://carsonwah.github.io/categories/swift/</loc>
+    <lastmod>2018-01-27T16:04:52+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
