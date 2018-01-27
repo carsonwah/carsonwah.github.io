@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Swift和Objective-C的前世今生 - Carson&#39;s Tech Note</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Carson Wah" />
+  <meta name="description" content="要充分了解Swift的出現意義，就先要從Objective-C的歷史開始說起。 為甚麼寫App要用Objective-C？ 話說在1985年，A" />
+<meta name="keywords" content="swift, ios, mac os, os x, optional, objective-c, objective c, apple, steve jobs, next, nextstep, javascript" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="https://carsonwah.github.io/post/languages/swift/2018-01-27-intro-1/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.4" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Swift和Objective-C的前世今生" />
+<meta property="og:description" content="要充分了解Swift的出現意義，就先要從Objective-C的歷史開始說起。 為甚麼寫App要用Objective-C？ 話說在1985年，A" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carsonwah.github.io/post/languages/swift/2018-01-27-intro-1/" />
+
+
+
+<meta property="article:published_time" content="2018-01-27T16:04:52&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-01-27T16:04:52&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Swift和Objective-C的前世今生">
+<meta itemprop="description" content="要充分了解Swift的出現意義，就先要從Objective-C的歷史開始說起。 為甚麼寫App要用Objective-C？ 話說在1985年，A">
+
+
+<meta itemprop="datePublished" content="2018-01-27T16:04:52&#43;08:00" />
+<meta itemprop="dateModified" content="2018-01-27T16:04:52&#43;08:00" />
+<meta itemprop="wordCount" content="1507">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Swift和Objective-C的前世今生"/>
+<meta name="twitter:description" content="要充分了解Swift的出現意義，就先要從Objective-C的歷史開始說起。 為甚麼寫App要用Objective-C？ 話說在1985年，A"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Carson&#39;s Tech Note</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About Me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+<div class="logo-wrapper">
+  <a href="/" class="logo" style="font-size:40px;">Carson&#39;s Tech Note</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About Me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Swift和Objective-C的前世今生</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-01-27 </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目錄</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#為甚麼寫app要用objective-c">為甚麼寫App要用Objective-C？</a></li>
+<li><a href="#swift的誕生">Swift的誕生</a>
+<ul>
+<li><a href="#特點">特點</a></li>
+<li><a href="#optional">Optional</a></li>
+</ul></li>
+<li><a href="#後記">後記</a>
+<ul>
+<li><a href="#swift對整個it業界的意義">Swift對整個IT業界的意義</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>要充分了解Swift的出現意義，就先要從Objective-C的歷史開始說起。</p>
+
+<h1 id="為甚麼寫app要用objective-c">為甚麼寫App要用Objective-C？</h1>
+
+<ol>
+<li><p>話說在1985年，Apple創辦人Steve Jobs權力被架空，憤而辭職，然後帶了幾個以前的同事在外成立了新科技公司<a href="https://en.wikipedia.org/wiki/NeXT">NeXT</a>。</p></li>
+
+<li><p>NeXT打算開發(<a href="https://en.wikipedia.org/wiki/NeXTSTEP">NeXTSTEP</a>)，一個Unix-like的作業系統。</p></li>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Objective-C#History">Objective-C</a>誕生於1986年，NeXT在1988年購買了版權，用來開發了AppKit和Foundation Kit，和基於它們的Interface Builder(IB)，成為NeXTSTEP軟件的主要開發工具。</p>
+
+<ul>
+<li>（Foundation Kit有點似層相識吧）</li>
+<li>（順帶一提，第一版的C++出現在1985年，前身名為&rdquo;C with Classes&rdquo;，和Objective-C一樣旨在加入Object-oriented的功能到C裡面。）</li>
+</ul></li>
+
+<li><p>Apple在1996年尾又收購了NeXT，並讓Steve Jobs回到Apple重新執掌CEO一職。</p></li>
+
+<li><p>Apple在接收NeXT的技術和人才後，決定推出Macintosh系統的第十個Major version，並命名為OS X，第一個推出的消費者版本就是2001年的OS X 10.0。</p>
+
+<ul>
+<li>（所以為甚麼macOS或OS X的版本號全都是10.x，例如High Sierra就是10.13）</li>
+</ul></li>
+
+<li><p>因此OS X也繼承了NeXT傳統，使用了Objective-C為官方開發工具的語言，並把新的framework命名為Cocoa。</p></li>
+</ol>
+
+<p>自此基本奠定了Objective-C在Apple生態中的地位，而及後的iOS也是從OS X借用了很多工具和規範，OS X的Cocoa也變成了iOS的Cocoa Touch（顧名思義了）。</p>
+
+<p>所以我們寫iOS App會用Objective-C，全都由於以上的歷史原因。</p>
+
+<h1 id="swift的誕生">Swift的誕生</h1>
+
+<p>知道了Objective-C的歷史，就應該明白它有多古老，即使Apple一直在改進它，也只不過是小修小補。Apple需要一個更先進，更為他們度身訂造的新語言，才能方便開發者，吸引他們留在Apple的生態圈，增加競爭力&hellip;&hellip;</p>
+
+<p>Swift就是帶著取代Objective-C的使命來到世上，<del>拯救世人</del>。</p>
+
+<h2 id="特點">特點</h2>
+
+<ol>
+<li><strong>安全</strong>：Swift是一個strong-typed language，它希望盡可能在開發的時候就能發現到unexpected的bug。</li>
+<li><strong>快速</strong>：在支援各種fancy功能的同時，也要有比得上C-based languages(C, C++, ObjC)的速度。</li>
+<li><strong>易於表達</strong>：簡化語法，方便開發人員，學習門檻也降低</li>
+</ol>
+
+<p><a href="https://swift.org/about/#swiftorg-and-open-source">Reference</a></p>
+
+<h2 id="optional">Optional</h2>
+
+<p>經常我們看到的Swift code都有共同特點，就是各種問號(?)感嘆號(!)到處飛。
+它是Swift的一大功能，確保不會出現runtime時嘗試access null的properties，發生像Javascript <code>TypeError: 'undefined' is not an object</code> 的錯誤。</p>
+
+<p>詳細容日後再談。</p>
+
+<h1 id="後記">後記</h1>
+
+<h2 id="swift對整個it業界的意義">Swift對整個IT業界的意義</h2>
+
+<p>最近看到一篇2014年的<a href="https://conquermobile.com/blog/swift-history-apples-new-programming-language">文章</a>，談論Swift的重大意義，其中有一段說到Javascript的問題，頗為有趣：</p>
+
+<blockquote>
+<p>Javascript, and technologies like Node.JS and Angular in web browsers are increasingly compelling, but also a dead-end.</p>
+</blockquote>
+
+<p>Javascript一些來自遠古時代的語言設計並不好，但由於大家不停投放資源、時間在它身上，製作出各種便利工具和龐大的生態圈，使得Javascript成為了Web開發中唯一的選擇。
+Javascript的壯大正正是Web的故步自封，很多美妙的功能只能建造在糟糕的語言上，使Web開發鑽進了死胡同。</p>
+
+<p>我覺得Javascript也有ES6, ES7一直在改進語法，同時也要顧及到Web運行環境太複雜，不能一刀切更換新語言，不可和身處Apple生態圈的Swift比較。</p>
+
+<p>但不失為一篇有趣的文章，有興趣可以看看原文。</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/frameworks/nodejs/2018-01-16-set-up-eslint/">
+            <span class="next-text nav-default">建置eslint開發環境</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:carsonwah@gmail.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://github.com/carsonwah" class="iconfont icon-github" title="github" target="_blank"></a>
+  <a href="https://carsonwah.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss" target="_blank"></a>
+</div>
+
+<div class="copyright">
+  
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+  
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span>&nbsp;|&nbsp;</span>
+    <span class="author">Carson Wah</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.4"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111343902-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>
