@@ -175,9 +175,11 @@
 <li><a href="#為甚麼寫app要用objective-c">為甚麼寫App要用Objective-C？</a></li>
 <li><a href="#swift的誕生">Swift的誕生</a>
 <ul>
-<li><a href="#特點">特點</a></li>
+<li><a href="#特點">特點</a>
+<ul>
 <li><a href="#pointer">Pointer</a></li>
 <li><a href="#optional">Optional</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#後記">後記</a>
 <ul>
@@ -239,13 +241,13 @@
 
 <p><a href="https://swift.org/about/#swiftorg-and-open-source">About Swift</a></p>
 
-<h2 id="pointer">Pointer</h2>
+<h3 id="pointer">Pointer</h3>
 
 <p>另外，由於Objective-C來自C family，語法上經常會使用pointer reference。
 Swift就像是<a href="https://stackoverflow.com/questions/40248021/what-does-swift-is-build-on-top-of-c-and-objective-c-without-constraints-of-c-c?rq=1">Objective-C without C</a>
 ，收起各種到處飛的pointer，轉用更簡潔更安全的語法。要用的話，只能用<a href="https://developer.apple.com/documentation/swift/unsafepointer"><code>UnsafePointer</code></a>，<del>強行無時無刻都提醒你不要用</del>。</p>
 
-<h2 id="optional">Optional</h2>
+<h3 id="optional">Optional</h3>
 
 <p>經常我們看到的Swift code都有共同特點，就是各種問號(?)感嘆號(!)到處飛。
 它是Swift的一大功能，確保不會出現runtime時嘗試access null的properties，發生像Javascript <code>TypeError: 'undefined' is not an object</code> 的錯誤。</p>
