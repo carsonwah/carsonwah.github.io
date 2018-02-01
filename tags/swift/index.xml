@@ -6,17 +6,29 @@
     <description>Recent content in Swift on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
-    <lastBuildDate>Sat, 27 Jan 2018 16:04:52 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Feb 2018 17:47:42 +0800</lastBuildDate>
     
 	<atom:link href="https://carsonwah.github.io/tags/swift/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>在iOS app裡加入Google Maps (Swift 4)</title>
+      <link>https://carsonwah.github.io/post/mobile/ios/2018-02-01-google-map-tuto/</link>
+      <pubDate>Thu, 01 Feb 2018 17:47:42 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/mobile/ios/2018-02-01-google-map-tuto/</guid>
+      <description>&lt;p&gt;相信很多App都需要用到地圖功能，除了Apple原生的MapKit之外，功能齊全的Google Map SDK也是不錯的選擇。
+本篇blog介紹如何開始使用Google Map SDK，和一些常用但官方沒有教的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Swift和Objective-C的前世今生</title>
-      <link>https://carsonwah.github.io/post/languages/swift/2018-01-27-intro/</link>
+      <link>https://carsonwah.github.io/post/languages/swift/2018-01-27-objc-and-swift-intro/</link>
       <pubDate>Sat, 27 Jan 2018 16:04:52 +0800</pubDate>
       
-      <guid>https://carsonwah.github.io/post/languages/swift/2018-01-27-intro/</guid>
+      <guid>https://carsonwah.github.io/post/languages/swift/2018-01-27-objc-and-swift-intro/</guid>
       <description>&lt;p&gt;要充分了解Swift的出現意義，就先要從Objective-C的歷史開始說起。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
