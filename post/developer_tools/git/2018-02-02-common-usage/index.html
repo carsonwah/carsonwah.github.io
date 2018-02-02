@@ -72,7 +72,7 @@
 
 <meta itemprop="datePublished" content="2018-02-02T18:22:55&#43;08:00" />
 <meta itemprop="dateModified" content="2018-02-02T18:22:55&#43;08:00" />
-<meta itemprop="wordCount" content="766">
+<meta itemprop="wordCount" content="769">
 
 
 
@@ -165,15 +165,21 @@
   <div class="post-toc-content">
       <nav id="TableOfContents">
 <ul>
-<li><a href="#workflow-related">Workflow-related</a>
+<li><a href="#commands">Commands</a>
 <ul>
-<li><a href="#checkout">Checkout</a></li>
+<li><a href="#checkout">Checkout</a>
+<ul>
+<li><a href="#換branch-換到某commit的狀態">換branch、換到某commit的狀態</a></li>
 <li><a href="#開新branch">開新branch</a></li>
-<li><a href="#log">Log</a></li>
-<li><a href="#reset">Reset</a></li>
-<li><a href="#回復到幾個commit前的狀態">回復到幾個commit前的狀態</a></li>
-<li><a href="#rebase">Rebase</a></li>
-<li><a href="#amend">Amend</a></li>
+</ul></li>
+<li><a href="#log-查看git-history">Log: 查看git history</a></li>
+<li><a href="#reset-取消local-commit">Reset: 取消local commit</a></li>
+<li><a href="#revert-回復到幾個commit前的狀態">Revert: 回復到幾個commit前的狀態</a></li>
+<li><a href="#rebase">Rebase:</a>
+<ul>
+<li><a href="#combine-previous-commits">Combine previous commits</a></li>
+</ul></li>
+<li><a href="#amend-修改commit">Amend: 修改commit</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -184,38 +190,34 @@
     <div class="post-content">
       <p></p>
 
-<h1 id="workflow-related">Workflow-related</h1>
+<h1 id="commands">Commands</h1>
 
 <h2 id="checkout">Checkout</h2>
 
-<p>可以用來換branch、換到某commit的狀態</p>
+<h3 id="換branch-換到某commit的狀態">換branch、換到某commit的狀態</h3>
 
 <pre><code class="language-bash">$ git checkout branch-name
 $ git checkout xxxxx  # &lt;- commit hash
 </code></pre>
 
-<h2 id="開新branch">開新branch</h2>
+<h3 id="開新branch">開新branch</h3>
 
 <pre><code class="language-bash">$ git checkout -b some-branch
 $ git push --set-upstream origin some-branch
 </code></pre>
 
-<h2 id="log">Log</h2>
-
-<p>查看git history</p>
+<h2 id="log-查看git-history">Log: 查看git history</h2>
 
 <pre><code class="language-bash">$ git log
 </code></pre>
 
-<h2 id="reset">Reset</h2>
-
-<p>取消local commit</p>
+<h2 id="reset-取消local-commit">Reset: 取消local commit</h2>
 
 <pre><code class="language-bash">$ git reset HEAD~1  # 取消一個local commit
 $ git reset HEAD~2  # 兩個
 </code></pre>
 
-<h2 id="回復到幾個commit前的狀態">回復到幾個commit前的狀態</h2>
+<h2 id="revert-回復到幾個commit前的狀態">Revert: 回復到幾個commit前的狀態</h2>
 
 <p>重要概念1：不要想著能回到以前，git是version control工具，任何動作和history都需要被紀錄，包括「回復舊version」這動作。
 重要概念2：每revert一個commit都是一次改動，代表需要一次commit，但可以找方法squash做同一次commit。</p>
@@ -232,9 +234,9 @@ $ git revert --no-commit master~3..master  # A &lt;- B &lt;- C &lt;- D &lt;- BCD
 
 <p><a href="https://stackoverflow.com/questions/1463340/revert-multiple-git-commits">Reference</a></p>
 
-<h2 id="rebase">Rebase</h2>
+<h2 id="rebase">Rebase:</h2>
 
-<p>Combine previous commits with rebase</p>
+<h3 id="combine-previous-commits">Combine previous commits</h3>
 
 <p>可以和上面的<code>revert</code>組合使用，例如<code>revert master~4..master</code>後，出現四個用來revert的commits，然後用rebase來變做同一個commit。</p>
 
@@ -269,7 +271,7 @@ $ git revert --no-commit master~3..master  # A &lt;- B &lt;- C &lt;- D &lt;- BCD
 
 <p><a href="http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html">Reference</a></p>
 
-<h2 id="amend">Amend</h2>
+<h2 id="amend-修改commit">Amend: 修改commit</h2>
 
 <p>修改上一條local commit的message，並加入現在的staged changes</p>
 
