@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Git的常用指令和工作流程 - Carson&#39;s Tech Note</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Carson Wah" />
+  <meta name="description" content="
+" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="https://carsonwah.github.io/post/developer_tools/git/2018-02-02-common-usage/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.4" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="Git的常用指令和工作流程" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carsonwah.github.io/post/developer_tools/git/2018-02-02-common-usage/" />
+
+
+
+<meta property="article:published_time" content="2018-02-02T18:22:55&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-02-02T18:22:55&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Git的常用指令和工作流程">
+<meta itemprop="description" content="">
+
+
+<meta itemprop="datePublished" content="2018-02-02T18:22:55&#43;08:00" />
+<meta itemprop="dateModified" content="2018-02-02T18:22:55&#43;08:00" />
+<meta itemprop="wordCount" content="766">
+
+
+
+<meta itemprop="keywords" content="git,github," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Git的常用指令和工作流程"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Carson&#39;s Tech Note</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About Me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Posts</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+<div class="logo-wrapper">
+  <a href="/" class="logo" style="font-size:40px;">Carson&#39;s Tech Note</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About Me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Posts</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Git的常用指令和工作流程</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-02-02 </span>
+        <div class="post-category">
+            <a href="/categories/developer-tools/">Developer Tools</a><a href="/categories/git/">, Git</a>
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目錄</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#workflow-related">Workflow-related</a>
+<ul>
+<li><a href="#checkout">Checkout</a></li>
+<li><a href="#開新branch">開新branch</a></li>
+<li><a href="#log">Log</a></li>
+<li><a href="#reset">Reset</a></li>
+<li><a href="#回復到幾個commit前的狀態">回復到幾個commit前的狀態</a></li>
+<li><a href="#rebase">Rebase</a></li>
+<li><a href="#amend">Amend</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p></p>
+
+<h1 id="workflow-related">Workflow-related</h1>
+
+<h2 id="checkout">Checkout</h2>
+
+<p>可以用來換branch、換到某commit的狀態</p>
+
+<pre><code class="language-bash">$ git checkout branch-name
+$ git checkout xxxxx  # &lt;- commit hash
+</code></pre>
+
+<h2 id="開新branch">開新branch</h2>
+
+<pre><code class="language-bash">$ git checkout -b some-branch
+$ git push --set-upstream origin some-branch
+</code></pre>
+
+<h2 id="log">Log</h2>
+
+<p>查看git history</p>
+
+<pre><code class="language-bash">$ git log
+</code></pre>
+
+<h2 id="reset">Reset</h2>
+
+<p>取消local commit</p>
+
+<pre><code class="language-bash">$ git reset HEAD~1  # 取消一個local commit
+$ git reset HEAD~2  # 兩個
+</code></pre>
+
+<h2 id="回復到幾個commit前的狀態">回復到幾個commit前的狀態</h2>
+
+<p>重要概念1：不要想著能回到以前，git是version control工具，任何動作和history都需要被紀錄，包括「回復舊version」這動作。
+重要概念2：每revert一個commit都是一次改動，代表需要一次commit，但可以找方法squash做同一次commit。</p>
+
+<pre><code class="language-bash">$ git revert HEAD~1  # revert最後一個commit
+$ git revert HEAD~2  # 兩個
+# ...
+$ git revert master~3..master  # A &lt;- B &lt;- C &lt;- D &lt;- BCD'   &lt;- HEAD
+
+# 途中不用自動commit，只留下最後一個change自己commit
+# 不建議使用
+$ git revert --no-commit master~3..master  # A &lt;- B &lt;- C &lt;- D &lt;- BCD'   &lt;- HEAD
+</code></pre>
+
+<p><a href="https://stackoverflow.com/questions/1463340/revert-multiple-git-commits">Reference</a></p>
+
+<h2 id="rebase">Rebase</h2>
+
+<p>Combine previous commits with rebase</p>
+
+<p>可以和上面的<code>revert</code>組合使用，例如<code>revert master~4..master</code>後，出現四個用來revert的commits，然後用rebase來變做同一個commit。</p>
+
+<pre><code class="language-bash">$ git rebase -i HEAD~4
+# rebase HEAD~4: rebase至第四新的commit
+# -i: 用interactive的方式決定如何處理之前的commits
+
+  1 pick af9ccec Upgrade to expo v25.0.0 dependencies  # 第一個不能是squash
+  2 squash c6f387a Update version  # squash到上一個commit當中
+  3 squash e9564d4 Update ios android version
+  4 squash c588e11 Update yarn.lock to expo v25.0.0
+  5 
+  6 # Rebase 32f1edc..c588e11 onto 32f1edc (4 commands)
+  7 #
+  8 # Commands:
+  9 # p, pick = use commit
+ 10 # r, reword = use commit, but edit the commit message
+ 11 # e, edit = use commit, but stop for amending
+ 12 # s, squash = use commit, but meld into previous commit
+ 13 # f, fixup = like &quot;squash&quot;, but discard this commit's log message
+ 14 # x, exec = run command (the rest of the line) using shell
+ 15 # d, drop = remove commit
+ 16 #
+ 17 # These lines can be re-ordered; they are executed from top to bottom.
+ 18 #
+ 19 # If you remove a line here THAT COMMIT WILL BE LOST.
+ 20 #
+ 21 # However, if you remove everything, the rebase will be aborted.
+ 22 #
+ 23 # Note that empty commits are commented out
+</code></pre>
+
+<p><a href="http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html">Reference</a></p>
+
+<h2 id="amend">Amend</h2>
+
+<p>修改上一條local commit的message，並加入現在的staged changes</p>
+
+<pre><code class="language-bash">$ git commit --amend
+# 或直接
+$ git commit --amend -m &quot;xxxx&quot;
+</code></pre>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/git/">git</a>
+          
+          <a href="/tags/github/">github</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/mobile/ios/2018-02-01-google-map-tuto/">
+            <span class="next-text nav-default">在iOS app裡加入Google Maps (Swift 4)</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:carsonwah@gmail.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://github.com/carsonwah" class="iconfont icon-github" title="github" target="_blank"></a>
+  <a href="https://carsonwah.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss" target="_blank"></a>
+</div>
+
+<div class="copyright">
+  
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+  
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span>&nbsp;|&nbsp;</span>
+    <span class="author">Carson Wah</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.4"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111343902-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>
