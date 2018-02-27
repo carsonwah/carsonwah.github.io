@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>在Django裡處理One-To-Many Relation - Carson&#39;s Tech Note</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Carson Wah" />
+  <meta name="description" content="建立Relational Database的時候常常會用到One-To-Many Relation，一般都是以Foreign Key的形式儲存。
+Django功能十分齊全，但它的model inheritance設計令所有功能都非常&amp;rdquo;implicit&amp;rdquo;，一些功能如果不知道要到哪裡define的話根本無從入手。 所以這篇就來紀錄一下如何用Django的ORM處理One-To-Many的Model吧
+
+" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="https://carsonwah.github.io/post/frameworks/django/2018-02-27-one-to-many-relation/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.4" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="在Django裡處理One-To-Many Relation" />
+<meta property="og:description" content="建立Relational Database的時候常常會用到One-To-Many Relation，一般都是以Foreign Key的形式儲存。
+
+Django功能十分齊全，但它的model inheritance設計令所有功能都非常&rdquo;implicit&rdquo;，一些功能如果不知道要到哪裡define的話根本無從入手。
+所以這篇就來紀錄一下如何用Django的ORM處理One-To-Many的Model吧
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carsonwah.github.io/post/frameworks/django/2018-02-27-one-to-many-relation/" />
+
+
+
+<meta property="article:published_time" content="2018-02-27T17:31:58&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-02-27T17:31:58&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="在Django裡處理One-To-Many Relation">
+<meta itemprop="description" content="建立Relational Database的時候常常會用到One-To-Many Relation，一般都是以Foreign Key的形式儲存。
+
+Django功能十分齊全，但它的model inheritance設計令所有功能都非常&rdquo;implicit&rdquo;，一些功能如果不知道要到哪裡define的話根本無從入手。
+所以這篇就來紀錄一下如何用Django的ORM處理One-To-Many的Model吧
+
+">
+
+
+<meta itemprop="datePublished" content="2018-02-27T17:31:58&#43;08:00" />
+<meta itemprop="dateModified" content="2018-02-27T17:31:58&#43;08:00" />
+<meta itemprop="wordCount" content="1856">
+
+
+
+<meta itemprop="keywords" content="django,python,database," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="在Django裡處理One-To-Many Relation"/>
+<meta name="twitter:description" content="建立Relational Database的時候常常會用到One-To-Many Relation，一般都是以Foreign Key的形式儲存。
+
+Django功能十分齊全，但它的model inheritance設計令所有功能都非常&rdquo;implicit&rdquo;，一些功能如果不知道要到哪裡define的話根本無從入手。
+所以這篇就來紀錄一下如何用Django的ORM處理One-To-Many的Model吧
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Carson&#39;s Tech Note</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About Me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Posts</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+<div class="logo-wrapper">
+  <a href="/" class="logo" style="font-size:40px;">Carson&#39;s Tech Note</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About Me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Posts</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">在Django裡處理One-To-Many Relation</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-02-27 </span>
+        <div class="post-category">
+            <a href="/categories/django/">django</a>
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目錄</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#i-建立one-to-many-model">I. 建立One-To-Many Model</a></li>
+<li><a href="#ii-取得一個parent的所有child">II. 取得一個Parent的所有Child</a>
+<ul>
+<li><a href="#方法一-query">方法一：Query</a></li>
+<li><a href="#方法二-child-set">方法二：Child Set</a>
+<ul>
+<li><a href="#關於manager">關於Manager</a></li>
+<li><a href="#自訂field-name">自訂field name</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#iii-取得所有parent連帶它們的child">III. 取得所有Parent連帶它們的Child</a>
+<ul>
+<li><a href="#方法一-for-loop">方法一：For-loop</a></li>
+<li><a href="#方法二-rest-framework-serializer">方法二：REST Framework Serializer</a></li>
+<li><a href="#performance-issue-n-1-problem">Performance Issue (N+1 Problem)</a>
+<ul>
+<li><a href="#解決方法">解決方法</a></li>
+<li><a href="#相關reference">相關Reference</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>建立Relational Database的時候常常會用到One-To-Many Relation，一般都是以Foreign Key的形式儲存。</p>
+
+<p>Django功能十分齊全，但它的model inheritance設計令所有功能都非常&rdquo;implicit&rdquo;，一些功能如果不知道要到哪裡define的話根本無從入手。
+所以這篇就來紀錄一下如何用Django的ORM處理One-To-Many的Model吧</p>
+
+<p></p>
+
+<p><em>(如果你不知道甚麼是ORM：<a href="https://stackoverflow.com/questions/1279613/what-is-an-orm-and-where-can-i-learn-more-about-it">What is ORM</a>)</em></p>
+
+<h1 id="i-建立one-to-many-model">I. 建立One-To-Many Model</h1>
+
+<p>假設有以下model：</p>
+
+<pre><code class="language-python">from django.db import models
+
+class Restaurant(models.Model):
+    name = CharField(max_length=200)
+
+class Food(models.Model):
+    restaurant = ForeignKey(Restaurant, on_delete=models.CASCADE)
+    name = CharField(max_length=200)
+</code></pre>
+
+<p><em>(不知道如何define model的可先看<a href="https://docs.djangoproject.com/en/2.0/intro/tutorial02/">Django Tutorial</a>)</em></p>
+
+<p>每個<code>Food</code>都有個<code>Restaurant</code>的<code>ForeignKey</code>，代表它屬於某個<code>Restaurant</code>，每個<code>Restaurant</code>可以有多於一個<code>Food</code>。</p>
+
+<h1 id="ii-取得一個parent的所有child">II. 取得一個Parent的所有Child</h1>
+
+<h2 id="方法一-query">方法一：Query</h2>
+
+<p>如果想取得Restaurant的所有Food，以官方教學中有提及的方法：</p>
+
+<pre><code class="language-python">restaurant = Restaurant.objects.get(id=1)  # 取得一間restaurant
+Food.objects.filter(restaurant__id=restaurant.id)
+# &lt;QuerySet [&lt;Food: 叉燒飯&gt;, &lt;Food: 燒鴨飯&gt;]&gt;
+</code></pre>
+
+<p>其實就是用restaurant的資料query一次food。</p>
+
+<h2 id="方法二-child-set">方法二：Child Set</h2>
+
+<p>然後我發現原來<a href="https://docs.djangoproject.com/en/2.0/topics/db/queries/#following-relationships-backward">官方在<strong>某個角落</strong>寫著</a>，可以用<code>restaurant.food_set</code>來達到相同效果：</p>
+
+<pre><code class="language-python">restaurant = Restaurant.objects.get(id=1)  # 取得一間restaurant
+restaurant.food_set.all()
+# &lt;QuerySet [&lt;Food: 叉燒飯&gt;, &lt;Food: 燒鴨飯&gt;]&gt;
+</code></pre>
+
+<p><code>food_set</code>這名稱來自<code>Food</code>這個class，Django會把它變lowercase然後加上<code>_set</code>，神奇吧。</p>
+
+<p><em>這就是為甚麼我不喜歡Django，明明一直都存在於model之中，但如果我沒找到這一小段文檔，可能一世也不會知道它的存在</em></p>
+
+<h3 id="關於manager">關於Manager</h3>
+
+<ul>
+<li><code>Restaurant.objects</code>是一個<code>Manager</code>，用來管理對restaurant的query，詳情可參照<a href="https://docs.djangoproject.com/en/2.0/topics/db/managers/">Manager Reference</a>。</li>
+<li>同時<code>restaurant.food_set</code>也是一個<code>Manager</code>，但它管理對「屬於這間restaurant的food」的query</li>
+</ul>
+
+<h3 id="自訂field-name">自訂field name</h3>
+
+<p>如果想用<code>restaurant.foods</code> instead of <code>restaurant.food_set</code>，可以在ForeignKey field裡加入<code>related_name</code>：</p>
+
+<pre><code class="language-python">class Food(models.Model):
+    restaurant = ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='foods')  # 這裡
+    name = CharField(max_length=200)
+# ...
+restaurant.foods.all()
+</code></pre>
+
+<h1 id="iii-取得所有parent連帶它們的child">III. 取得所有Parent連帶它們的Child</h1>
+
+<p><em>（等同SQL裡的Join table）</em></p>
+
+<p>這裡示範如何取得所有Restaurant連帶它們的Food：</p>
+
+<h2 id="方法一-for-loop">方法一：For-loop</h2>
+
+<p>先取得Restaurants，再找出屬於每個Restaurant的Food：</p>
+
+<pre><code class="language-python">restaurants = Restaurant.objects.all().values()  # values()把QuerySet裡的所有Restaurant objects變成dict
+for restaurant in restaurants:
+    food_queryset = Food.objects.filter(restaurant__id=restaurant['id']).values()
+    restaurant['food'] = list(food_queryset)  # list()把QuerySet變成list
+restaurants = list(restaurants)  # list()把QuerySet變成list
+</code></pre>
+
+<h2 id="方法二-rest-framework-serializer">方法二：REST Framework Serializer</h2>
+
+<p><a href="https://www.django-rest-framework.org"><em>Django REST Framework</em></a>是Django一個非常熱門的工具，它可以幫你處理這些常見process，讓你不用自己寫for-loop。</p>
+
+<p><del>（只是我覺得又再abstract了一層後，已經不知道自己的code怎麼運作了。）</del></p>
+
+<pre><code class="language-python">class FoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Food
+        fields = '__all__'
+
+
+class RestaurantSerializer(serializers.ModelSerializer):
+    foods = FoodSerializer(many=True, source='food_set')  # 加入這行後，它會自動幫你找到所有related childs
+
+    class Meta:
+        model = Restaurant
+        fields = '__all__'
+
+queryset = Restaurant.objects.all()
+serializer = RestaurantSerializer(queryset, many=True)
+serializer.data  # list of restaurant_dicts with their food_dicts
+</code></pre>
+
+<h2 id="performance-issue-n-1-problem">Performance Issue (N+1 Problem)</h2>
+
+<p>在處理Database relations時，常常會遇上performance的瓶頸，而問題九成都是來自著名的<strong><em>N+1 Problem</em></strong>。</p>
+
+<p>N+1意思就是touch了database N+1次，例如以上兩個做法，首先是找出所有N間restaurants（touch <strong>1</strong>次），然後逐間找一次相關的Food（touch <strong>N</strong>次），加起來就是<strong>N+1</strong>了。</p>
+
+<p>在現今電腦架構中，動用<strong>實體硬碟</strong>（尤其是HDD）是非常昂貴(expensive)的，無論從速度還是機器折舊角度，都應盡量減少這種operation。</p>
+
+<h3 id="解決方法">解決方法</h3>
+
+<p>Django的<code>Manager</code>採用<a href="https://docs.djangoproject.com/en/2.0/topics/db/queries/#querysets-are-lazy">Lazy loading</a>，所以未動用到的data是不會主動拿出來的，就像是這裡每間restaurant的foods。</p>
+
+<p>我們可以使用<a href="https://docs.djangoproject.com/en/2.0/ref/models/querysets/#prefetch-related"><code>prefetch_related()</code></a>來逼django在找restaurants的時候也找出所有相關的foods，這樣動用實體硬碟的次數就只需一次了。</p>
+
+<p>例如以上serializer的做法改良版：</p>
+
+<pre><code class="language-python">queryset = Restaurant.objects.prefetch_related('food_set').all()  # 使用queryset前先prefetch所有相關food
+serializer = RestaurantSerializer(queryset, many=True)
+</code></pre>
+
+<h3 id="相關reference">相關Reference</h3>
+
+<ul>
+<li><a href="https://stackoverflow.com/questions/1299374/what-is-eager-loading"><em>&ldquo;Lazy Loading&rdquo; vs &ldquo;Eager Loading&rdquo;</em></a></li>
+<li><a href="https://medium.com/@hansonkd/performance-problems-in-the-django-orm-1f62b3d04785"><em>Solving Performance Problems in the Django ORM</em></a></li>
+<li><a href="http://ses4j.github.io/2015/11/23/optimizing-slow-django-rest-framework-performance/"><em>Optimizing slow Django REST Framework performance</em></a></li>
+</ul>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/django/">django</a>
+          
+          <a href="/tags/python/">python</a>
+          
+          <a href="/tags/database/">database</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/developer_tools/git/2018-02-02-common-usage/">
+            <span class="next-text nav-default">Git的常用指令和工作流程</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:carsonwah@gmail.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://github.com/carsonwah" class="iconfont icon-github" title="github" target="_blank"></a>
+  <a href="https://carsonwah.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss" target="_blank"></a>
+</div>
+
+<div class="copyright">
+  
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+  
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span>&nbsp;|&nbsp;</span>
+    <span class="author">Carson Wah</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.4"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111343902-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>
