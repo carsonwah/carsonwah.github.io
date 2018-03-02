@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://carsonwah.github.io/post/frameworks/vuejs/2018-03-02-quickstart/</loc>
+    <lastmod>2018-03-02T22:22:58+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/post/frameworks/django/2018-02-27-one-to-many-relation/</loc>
     <lastmod>2018-02-27T17:31:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -122,7 +129,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/</loc>
-    <lastmod>2018-02-27T17:31:58+08:00</lastmod>
+    <lastmod>2018-03-02T22:22:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -241,7 +248,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/post/</loc>
-    <lastmod>2018-02-27T17:31:58+08:00</lastmod>
+    <lastmod>2018-03-02T22:22:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

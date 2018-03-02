@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>由零開始一個Vue.js Project - Carson&#39;s Tech Note</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Carson Wah" />
+  <meta name="description" content="Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個SPA(Single-page application)。
+這裡紀錄了如何建立一個用上 node.js, npm, webpack, vue-router, vuex 的Vue.js專案。
+
+" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="https://carsonwah.github.io/post/frameworks/vuejs/2018-03-02-quickstart/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.4" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="由零開始一個Vue.js Project" />
+<meta property="og:description" content="Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個SPA(Single-page application)。
+
+這裡紀錄了如何建立一個用上 node.js, npm, webpack, vue-router, vuex 的Vue.js專案。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carsonwah.github.io/post/frameworks/vuejs/2018-03-02-quickstart/" />
+
+
+
+<meta property="article:published_time" content="2018-03-02T22:22:58&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-02T22:22:58&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="由零開始一個Vue.js Project">
+<meta itemprop="description" content="Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個SPA(Single-page application)。
+
+這裡紀錄了如何建立一個用上 node.js, npm, webpack, vue-router, vuex 的Vue.js專案。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-03-02T22:22:58&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-02T22:22:58&#43;08:00" />
+<meta itemprop="wordCount" content="1480">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="由零開始一個Vue.js Project"/>
+<meta name="twitter:description" content="Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個SPA(Single-page application)。
+
+這裡紀錄了如何建立一個用上 node.js, npm, webpack, vue-router, vuex 的Vue.js專案。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Carson&#39;s Tech Note</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About Me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Posts</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+<div class="logo-wrapper">
+  <a href="/" class="logo" style="font-size:40px;">Carson&#39;s Tech Note</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About Me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Posts</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">由零開始一個Vue.js Project</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-02 </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目錄</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#i-安裝-vue">I. 安裝 Vue</a>
+<ul>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#運作流程">運作流程</a>
+<ul>
+<li><a href="#dev-server">Dev server</a></li>
+<li><a href="#webpack-config">Webpack config</a></li>
+<li><a href="#main-js">main.js</a></li>
+<li><a href="#index-html">index.html</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ii-vue-router">II. Vue Router</a></li>
+<li><a href="#iii-vuex">III. Vuex</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個<a href="https://en.wikipedia.org/wiki/Single-page_application">SPA(Single-page application)</a>。</p>
+
+<p>這裡紀錄了如何建立一個用上 <code>node.js</code>, <code>npm</code>, <code>webpack</code>, <code>vue-router</code>, <code>vuex</code> 的Vue.js專案。</p>
+
+<p></p>
+
+<h1 id="i-安裝-vue">I. 安裝 Vue</h1>
+
+<p>以下參照了<a href="https://vuejs.org/v2/guide/installation.html#CLI">官方文檔</a>所寫的步驟：</p>
+
+<pre><code class="language-bash"># 安裝 vue-cli
+$ npm install --global vue-cli
+# 用 &quot;webpack&quot; template 開一個新project
+$ vue init webpack my-project
+</code></pre>
+
+<p>然後vue-cli會問一些問題去幫你決定如何初始化你的專案，<code>vue-router</code>最好選安裝，用來做網頁的routing。</p>
+
+<pre><code class="language-bash"># 安裝 dependencies
+$ cd my-project
+$ npm install
+# 試行
+$ npm run dev
+</code></pre>
+
+<h2 id="project-structure">Project Structure</h2>
+
+<p>現在你的Project大概長這樣：</p>
+
+<pre><code class="language-bash">.
+├── build/  # 放專案管理工具
+├── config/  # 放config檔
+├── dist/  # 經compile後的完整網頁，由npm run build建立
+├── index.html  # 整個project的根檔案
+├── node_modules/  # npm modules
+├── package.json  # npm dependencies
+├── src/  # 你的code
+├── static/  # 放static files如圖片等
+└── test/  # UI tests
+</code></pre>
+
+<h2 id="運作流程">運作流程</h2>
+
+<blockquote>
+<p>趕時間的朋友可跳過這part到<a href="#ii-vue-router">Part II</a></p>
+</blockquote>
+
+<p>理解這個初始project如何運作，對日後擴展你的application有很大幫助。</p>
+
+<h3 id="dev-server">Dev server</h3>
+
+<p>執行<code>npm run dev</code>，會調用<code>build/dev-server.js</code>，裡面會使用<code>webpack</code>去打包project。</p>
+
+<h3 id="webpack-config">Webpack config</h3>
+
+<p>使用<code>vue init</code>建立的project會使用webpack一個叫<a href="https://vue-loader.vuejs.org/en/"><code>vue-loader</code></a>的plugin來打包project。</p>
+
+<p>由於<code>build/webpack.base.config.js</code>寫了：</p>
+
+<pre><code class="language-javascript">entry: {
+    app: './src/main.js'
+  }
+</code></pre>
+
+<p>所以會把你的<code>src/main.js</code>裡import了的<code>App.vue</code>（以至裡面一層層的<code>.vue</code>檔）打包成一個龐大的<code>js</code>檔（對，整個project純粹就是一個<code>js</code>檔）。</p>
+
+<h3 id="main-js">main.js</h3>
+
+<p><code>src/main.js</code>裡建立了一個Vue instance：</p>
+
+<pre><code class="language-javascript">new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '&lt;App/&gt;',
+});
+</code></pre>
+
+<p><code>el: #app</code>意思就是會inject到<code>html</code>裡的<code>&lt;div id=&quot;app&quot;&gt;</code>。</p>
+
+<h3 id="index-html">index.html</h3>
+
+<p><code>index.html</code>是整個project的root檔，好似甚麼都沒有。</p>
+
+<p>執行一次<code>npm run build</code>後，可以看看<code>dist/index.html</code>：</p>
+
+<pre><code>&lt;div id=app&gt;&lt;/div&gt;
+&lt;script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js&gt;&lt;/script&gt;
+&lt;script type=text/javascript src=/static/js/vendor.5973cf24864eecc78c48.js&gt;&lt;/script&gt;
+&lt;script type=text/javascript src=/static/js/app.cda9eea43bd2acedfa05.js&gt;
+</code></pre>
+
+<p>三個<code>js</code>檔都是<code>webpack</code>打包<code>main.js</code>後的產物，執行這些檔後，你的app就會被inject到<code>&lt;div id=&quot;app&quot;&gt;</code>。</p>
+
+<h1 id="ii-vue-router">II. Vue Router</h1>
+
+<p>主要檔案就是<code>src/router/index.js</code>裡的<code>new Router()</code>和<code>App.vue</code>裡的<code>&lt;router-view/&gt;</code>。</p>
+
+<p>詳情可參照<a href="https://router.vuejs.org/en/">官方文檔</a>。</p>
+
+<h1 id="iii-vuex">III. Vuex</h1>
+
+<p><a href="https://vuex.vuejs.org/en/">Vuex</a>是一個state管理工具，強調一個application只能有一個 <code>centralized store</code> ，而且只能透過 <code>mutation</code> 去改變它。</p>
+
+<blockquote>
+<p><a href="https://reactjs.org/">React.js</a>也有個相似的工具—<a href="https://redux.js.org/introduction">Redux</a>，他們的概念都來自<code>Flux</code>。</p>
+</blockquote>
+
+<p>如果你的project規模不少的話，其實很難避免使用<code>Vuex</code>，所以我建議先把它裝了。</p>
+
+<pre><code class="language-bash">$ npm install vuex --save  # --save代表安裝到當前project當中
+</code></pre>
+
+<p>按照官方的<a href="https://vuex.vuejs.org/en/structure.html">example</a>創建 <code>src/store/</code> folder，在<code>src/store/index.js</code>加入store：</p>
+
+<pre><code class="language-javascript">const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  }
+})
+
+export default store
+</code></pre>
+
+<p>在<code>App.vue</code>加入：</p>
+
+<pre><code class="language-javascript">import store from './store';  // import
+
+// ...
+
+new Vue({
+  el: '#app',
+  router,
+  store,  // 加入store到app裡面
+  components: { App },
+  template: '&lt;App/&gt;',
+});
+</code></pre>
+
+<p>之後在<code>.vue</code>檔裡面就可以用<code>this.$store</code>來使用store了。</p>
+
+<hr />
+
+<p>以上就是一個完整的Vue single-page application了，Vue的modularity使這個project可以擴展到非常大規模也沒有問題，除了performance很好，code也容易維護。</p>
+
+<p>日後再寫Vue的入門教學吧。</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/frameworks/django/2018-02-27-one-to-many-relation/">
+            <span class="next-text nav-default">在Django裡處理One-To-Many Relation</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:carsonwah@gmail.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://github.com/carsonwah" class="iconfont icon-github" title="github" target="_blank"></a>
+  <a href="https://carsonwah.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss" target="_blank"></a>
+</div>
+
+<div class="copyright">
+  
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+  
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span>&nbsp;|&nbsp;</span>
+    <span class="author">Carson Wah</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.4"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111343902-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>
