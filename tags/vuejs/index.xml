@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vuejs on Carson&#39;s Tech Note</title>
+    <link>https://carsonwah.github.io/tags/vuejs/</link>
+    <description>Recent content in Vuejs on Carson&#39;s Tech Note</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-hk</language>
+    <lastBuildDate>Fri, 02 Mar 2018 22:22:58 +0800</lastBuildDate>
+    
+	<atom:link href="https://carsonwah.github.io/tags/vuejs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>由頭建立Vue.js WebApp及專案結構解釋</title>
+      <link>https://carsonwah.github.io/post/frameworks/vuejs/2018-03-02-quickstart/</link>
+      <pubDate>Fri, 02 Mar 2018 22:22:58 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/frameworks/vuejs/2018-03-02-quickstart/</guid>
+      <description>&lt;p&gt;Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個&lt;a href=&#34;https://en.wikipedia.org/wiki/Single-page_application&#34;&gt;SPA(Single-page application)&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;這裡紀錄了如何建立一個用上 &lt;code&gt;node.js&lt;/code&gt;, &lt;code&gt;npm&lt;/code&gt;, &lt;code&gt;webpack&lt;/code&gt;, &lt;code&gt;vue-router&lt;/code&gt;, &lt;code&gt;vuex&lt;/code&gt; 的Vue.js專案。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
