@@ -82,7 +82,7 @@
 
 <meta itemprop="datePublished" content="2018-03-02T22:22:58&#43;08:00" />
 <meta itemprop="dateModified" content="2018-03-02T22:22:58&#43;08:00" />
-<meta itemprop="wordCount" content="1480">
+<meta itemprop="wordCount" content="1557">
 
 
 
@@ -191,7 +191,10 @@
 </ul></li>
 </ul></li>
 <li><a href="#ii-vue-router">II. Vue Router</a></li>
-<li><a href="#iii-vuex">III. Vuex</a></li>
+<li><a href="#iii-vuex">III. Vuex</a>
+<ul>
+<li><a href="#好處">好處</a></li>
+</ul></li>
 </ul>
 </nav>
   </div>
@@ -302,6 +305,13 @@ $ npm run dev
 <h1 id="iii-vuex">III. Vuex</h1>
 
 <p><a href="https://vuex.vuejs.org/en/">Vuex</a>是一個state管理工具，強調一個application只能有一個 <code>centralized store</code> ，而且只能透過 <code>mutation</code> 去改變它。</p>
+
+<h2 id="好處">好處</h2>
+
+<ol>
+<li>各component可以共同share data，不用pass來pass去</li>
+<li>所有對store的改動都一目瞭然，因為全部都是<code>mutation</code>，方便debug</li>
+</ol>
 
 <blockquote>
 <p><a href="https://reactjs.org/">React.js</a>也有個相似的工具—<a href="https://redux.js.org/introduction">Redux</a>，他們的概念都來自<code>Flux</code>。</p>
