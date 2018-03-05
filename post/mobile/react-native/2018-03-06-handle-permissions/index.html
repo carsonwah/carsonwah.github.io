@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-hk">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>在React Native處理Permissions - Carson&#39;s Tech Note</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Carson Wah" />
+  <meta name="description" content="在Apps上取用user的資料或硬件前，都必先得到user的同意(Permission)。但iOS和Android的取得都不同，所以在React Native上要小心處理。
+
+" />
+
+  <meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+<link rel="canonical" href="https://carsonwah.github.io/post/mobile/react-native/2018-03-06-handle-permissions/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/even.min.css?v=2.6.4" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+<meta property="og:title" content="在React Native處理Permissions" />
+<meta property="og:description" content="在Apps上取用user的資料或硬件前，都必先得到user的同意(Permission)。但iOS和Android的取得都不同，所以在React Native上要小心處理。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://carsonwah.github.io/post/mobile/react-native/2018-03-06-handle-permissions/" />
+
+
+
+<meta property="article:published_time" content="2018-03-06T02:29:42&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-03-06T02:29:42&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="在React Native處理Permissions">
+<meta itemprop="description" content="在Apps上取用user的資料或硬件前，都必先得到user的同意(Permission)。但iOS和Android的取得都不同，所以在React Native上要小心處理。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-03-06T02:29:42&#43;08:00" />
+<meta itemprop="dateModified" content="2018-03-06T02:29:42&#43;08:00" />
+<meta itemprop="wordCount" content="852">
+
+
+
+<meta itemprop="keywords" content="React Native,javascript,ios,android," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="在React Native處理Permissions"/>
+<meta name="twitter:description" content="在Apps上取用user的資料或硬件前，都必先得到user的同意(Permission)。但iOS和Android的取得都不同，所以在React Native上要小心處理。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Carson&#39;s Tech Note</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About Me</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Posts</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        
+<div class="logo-wrapper">
+  <a href="/" class="logo" style="font-size:40px;">Carson&#39;s Tech Note</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About Me</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Posts</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">在React Native處理Permissions</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-03-06 </span>
+        <div class="post-category">
+            <a href="/categories/react-native/">React Native</a>
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目錄</h2>
+  <div class="post-toc-content">
+      <nav id="TableOfContents">
+<ul>
+<li><a href="#i-react-native">I. React Native</a>
+<ul>
+<li><a href="#ios">iOS</a></li>
+<li><a href="#android">Android</a>
+<ul>
+<li><a href="#api-23">API &lt; 23</a></li>
+<li><a href="#api-23-1">API &gt;= 23</a></li>
+</ul></li>
+<li><a href="#相關工具">相關工具</a></li>
+</ul></li>
+<li><a href="#ii-expo">II. Expo</a>
+<ul>
+<li><a href="#取用permissions">取用permissions</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul></li>
+<li><a href="#notes-push-notification">Notes: Push notification</a>
+<ul>
+<li><a href="#ios-1">iOS</a></li>
+<li><a href="#android-1">Android</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>在Apps上取用user的資料或硬件前，都必先得到user的同意(Permission)。但iOS和Android的取得都不同，所以在React Native上要小心處理。</p>
+
+<p></p>
+
+<h1 id="i-react-native">I. React Native</h1>
+
+<h2 id="ios">iOS</h2>
+
+<p>在初次取用某些需要permission的module時，會彈出dialog問user是否批准。</p>
+
+<p>例如想獲取<a href="https://facebook.github.io/react-native/docs/geolocation.html">user的location</a>：<code>navigator.geolocation.getCurrentPosition()</code>時，會在第一次的時候先問user，再視情況返回success callback或error callback。</p>
+
+<p>同時需要在<code>info.plist</code>裡加入相關的dialog message，例如有關location的<code>NSLocationWhenInUseUsageDescription</code>，裡面要清楚解釋為甚麼要用user的位置，否則有機會因此被Apple reject你的app。</p>
+
+<h2 id="android">Android</h2>
+
+<p>Android的情況比較複雜。</p>
+
+<p>以前的Android一向是在安裝時列明所需權限，不用之後逐一問的。但自API &gt;= 23開始，Android也改為runtime問user了。</p>
+
+<h3 id="api-23">API &lt; 23</h3>
+
+<p>在<code>AndroidManifest.xml</code>裡加入所需permissions。</p>
+
+<h3 id="api-23-1">API &gt;= 23</h3>
+
+<p>使用<a href="https://facebook.github.io/react-native/docs/permissionsandroid.html">PermissionsAndroid</a> module。</p>
+
+<h2 id="相關工具">相關工具</h2>
+
+<p><a href="https://github.com/yonahforst/react-native-permissions">react-native-permissions</a></p>
+
+<h1 id="ii-expo">II. Expo</h1>
+
+<p>Expo是一個讓你可以用 <em>pure javascript</em> 寫 <em>cross-platform</em> apps 的工具，它會幫你處理好native相關的東西，例如compile成.apk和.ipa、code push等等。</p>
+
+<h2 id="取用permissions">取用permissions</h2>
+
+<p>Expo提供<a href="https://docs.expo.io/versions/latest/sdk/permissions.html"><code>Permission</code></a> module，可以查看permission狀態，也可以問user獲取permissions，非常方便。</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>簡單來說：</p>
+
+<ol>
+<li>在app.json加入permission dialog message (for iOS)</li>
+<li>在app.json加入所需permissions (for 舊Android)</li>
+<li>使用Permission API取得使用權</li>
+</ol>
+
+<p><a href="https://docs.expo.io/versions/latest/guides/configuration.html#permissions">app.json configuration</a></p>
+
+<p><a href="https://github.com/expo/expo/blob/master/exponent-view-template/ios/exponent-view-template/Supporting/Info.plist#L28-L41">Supporting permissions</a></p>
+
+<h1 id="notes-push-notification">Notes: Push notification</h1>
+
+<p>Push notification permission is a special case, unlike others like camera, location, etc.</p>
+
+<h2 id="ios-1">iOS</h2>
+
+<ul>
+<li>Ask permission in runtime</li>
+<li>Cannot customize permission dialog message</li>
+</ul>
+
+<h2 id="android-1">Android</h2>
+
+<ul>
+<li>Permission is granted along with installation (<a href="https://stackoverflow.com/questions/37294076/push-notifications-gcm-permission-at-runtime">stackoverflow</a>)</li>
+<li>No dialog will be shown</li>
+<li>Notification format can be customized
+
+<ul>
+<li>Expo: 可以在<code>app.json</code> <a href="https://docs.expo.io/versions/latest/guides/configuration.html#notification">customize notification的樣式</a></li>
+</ul></li>
+</ul>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/react-native/">React Native</a>
+          
+          <a href="/tags/javascript/">javascript</a>
+          
+          <a href="/tags/ios/">ios</a>
+          
+          <a href="/tags/android/">android</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/frameworks/vuejs/2018-03-02-quickstart/">
+            <span class="next-text nav-default">由零建立Vue.js WebApp及專案結構解釋</span>
+            <span class="prev-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+        
+        
+        if (window.location.hostname === 'localhost') return;
+
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        var disqus_shortname = 'carsonwah';
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink" target="_blank">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  
+      </div>  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:carsonwah@gmail.com" class="iconfont icon-email" title="email" target="_blank"></a>
+      <a href="https://github.com/carsonwah" class="iconfont icon-github" title="github" target="_blank"></a>
+  <a href="https://carsonwah.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss" target="_blank"></a>
+</div>
+
+<div class="copyright">
+  
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+  
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span>&nbsp;|&nbsp;</span>
+    <span class="author">Carson Wah</span>
+  </span>
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=2.6.4"></script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-111343902-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+</body>
+</html>

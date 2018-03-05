@@ -6,10 +6,19 @@
     <description>Recent content in Tags on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
-    <lastBuildDate>Tue, 27 Feb 2018 17:31:58 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Mar 2018 02:29:42 +0800</lastBuildDate>
     
 	<atom:link href="https://carsonwah.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Android</title>
+      <link>https://carsonwah.github.io/tags/android/</link>
+      <pubDate>Tue, 06 Mar 2018 02:29:42 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/tags/android/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Database</title>
@@ -68,7 +77,7 @@
     <item>
       <title>Ios</title>
       <link>https://carsonwah.github.io/tags/ios/</link>
-      <pubDate>Thu, 01 Feb 2018 17:47:42 +0800</pubDate>
+      <pubDate>Tue, 06 Mar 2018 02:29:42 +0800</pubDate>
       
       <guid>https://carsonwah.github.io/tags/ios/</guid>
       <description></description>
@@ -77,7 +86,7 @@
     <item>
       <title>Javascript</title>
       <link>https://carsonwah.github.io/tags/javascript/</link>
-      <pubDate>Fri, 02 Mar 2018 22:22:58 +0800</pubDate>
+      <pubDate>Tue, 06 Mar 2018 02:29:42 +0800</pubDate>
       
       <guid>https://carsonwah.github.io/tags/javascript/</guid>
       <description></description>
@@ -116,6 +125,15 @@
       <pubDate>Tue, 27 Feb 2018 17:31:58 +0800</pubDate>
       
       <guid>https://carsonwah.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React Native</title>
+      <link>https://carsonwah.github.io/tags/react-native/</link>
+      <pubDate>Tue, 06 Mar 2018 02:29:42 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/tags/react-native/</guid>
       <description></description>
     </item>
     

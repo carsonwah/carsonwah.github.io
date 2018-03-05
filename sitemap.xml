@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://carsonwah.github.io/post/mobile/react-native/2018-03-06-handle-permissions/</loc>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/post/frameworks/vuejs/2018-03-02-quickstart/</loc>
     <lastmod>2018-03-02T22:22:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -121,6 +128,13 @@
   </url>
   
   <url>
+    <loc>https://carsonwah.github.io/tags/android/</loc>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://carsonwah.github.io/categories/blogging/</loc>
     <lastmod>2017-12-18T21:49:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -129,7 +143,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/</loc>
-    <lastmod>2018-03-02T22:22:58+08:00</lastmod>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -199,7 +213,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/tags/ios/</loc>
-    <lastmod>2018-02-01T17:47:42+08:00</lastmod>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -213,7 +227,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/tags/javascript/</loc>
-    <lastmod>2018-03-02T22:22:58+08:00</lastmod>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -248,7 +262,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/post/</loc>
-    <lastmod>2018-03-02T22:22:58+08:00</lastmod>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -263,6 +277,20 @@
   <url>
     <loc>https://carsonwah.github.io/categories/python/</loc>
     <lastmod>2018-01-05T00:25:05+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://carsonwah.github.io/tags/react-native/</loc>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://carsonwah.github.io/categories/react-native/</loc>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -290,7 +318,7 @@
   
   <url>
     <loc>https://carsonwah.github.io/tags/</loc>
-    <lastmod>2018-02-27T17:31:58+08:00</lastmod>
+    <lastmod>2018-03-06T02:29:42+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

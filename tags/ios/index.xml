@@ -6,10 +6,21 @@
     <description>Recent content in Ios on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
-    <lastBuildDate>Thu, 01 Feb 2018 17:47:42 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Mar 2018 02:29:42 +0800</lastBuildDate>
     
 	<atom:link href="https://carsonwah.github.io/tags/ios/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>在React Native處理Permissions</title>
+      <link>https://carsonwah.github.io/post/mobile/react-native/2018-03-06-handle-permissions/</link>
+      <pubDate>Tue, 06 Mar 2018 02:29:42 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/mobile/react-native/2018-03-06-handle-permissions/</guid>
+      <description>&lt;p&gt;在Apps上取用user的資料或硬件前，都必先得到user的同意(Permission)。但iOS和Android的取得都不同，所以在React Native上要小心處理。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>在iOS app裡加入Google Maps (Swift 4)</title>
