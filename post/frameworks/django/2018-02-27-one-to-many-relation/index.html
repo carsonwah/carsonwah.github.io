@@ -84,7 +84,7 @@ Django功能十分齊全，但它的model inheritance設計令所有功能都非
 
 <meta itemprop="datePublished" content="2018-02-27T17:31:58&#43;08:00" />
 <meta itemprop="dateModified" content="2018-02-27T17:31:58&#43;08:00" />
-<meta itemprop="wordCount" content="1856">
+<meta itemprop="wordCount" content="1905">
 
 
 
@@ -194,6 +194,7 @@ Django功能十分齊全，但它的model inheritance設計令所有功能都非
 </ul></li>
 <li><a href="#iii-取得所有parent連帶它們的child">III. 取得所有Parent連帶它們的Child</a>
 <ul>
+<li><a href="#目標">目標</a></li>
 <li><a href="#方法一-for-loop">方法一：For-loop</a></li>
 <li><a href="#方法二-rest-framework-serializer">方法二：REST Framework Serializer</a></li>
 <li><a href="#performance-issue-n-1-problem">Performance Issue (N+1 Problem)</a>
@@ -283,6 +284,24 @@ restaurant.foods.all()
 <h1 id="iii-取得所有parent連帶它們的child">III. 取得所有Parent連帶它們的Child</h1>
 
 <p><em>（等同SQL裡的Join table）</em></p>
+
+<h2 id="目標">目標</h2>
+
+<pre><code class="language-json">[
+    {
+        &quot;name&quot;: &quot;restaurant_A&quot;,
+        &quot;foods&quot;: [
+            {
+                &quot;name&quot;: &quot;叉燒飯&quot;
+            }, {
+                &quot;name&quot;: &quot;燒鴨飯&quot;
+            },
+            ...
+        ]
+    },
+    ...
+]
+</code></pre>
 
 <p>這裡示範如何取得所有Restaurant連帶它們的Food：</p>
 
