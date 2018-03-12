@@ -28,7 +28,7 @@
 &lt;/ol&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;但Jupyter Notebook有自己的environment，如果要使用不同的environment，則需要小心處理。&lt;/p&gt;
+&lt;p&gt;以下會如何解釋分別以&lt;code&gt;pip&lt;/code&gt;和&lt;code&gt;conda&lt;/code&gt;處理 Jupyter 的 python environment。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

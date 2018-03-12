@@ -6,10 +6,23 @@
     <description>Recent content in Posts on Carson&#39;s Tech Note</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-hk</language>
-    <lastBuildDate>Tue, 06 Mar 2018 02:29:42 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Mar 2018 23:27:47 +0800</lastBuildDate>
     
 	<atom:link href="https://carsonwah.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>理解Python的 relative 和 absolute import</title>
+      <link>https://carsonwah.github.io/post/languages/python/2018-03-12-importing-modules/</link>
+      <pubDate>Mon, 12 Mar 2018 23:27:47 +0800</pubDate>
+      
+      <guid>https://carsonwah.github.io/post/languages/python/2018-03-12-importing-modules/</guid>
+      <description>&lt;p&gt;在開發python project時，通常都會以package分開各部件，貫徹&amp;rdquo;Separation of concerns&amp;rdquo;。可是如果對python modules的概念不清晰，各部件之間的import可以成為project的大問題。&lt;/p&gt;
+
+&lt;p&gt;以下會以case study的形式解釋python import的常見問題：&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>在React Native處理Permissions</title>
@@ -214,7 +227,7 @@ $ git push -u origin master
 &lt;/ol&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;但Jupyter Notebook有自己的environment，如果要使用不同的environment，則需要小心處理。&lt;/p&gt;
+&lt;p&gt;以下會如何解釋分別以&lt;code&gt;pip&lt;/code&gt;和&lt;code&gt;conda&lt;/code&gt;處理 Jupyter 的 python environment。&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>
