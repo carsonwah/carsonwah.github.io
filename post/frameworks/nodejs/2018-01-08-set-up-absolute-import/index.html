@@ -88,7 +88,7 @@ import { Something } from &#39;../../../../../../../../../HelloWorld&#39;;
 
 <meta itemprop="datePublished" content="2018-01-08T18:11:22&#43;08:00" />
 <meta itemprop="dateModified" content="2018-01-08T18:11:22&#43;08:00" />
-<meta itemprop="wordCount" content="584">
+<meta itemprop="wordCount" content="685">
 
 
 
@@ -192,7 +192,11 @@ import { Something } from &#39;../../../../../../../../../HelloWorld&#39;;
 <li><a href="#import-local-package">Import local package</a>
 <ul>
 <li><a href="#relative-import">Relative import</a></li>
-<li><a href="#absolute-import">Absolute import</a></li>
+<li><a href="#absolute-import">Absolute import</a>
+<ul>
+<li><a href="#一般node-projects">一般node projects</a></li>
+<li><a href="#react-native">React Native</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -251,6 +255,16 @@ import { Something } from &#39;../../../../../../../../../HelloWorld&#39;;
 <p>當結構越來越複雜時，<code>../../</code>這些relative路徑會非常容易混淆、搞錯。</p>
 
 <h2 id="absolute-import">Absolute import</h2>
+
+<h3 id="一般node-projects">一般node projects</h3>
+
+<ul>
+<li><p>如果你的project有使用<code>babel</code>，可以嘗試<a href="https://github.com/tleunen/babel-plugin-module-resolver">babel-plugin-module-resolver</a>。</p></li>
+
+<li><p>如果你的project有使用<code>webpack</code>，可以嘗試<a href="https://webpack.js.org/configuration/resolve/">Webpack alias</a>。</p></li>
+</ul>
+
+<h3 id="react-native">React Native</h3>
 
 <p>新增<code>package.json</code>到directory，使其成為一個獨立package。</p>
 
