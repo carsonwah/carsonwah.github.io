@@ -1,2 +1,0 @@
-User-agent: *
-Sitemap: https://carsonwah.github.io/sitemap.xml

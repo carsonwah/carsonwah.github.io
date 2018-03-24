@@ -1,0 +1,501 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  在Jupyter同時使用Python2 + Python3 - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>在Jupyter同時使用Python2 + Python3</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='python.html'>python</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15213187969431.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p><em>(Updated on 2018-01-20)</em></p>
+
+<blockquote>
+<p><a href="http://jupyter.org/">Jupyter Notebook</a> (前身ipython notebook)是個很好用的coding工具，它可以：</p>
+
+<ol>
+<li>用作快速prototyping：分段execute、即時修改memory中的variables</li>
+<li>用作寫報告：內容可以包括code、執行結果、圖表等等</li>
+</ol>
+</blockquote>
+
+<p>以下會如何解釋分別以<code>pip</code>和<code>conda</code>處理 Jupyter 的 python environment。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">1. 安裝Jupyter Notebook</h2>
+
+<h3 id="toc_1">以pip安裝</h3>
+
+<pre><code class="language-bash"># python2
+$ pip install --upgrade pip
+$ pip install jupyter
+
+# python3
+$ brew install python3  # macOS
+$ pip3 install --upgrade pip
+$ pip3 install jupyter
+</code></pre>
+
+<h3 id="toc_2">以Conda安裝</h3>
+
+<p><strong><a href="https://conda.io/">Conda</a></strong> 是一個package manager + environment manager，就像是pip + virtualenv，可以裝package，也可以用作管理python的versions。</p>
+
+<h4 id="toc_3">安裝Conda</h4>
+
+<p><a href="https://conda.io/docs/user-guide/install/index.html">Conda 安裝文檔</a></p>
+
+<p>Anaconda版本包含了&gt;720個常用的packages，如果不想安裝太多可以選擇先裝Miniconda，只包括conda的dependencies，日後可以<code>conda install anaconda</code>。</p>
+
+<p><em>(conda不是本篇重點所以先輕輕帶過了)</em></p>
+
+<h4 id="toc_4">安裝Jupyter</h4>
+
+<p>Anaconda已經自帶了Jupyter，如果你裝了Miniconda，可以執行<code>conda install jupyter</code>安裝。</p>
+
+<p><a href="http://jupyter.org/install.html">Jupyter Documentation</a></p>
+
+<h2 id="toc_5">2. 加入python2 / python3 kernel</h2>
+
+<p><strong>Kernel</strong> 決定了Jupyter上的code用甚麼去execute，例如可以是python2、python3，甚至是其他語言。</p>
+
+<p>打開Jupyter看一看： <code>jupyter notebook</code><br/><br/>
+這時browser應該已經出現了Jupyter的介面，右上角按New可以新增notebook，應該可以看到kernel的選擇。<br/><br/>
+因為我安裝的conda是python2，所以只有一個python2的kernel。</p>
+
+<h3 id="toc_6">使用ipykernel</h3>
+
+<blockquote>
+<p>歷史：Jupyter原名叫<code>ipython notebook</code>，之後分拆成為獨立工具，但只代表web UI的部分，背後其實依然依賴ipython來執行code。</p>
+</blockquote>
+
+<p>所以要改動Jupyter的kernel，就代表需要改動ipython的kernel，而ipython提供了<code>ipykernel</code>的工具來管理kernel。</p>
+
+<p><code>ipykernel install</code>的用法：</p>
+
+<pre><code class="language-bash">$ python -m ipykernel install  --help
+usage: __main__.py [-h] [--user] [--name NAME] [--display-name DISPLAY_NAME]
+                   [--prefix PREFIX]
+
+Install the IPython kernel spec.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --user                Install for the current user instead of system-wide
+  --name NAME           Specify a name for the kernelspec. This is needed to
+                        have multiple IPython kernels at the same time.
+  --display-name DISPLAY_NAME
+                        Specify the display name for the kernelspec. This is
+                        helpful when you have multiple IPython kernels.
+  --prefix PREFIX       Specify an install prefix for the kernelspec. This is
+                        needed to install into a non-default location, such as
+                        a conda/virtual-env.
+</code></pre>
+
+<p><a href="http://ipython.readthedocs.io/en/stable/install/kernel_install.html">官方Doc</a></p>
+
+<h3 id="toc_7">直接加入python3 kernel</h3>
+
+<h4 id="toc_8">pip</h4>
+
+<ol>
+<li>假設已<code>brew install python3</code></li>
+<li>安裝global env中的python3到jupyter</li>
+</ol>
+
+<pre><code class="language-bash">$ python3 -m pip install ipykernel
+$ python3 -m ipykernel install --user
+</code></pre>
+
+<p>現在打開<code>jupyter notebook</code>，應該已經有<code>python2</code>和<code>python3</code>兩個kernel了。</p>
+
+<h4 id="toc_9">conda</h4>
+
+<ol>
+<li>新增一個python3 environment （或python2）</li>
+<li>進入env</li>
+<li>安裝這env中的kernel到jupyter</li>
+</ol>
+
+<pre><code class="language-bash"># conda
+$ conda create -n py36 python=3.6 ipykernel # 新增名為py36的python3.6 environment，在裡面安裝ipykernel
+$ source activate py36 # 進入env (activate是conda提供的command)
+$ python -m ipykernel install --user --name py36 # 安裝kernel
+$ source deactivate # 離開env
+</code></pre>
+
+<p>現在打開<code>jupyter notebook</code>，應該已經有<code>python2</code>和<code>py36</code>兩個kernel了。</p>
+
+<h3 id="toc_10">管理不同env的kernel</h3>
+
+<p>可能你有兩個project的virtual environment，各自都在使用python 2.7，那麼在jupyter就要用不同命名去分辨兩個env。</p>
+
+<pre><code class="language-bash">source activate myenv
+python -m ipykernel install --user --name myenv --display-name &quot;Python (myenv)&quot;
+
+source activate other-env
+python -m ipykernel install --user --name other-env --display-name &quot;Python (other-env)&quot;
+</code></pre>
+
+<ul>
+<li><code>--name</code>是jupyter內部用的env名稱，如果已存在，會直接overwrite重覆的env</li>
+<li><code>--display-name</code>就是顯示在jupyter介面的名稱</li>
+</ul>
+
+<hr/>
+
+<blockquote>
+<p>下筆時的versions:  </p>
+
+<ul>
+<li>conda 4.3.30<br/></li>
+<li>python 2.7.13</li>
+</ul>
+</blockquote>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="15213187969378.html" 
+          title="Previous Post: 建置python虛擬環境(Virtual Environment)">&laquo; 建置python虛擬環境(Virtual Environment)</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15217393506091.html">Django 新手上路</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>

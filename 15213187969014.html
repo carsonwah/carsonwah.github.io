@@ -1,0 +1,567 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  Hugo的專案結構 - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Hugo的專案結構</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='hugo.html'>Hugo</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15213187969014.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>完成Hugo的基本<a href="15213187969126.html">setup</a>後，我們來看看Hugo的project structure吧。</p>
+
+<p><em>(強烈建議花點時間理解Hugo的整個結構，不然遇上問題會很迷茫)</em></p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">Overview</h2>
+
+<p>執行<code>hugo new site</code>後的專案：</p>
+
+<pre><code>.
+├── archetypes/
+├── content/
+├── data/
+├── layouts/
+├── static/
+├── themes/
+└── config.toml
+</code></pre>
+
+<h2 id="toc_1">1. 基本設定：</h2>
+
+<h3 id="toc_2">config.toml</h3>
+
+<p>這是整個project的設定文件，裡面會define各種variables，有些是hugo的設定，有些是被layouts裡的html檔拿來用。</p>
+
+<p>例如<strong><em>ananke</em></strong>主題的config.toml:</p>
+
+<pre><code class="language-toml"># --------- Hugo設定 ---------
+title = &quot;Notre-Dame de Paris&quot;
+baseURL = &quot;https://example.com&quot;
+languageCode = &quot;en-us&quot;
+theme = &quot;ananke&quot;
+
+# --------- ananke theme所需的設定 ---------
+Paginate = 3
+googleAnalytics = &quot;&quot;
+enableRobotsTXT = true
+
+[sitemap]
+  changefreq = &quot;monthly&quot;
+  priority = 0.5
+  filename = &quot;sitemap.xml&quot;
+
+[params]
+  favicon = &quot;&quot;
+  description = &quot;The last theme you&#39;ll ever need. Maybe.&quot;
+  twitter = &quot;https://twitter.com/GoHugoIO&quot;
+  github = &quot;&quot;
+</code></pre>
+
+<p>Hugo的預設config檔是用<a href="https://github.com/toml-lang/toml">toml</a> syntax，也可以設置成<code>yaml</code>或<code>json</code>，功能上沒有分別。</p>
+
+<ul>
+<li><strong>title</strong>: 主頁的標題，也有機會用在其他地方</li>
+<li><strong>baseURL</strong>: 所有relative path前面都會加上這baseURL (如<code>blog/post.md</code>變成<code>https://example.com/blog/post.md</code>)</li>
+<li><strong>languageCode</strong>: 決定網頁語言，對單語言的blog用途不大，主要是讓search engine看</li>
+<li><strong>theme</strong>: 使用哪個主題 (在<code>themes/</code>底下)</li>
+<li><a href="https://gohugo.io/getting-started/configuration/">其他...</a></li>
+</ul>
+
+<p>Hugo設定基本上所有theme都是共通的，但每個theme都會有一些自己的設定，例如在以上config中，github的link會變成<code>.Site.Params.github</code>，<br/>
+讓負責render的html可以取用。此部份牽涉到 <em>Template Rendering</em> 。</p>
+
+<hr/>
+
+<h2 id="toc_3">2. 網頁模板渲染 (Template Rendering)</h2>
+
+<p>Hugo是一個static website generator，主要作用就是把各種動態資料、檔案，根據一早寫好的模板(templates)，渲染(render)成靜態的html檔。</p>
+
+<h3 id="toc_4">themes/</h3>
+
+<p>安裝主題的地方。例如最基本的<code>ananke</code>主題：</p>
+
+<pre><code>themes/
+└── ananke
+    ├── LICENSE.md
+    ├── README.md
+    ├── archetypes  # important
+    ├── exampleSite  # important
+    ├── images
+    ├── layouts  # important
+    ├── package.json
+    ├── src
+    ├── static  # important
+    └── theme.toml
+</code></pre>
+
+<p>其實主要的只有：</p>
+
+<ul>
+<li><strong>archetypes</strong>: <a href="#archetypes">下面會提及</a></li>
+<li><strong>exampleSite</strong>: 主題的範例專案，一般安裝theme時會叫你由這裡複製config.toml來開始</li>
+<li><strong>layouts</strong>: 一堆用作template的html檔，是整個網頁的基礎</li>
+<li><strong>static</strong>: 主題所用的css, js, images等等</li>
+</ul>
+
+<h3 id="toc_5">layouts/</h3>
+
+<p>一個Hugo網頁必須要有主題才能運作，這是因為要取用到<code>layouts/</code>裡面的html檔。例如Home page會用到<code>/themes/ananke/layouts/index.html</code>來render。  </p>
+
+<p>可以customize layout，但不建議直接改<code>themes/</code>裡面的東西。Template有<a href="https://gohugo.io/templates/homepage/#homepage-template-lookup-order">look up order</a>，專案中的<code>layouts/index.html</code>會override<code>/themes/ananke/layouts/index.html</code>。</p>
+
+<p>html檔裡有各種render block，例如當hugo見到<code>&lt;h1&gt;{{ .Params.bar }}&lt;/h1&gt;</code>，就會自動在render出<code>.Params.bar</code>的value。</p>
+
+<p><em><a href="https://gohugo.io/themes/creating/">Link: theme的必備檔案</a></em></p>
+
+<hr/>
+
+<h2 id="toc_6">3. 內容管理</h2>
+
+<h3 id="toc_7">content/</h3>
+
+<p>這裡是放置你寫的blog post的地方。官方建議起碼加一個<code>post/</code>的sub-directory，我自己是會用很多sub-directory為文章分類，檔名用日期作prefix方便排序。例如：</p>
+
+<pre><code>content/
+└── post
+    └── blogging
+        └── hugo
+            ├── 2017-10-21-choosing-tools.md
+            ├── 2017-11-13-set-up-hugo.md
+            └── 2017-12-18-hugo-file-structure.md
+</code></pre>
+
+<ul>
+<li>不論開多少個sub-directory，Hugo還是能grab到文章。</li>
+<li>執行<code>hugo new post/blogging/hugo/xxx.md</code>建立文章，Hugo預設就是新增在<code>content/</code>底下。</li>
+</ul>
+
+<h3 id="toc_8">archetypes/</h3>
+
+<p>要理解 <strong>archetypes</strong> ，首先要了解 <strong>front matter</strong> 。</p>
+
+<p>每次執行<code>hugo new</code>建立新post時，hugo會自動幫你在<code>.md</code>檔中加入了必需的 <em>front matter</em> ，類似一篇文章的metadata。</p>
+
+<p>例如：<code>hugo new post/my-first-post.md</code></p>
+
+<pre><code class="language-yaml">---
+title: &quot;My First Post&quot; # Hugo自動把檔名format成標題
+date: 2017-12-18T21:54:40+08:00
+draft: true
+---
+Your markdown here, blahblahblah...
+</code></pre>
+
+<p>如果我想<code>post/</code>裡面新增的所有post都有一些特定的tag，我可以新增<code>archetypes/post.md</code>：</p>
+
+<pre><code class="language-yaml">---
+title: &quot;{{ replace .TranslationBaseName &quot;-&quot; &quot; &quot; | title }}&quot;
+date: {{ .Date }}
+draft: true
+tags: [&quot;web development&quot;, &quot;blogging&quot;]
+---
+Your markdown here, blahblahblah...
+</code></pre>
+
+<ul>
+<li><code>title</code>和<code>date</code>是hugo必需的，不然會有warning</li>
+<li><code>{{ replace .TranslationBaseName &quot;-&quot; &quot; &quot; | title }}</code>是hugo的rendering block，功能就是把<code>my-first-post.md</code>變成<code>My First Post</code></li>
+<li><code>tags</code>是我新增的新attribute</li>
+</ul>
+
+<p>執行<code>hugo new post/xxx.md</code>時，Hugo會按特定次序尋找<code>archetypes</code>檔來建立 <em>front matter</em> ：</p>
+
+<ol>
+<li>archetypes/post.md</li>
+<li>archetypes/default.md</li>
+<li>themes/<THEME>/archetypes/posts.md</li>
+<li>themes/<THEME>/archetypes/default.md</li>
+</ol>
+
+<p><em>（Hugo目前<a href="https://discourse.gohugo.io/t/are-archetypes-for-nested-sections-supported-in-any-way/7963/3">無法支援nested archetypes</a>，所以<code>hugo new post/blog/xxx.md</code>只會找<code>archetypes/post.md</code>）</em></p>
+
+<h3 id="toc_9">內部連結</h3>
+
+<p><a href="https://gohugo.io/content-management/cross-references/">Hugo內置功能</a>，可以產生連結到其他page的link。</p>
+
+<p>例如在此處，我可以用<br/>
+<code>markdown<br/>
+{{&lt;/* ref &quot;post/blogging/hugo/2017-11-13-set-up-hugo.md&quot; */&gt;}}<br/>
+</code><br/>
+來render出<code>{{&lt; ref &quot;post/blogging/hugo/2017-11-13-set-up-hugo.md&quot; &gt;}}</code>。</p>
+
+<h3 id="toc_10">static/</h3>
+
+<p>這裡一般是用來放css, js, images。例如：</p>
+
+<pre><code>static/
+└── images
+    └── abc.png
+</code></pre>
+
+<p>可以用<code>![alt text](/images/abc.png)</code>來顯示圖片。</p>
+
+<h3 id="toc_11">data/</h3>
+
+<p>此處可放一些網頁的data，例如<code>data/somedata.toml</code>：</p>
+
+<pre><code>food = [&quot;Bread&quot;, &quot;Pasta&quot;, &quot;Rice&quot;]
+</code></pre>
+
+<p>然後可以用<code>{{ .Site.Data.somedata.food }}</code>獲取data。</p>
+
+<ul>
+<li>可用format: YAML, TOML, JSON</li>
+<li><a href="https://gohugo.io/templates/data-templates/">data的詳細例子</a></li>
+</ul>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="15213187968912.html" 
+          title="Previous Post: git pull或push不用再打密碼">&laquo; git pull或push不用再打密碼</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15213187969066.html" 
+          title="Next Post: 選擇個人Blogging工具">選擇個人Blogging工具 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15217393506091.html">Django 新手上路</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>

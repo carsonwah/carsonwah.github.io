@@ -1,0 +1,462 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  將本地Project放到Github - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>將本地Project放到Github</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='git.html'>Git</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15213187968857.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <h2 id="toc_0">TL;DR</h2>
+
+<pre><code class="language-shell">$ git init
+$ git add .
+$ git commit -m &quot;First commit&quot;
+$ git remote add origin https://github.com/NAME/REPO.git
+$ git push -u origin master
+</code></pre>
+
+<span id="more"></span><!-- more -->
+
+<hr/>
+
+<h2 id="toc_1">詳細步驟</h2>
+
+<h3 id="toc_2">1. Initialize git</h3>
+
+<pre><code class="language-shell">$ git init # 新增.git資料夾
+$ git status # 查看檔案狀態
+$ git add . # 加入所有檔案到下個commit
+$ git commit -m &quot;First commit&quot; # commit已加入的檔案
+</code></pre>
+
+<h3 id="toc_3">2. 加入git push目的地</h3>
+
+<p>先在Github新增一個repo，並複製remote url (clone或download那裡)。</p>
+
+<pre><code class="language-shell">$ git remote add origin https://github.com/NAME/REPO.git
+</code></pre>
+
+<p><strong><em>Remote</em></strong>是一個git directory的遠端位置，在這個情況，我們的<strong>remote</strong>就是放在github上的repository網址。</p>
+
+<p>現在可以執行<code>git remote -v</code>看一看。</p>
+
+<pre><code>origin  https://github.com/NAME/REPO.git (fetch)
+origin  https://github.com/NAME/REPO.git (push)
+</code></pre>
+
+<p><em>（這些都是git的configuration，儲存在<code>.git/config</code>裡面）</em></p>
+
+<h3 id="toc_4">3. push到目的地</h3>
+
+<p>所有檔案都加入並commit好了，remote url也設置好了，這時可以push到github了。</p>
+
+<pre><code class="language-shell">$ git push
+
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin master
+</code></pre>
+
+<p>此時會出現fatal error，因為我們的push沒有指明push到甚麼remote和branch。</p>
+
+<p>這是個防護機制，一個git專案可以有多個remote和branch，所以我們第一次push要指明現在這個 <em>local branch</em> 要push到哪個 <em>remote branch</em> 。  </p>
+
+<p>我們現在是由 <em>local</em> 的 <em>master</em> push到 <em>github</em> 的 <em>master</em> ：</p>
+
+<pre><code class="language-sh">$ git push origin master # push到origin(剛剛新增的remote)的master branch
+</code></pre>
+
+<p>而<code>--set-upstream</code>或<code>-u</code>就是代表以後 <em>local master</em> 都是直接push到 <em>origin master</em> ，下次就直接打<code>git push</code>可以了。</p>
+
+<h3 id="toc_5">4. git pull</h3>
+
+<p><code>git pull</code>也是同樣情況，如果push的時候local branch不夠remote branch up-to-date的話，會有以下error：</p>
+
+<pre><code>! [rejected]        master -&gt; master (fetch first)
+error: failed to push some refs to &#39;https://github.com/carsonwah/gohugo-demo.git&#39;
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., &#39;git pull ...&#39;) before pushing again.
+hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; for details.
+</code></pre>
+
+<p>意思是要先<code>git fetch</code> remote branch的東西下來，然後<code>merge</code>到local branch讓它up-to-date，最後才能<code>push</code>。</p>
+
+<p><code>git pull</code>就是<code>fetch</code>和<code>merge</code>的合體，但直接<code>git pull</code>又會有以下error：</p>
+
+<pre><code> * [new branch]      master     -&gt; origin/master
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull &lt;remote&gt; &lt;branch&gt;
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/&lt;branch&gt; master
+</code></pre>
+
+<p>原來<code>git pull</code>也要和<code>git push</code>一樣，設置對應的remote branch。剛才還沒完成<code>git push --set-upstream</code>，所以還未有upstream目的地。pull不能用<code>-u</code>(不知道為甚麼)，要透過<code>git branch</code> 直接設置：</p>
+
+<pre><code class="language-sh">$ git branch --set-upstream-to=origin/master master  # 或 git branch -u origin/master master
+# 然後pull
+$ git pull --allow-unrelated-histories  # 需要加上--allow-unrelated-histories，因為local和remote完全沒有共同history，git default是不允許的
+</code></pre>
+
+<p>這時填好merge的commit message就可以直接<code>git push</code>了。</p>
+
+<p><em>(老實說直接在某處<code>git clone</code>，然後手動將project搬家好像更方便)</em></p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="15213187968804.html" 
+          title="Previous Post: Git的常用指令和工作流程">&laquo; Git的常用指令和工作流程</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15213187968912.html" 
+          title="Next Post: git pull或push不用再打密碼">git pull或push不用再打密碼 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15217393506091.html">Django 新手上路</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>

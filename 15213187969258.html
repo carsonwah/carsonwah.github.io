@@ -1,0 +1,433 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  Swift和Objective-C的前世今生 - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Swift和Objective-C的前世今生</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='swift.html'>swift</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15213187969258.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>要充分了解Swift的出現意義，就先要從Objective-C的歷史開始說起。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">為甚麼寫App要用Objective-C？</h2>
+
+<ol>
+<li><p>話說在1985年，Apple創辦人Steve Jobs權力被架空，憤而辭職，然後帶了幾個以前的同事在外成立了新科技公司<a href="https://en.wikipedia.org/wiki/NeXT">NeXT</a>。</p></li>
+<li><p>NeXT打算開發<a href="https://en.wikipedia.org/wiki/NeXTSTEP">NeXTSTEP</a>，一個Unix-like的作業系統。</p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Objective-C#History">Objective-C</a>誕生於1986年，NeXT在1988年購買了版權，用來開發了AppKit和Foundation Kit，和基於它們的Interface Builder(IB)，成為NeXTSTEP軟件的主要開發工具。</p>
+
+<ul>
+<li>（Foundation Kit有點似層相識吧）</li>
+<li>（順帶一提，第一版的C++出現在1985年，前身名為&quot;C with Classes&quot;，和Objective-C一樣旨在加入Object-oriented的功能到C裡面。）</li>
+</ul></li>
+<li><p>Apple在1996年尾又收購了NeXT，並讓Steve Jobs回到Apple重新執掌CEO一職。</p></li>
+<li><p>Apple在接收NeXT的技術和人才後，決定推出Macintosh系統的第十個Major version，並命名為OS X，第一個推出的消費者版本就是2001年的OS X 10.0。</p>
+
+<ul>
+<li>（所以為甚麼macOS或OS X的版本號全都是10.x，例如High Sierra就是10.13）</li>
+</ul></li>
+<li><p>因此OS X也繼承了NeXT傳統，使用了Objective-C為官方開發工具的語言，並把新的framework命名為Cocoa。</p></li>
+</ol>
+
+<p>自此基本上奠定了Objective-C在Apple生態中的地位，而及後的iOS也是從OS X借用了很多工具和規範，OS X的Cocoa也變成了iOS的Cocoa Touch（顧名思義了）。</p>
+
+<p>所以我們寫iOS App會用Objective-C，全都由於以上的歷史原因。</p>
+
+<h2 id="toc_1">Swift的誕生</h2>
+
+<p>知道了Objective-C的歷史，就應該明白它有多古老，即使Apple一直在改進它，也只不過是小修小補。Apple需要一個更先進，更為他們度身訂造的新語言，才能方便開發者，吸引他們留在Apple的生態圈，增加競爭力......</p>
+
+<p>Swift就是帶著取代Objective-C的使命來到世上，<del>拯救世人</del>。</p>
+
+<h3 id="toc_2">特點</h3>
+
+<ol>
+<li><strong>安全</strong>：Swift是一個strong-typed language，它希望盡可能在開發的時候就能發現到unexpected的bug</li>
+<li><strong>快速</strong>：在支援各種fancy功能的同時，也要有比得上C-based languages(C, C++, ObjC)的速度</li>
+<li><strong>易於表達</strong>：簡化語法，方便開發人員，學習門檻也降低</li>
+</ol>
+
+<p><a href="https://swift.org/about/#swiftorg-and-open-source">About Swift</a></p>
+
+<h4 id="toc_3">Pointer</h4>
+
+<p>另外，由於Objective-C來自C family，語法上經常會使用pointer reference。<br/>
+Swift就像是<a href="https://stackoverflow.com/questions/40248021/what-does-swift-is-build-on-top-of-c-and-objective-c-without-constraints-of-c-c?rq=1">Objective-C without C</a><br/>
+，收起各種到處飛的pointer，轉用更簡潔更安全的語法。要用的話，只能用<a href="https://developer.apple.com/documentation/swift/unsafepointer"><code>UnsafePointer</code></a>，<del>強行無時無刻都提醒你不要用</del>。</p>
+
+<h4 id="toc_4">Optional</h4>
+
+<p>經常我們看到的Swift code都有共同特點，就是各種問號(?)感嘆號(!)到處飛。<br/>
+它是Swift的一大功能，確保不會出現runtime時嘗試access null的properties，發生像Javascript <code>TypeError: &#39;undefined&#39; is not an object</code> 的錯誤。</p>
+
+<p>詳細容日後再談。</p>
+
+<h2 id="toc_5">後記</h2>
+
+<h3 id="toc_6">Swift對整個IT業界的意義</h3>
+
+<p>最近看到一篇2014年的<a href="https://conquermobile.com/blog/swift-history-apples-new-programming-language">文章</a>，談論Swift的重大意義，其中有一段說到Javascript的問題，頗為有趣：</p>
+
+<blockquote>
+<p>Javascript, and technologies like Node.JS and Angular in web browsers are increasingly compelling, but also a dead-end.</p>
+</blockquote>
+
+<p>Javascript一些來自遠古時代的語言設計並不好，但由於大家不停投放資源、時間在它身上，製作出各種便利工具和龐大的生態圈，使得Javascript成為了Web開發中唯一的選擇。<br/>
+Javascript的壯大正正是Web的故步自封，很多美妙的功能只能建造在糟糕的語言上，使Web開發鑽進了死胡同。</p>
+
+<p>我覺得Javascript也有ES6, ES7一直在改進語法，同時也要顧及到Web運行環境太複雜，不能一刀切更換新語言，不可和身處Apple生態圈的Swift比較。</p>
+
+<p>但不失為一篇有趣的文章，有興趣可以看看原文。</p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="15213187969126.html" 
+          title="Previous Post: 透過Hugo快速建置個人Blog">&laquo; 透過Hugo快速建置個人Blog</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15213187969322.html" 
+          title="Next Post: 理解Python的 relative 和 absolute import">理解Python的 relative 和 absolute import &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15217393506091.html">Django 新手上路</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>

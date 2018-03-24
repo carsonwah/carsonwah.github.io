@@ -1,0 +1,609 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  建置eslint開發環境 - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>建置eslint開發環境</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='nodejs.html'>nodejs</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15213187968640.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <h2 id="toc_0">1. 前言</h2>
+
+<blockquote>
+<p>對於所有Project來說，&quot;Coding Style&quot;都很重要，尤其是多人協作時，應該大家一起follow某些共同的coding style，才方便互相查看及修改其他人的code。  </p>
+</blockquote>
+
+<p>這時候我們可以使用<code>eslint</code>，來規範整個project的code，雖不能統一各人的個人風格，但它可以確保所有code都consistently follow某些syntax，不會亂糟糟。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_1">2. 建置流程</h2>
+
+<p>每個project的設定都不盡相同，以下以 <a href="https://facebook.github.io/react-native/">React Native</a> + <a href="https://expo.io/">Expo</a> 的project作例子。</p>
+
+<h3 id="toc_2">安裝eslint</h3>
+
+<pre><code class="language-bash">$ yarn add eslint --dev
+$ yarn add babel-eslint --dev  # 如果你有用babel (i.e. 有個.babelrc的config檔案)
+</code></pre>
+
+<ul>
+<li>建議安裝eslint到project的<code>node_modules/</code>，而不是global environment</li>
+<li>我偏好使用<a href="https://yarnpkg.com/zh-Hans/">yarn</a>來安裝，你也可以使用<code>npm install --save-dev</code></li>
+<li>使用<code>--dev</code>會安裝到<code>package.json</code>裡的<code>devDependencies</code>，代表只會在開發時用到，不會bundle進你的application</li>
+</ul>
+
+<p><a href="https://eslint.org/docs/user-guide/getting-started">eslint: getting-started</a></p>
+
+<h4 id="toc_3">題外話：babel</h4>
+
+<p><a href="https://babeljs.io"><em>babel</em></a> 是一個&quot;Javascript compiler&quot;，在nodejs的project中很常見，一般需要用到 <a href="https://babeljs.io/learn-es2015/">ES6 (ES2015)</a> 的語法或功能時，<br/>
+都會使用 <em>babel</em> compile回ES5的javascript，來確保舊browser也可以運行你的code。</p>
+
+<h3 id="toc_4">初始化</h3>
+
+<p>安裝好後，首先要建立一個config檔來說明linter應如何運作。</p>
+
+<pre><code class="language-bash">$ ./node_modules/.bin/eslint --init
+#  使用剛安裝的local eslint來執行
+</code></pre>
+
+<p>然後只需以interactive的形式答問題。以下是react-native+expo project的sample setup：</p>
+
+<pre><code class="language-bash">? How would you like to configure ESLint? Answer questions about your style
+? Are you using ECMAScript 6 features? Yes
+? Are you using ES6 modules? Yes
+? Where will your code run? Browser, Node
+? Do you use CommonJS? No
+? Do you use JSX? Yes
+? Do you use React? Yes
+? What style of indentation do you use? Spaces
+? What quotes do you use for strings? Single
+? What line endings do you use? Unix
+? Do you require semicolons? Yes
+? What format do you want your config file to be in? JavaScript  # 最好不要用JSON，因為不能加入comment
+</code></pre>
+
+<h3 id="toc_5">檢查</h3>
+
+<p>安裝好後<code>package.json</code>應該會有：</p>
+
+<ul>
+<li>一個<code>.eslintrc.js</code>檔案，這裡就是所有eslint的設定</li>
+</ul>
+
+<pre><code class="language-javascript">module.exports = {
+    &quot;env&quot;: {
+        &quot;browser&quot;: true,
+        &quot;es6&quot;: true,
+        &quot;node&quot;: true
+    },
+    &quot;extends&quot;: [&quot;eslint:recommended&quot;, &quot;plugin:react/recommended&quot;],
+    &quot;parser&quot;: &quot;babel-eslint&quot;,
+    &quot;parserOptions&quot;: {
+        &quot;ecmaVersion&quot;: 2017,
+        &quot;ecmaFeatures&quot;: {
+            &quot;experimentalObjectRestSpread&quot;: true,
+            &quot;jsx&quot;: true
+        },
+        &quot;sourceType&quot;: &quot;module&quot;
+    },
+    &quot;plugins&quot;: [
+        &quot;react&quot;
+    ],
+    &quot;rules&quot;: {
+        &quot;indent&quot;: [
+            &quot;error&quot;,
+            4
+        ],
+        &quot;linebreak-style&quot;: [
+            &quot;error&quot;,
+            &quot;unix&quot;
+        ],
+        &quot;quotes&quot;: [
+            &quot;error&quot;,
+            &quot;single&quot;
+        ],
+        &quot;semi&quot;: [
+            &quot;error&quot;,
+            &quot;always&quot;
+        ]
+    }
+};
+</code></pre>
+
+<ul>
+<li>和一堆新的dependencies</li>
+</ul>
+
+<pre><code class="language-json">&quot;devDependencies&quot;: {
+  &quot;babel-eslint&quot;: &quot;^8.2.1&quot;,
+  &quot;babel-preset-expo&quot;: &quot;^2.0.0&quot;,
+  &quot;eslint&quot;: &quot;^4.15.0&quot;,
+  &quot;eslint-config-airbnb&quot;: &quot;^16.1.0&quot;,
+  &quot;eslint-plugin-import&quot;: &quot;^2.8.0&quot;,
+  &quot;eslint-plugin-jsx-a11y&quot;: &quot;^6.0.3&quot;,
+  &quot;eslint-plugin-react&quot;: &quot;^7.5.1&quot;
+}
+</code></pre>
+
+<h2 id="toc_6">3. 設置</h2>
+
+<h3 id="toc_7">執行</h3>
+
+<p>先嘗試執行eslint：</p>
+
+<pre><code class="language-bash">$ ./node_modules/.bin/eslint some_file.js
+# 或
+$ ./node_modules/.bin/eslint some_folder/
+</code></pre>
+
+<h3 id="toc_8">修改設定</h3>
+
+<p>先試試lint一些檔案，第一次一定有很多error出現，之後慢慢按自己的需要更改<code>.eslintrc</code>。</p>
+
+<p>例如我的error：</p>
+
+<pre><code class="language-bash">   2:8   error  &#39;Expo&#39; is defined but never used                no-unused-vars
+   3:10  error  &#39;AppLoading&#39; is defined but never used          no-unused-vars
+   4:8   error  &#39;React&#39; is defined but never used               no-unused-vars
+   5:10  error  &#39;Image&#39; is defined but never used               no-unused-vars
+   6:10  error  &#39;Ionicons&#39; is defined but never used            no-unused-vars
+  11:8   error  &#39;ReduxWrapper&#39; is defined but never used        no-unused-vars
+  26:10  error  &#39;cacheFonts&#39; is defined but never used          no-unused-vars
+  27:1   error  Expected indentation of 4 spaces but found 2    indent
+  35:1   error  Expected indentation of 4 spaces but found 2    indent
+  36:1   error  Expected indentation of 8 spaces but found 4    indent
+  37:1   error  Expected indentation of 8 spaces but found 4    indent
+  38:1   error  Expected indentation of 12 spaces but found 6   indent
+  39:1   error  Expected indentation of 8 spaces but found 4    indent
+  40:1   error  Expected indentation of 4 spaces but found 2    indent
+  42:1   error  Expected indentation of 4 spaces but found 2    indent
+  43:1   error  Expected indentation of 8 spaces but found 4    indent
+  43:5   error  Unexpected console statement                    no-console
+  44:1   error  Expected indentation of 4 spaces but found 2    indent
+  46:1   error  Expected indentation of 4 spaces but found 2    indent
+  51:1   error  Expected indentation of 8 spaces but found 4    indent
+  ...........
+</code></pre>
+
+<h4 id="toc_9">indent</h4>
+
+<p>我習慣使用2 spaces indent，把<code>rules</code>裡的<code>indent</code>改改<br/>
+<code>javascript<br/>
+&quot;rules&quot;: {<br/>
+        &quot;indent&quot;: [<br/>
+            &quot;error&quot;,  // 也可以改做&quot;warn&quot;<br/>
+            2  // 2 spaces<br/>
+        ],<br/>
+        ...<br/>
+</code></p>
+
+<h4 id="toc_10">no-unused-vars</h4>
+
+<p>React那些是never used也要import的，例如<br/>
+<code>javascript<br/>
+import React, { Component } from &#39;react&#39;;  // 沒有import React會error<br/>
+</code></p>
+
+<p>把</p>
+
+<pre><code class="language-javascript">&quot;extends&quot;: &quot;eslint:recommended&quot;,
+</code></pre>
+
+<p>改成</p>
+
+<pre><code class="language-javascript">&quot;extends&quot;: [&quot;eslint:recommended&quot;, &quot;plugin:react/recommended&quot;],  // 要確保有安裝&quot;eslint-plugin-react&quot;
+</code></pre>
+
+<h4 id="toc_11">no-console</h4>
+
+<p><code>&quot;extends&quot;: &quot;eslint:recommended&quot;</code> default啟用了<code>no-console</code>模式，不允許到處<code>console.log()</code>。<br/><br/>
+最主要用途是避免user在browser看到開發用的debug message，但對於我的react-native project或一般node project其實是沒有所謂的。</p>
+
+<p>在<code>rules</code>裡面加入：</p>
+
+<pre><code class="language-javascript">&quot;no-console&quot;: 0,
+</code></pre>
+
+<p><a href="https://stackoverflow.com/questions/34215526/eslint-how-to-disable-unexpected-console-statement-in-node-js">Reference</a></p>
+
+<h4 id="toc_12">其他</h4>
+
+<ul>
+<li>其他rules可以在 <a href="https://eslint.org/docs/rules/">official doc</a> 找到，但然而並沒有甚麼卵用，一般都是直接google更好。</li>
+<li>React Native還可以安裝<a href="https://github.com/Intellicode/eslint-plugin-react-native">eslint-plugin-react-native</a>。</li>
+</ul>
+
+<h3 id="toc_13">結果</h3>
+
+<p>最後還是有以下error：</p>
+
+<pre><code>   2:8   error  &#39;Expo&#39; is defined but never used        no-unused-vars
+   5:10  error  &#39;Image&#39; is defined but never used       no-unused-vars
+   6:10  error  &#39;Ionicons&#39; is defined but never used    no-unused-vars
+  26:10  error  &#39;cacheFonts&#39; is defined but never used  no-unused-vars
+  75:8   error  Missing semicolon                       semi
+  79:6   error  Missing semicolon                       semi
+</code></pre>
+
+<p>這些就是真的需要fix的地方了。</p>
+
+<h2 id="toc_14">4. Integrations</h2>
+
+<p>以上執行只是在command line run一次，實際工作流程中，不可能每次都自己run一下。</p>
+
+<p>所以有各種integration support，讓developers可以在開發的過程中立即發現問題並及時修正。</p>
+
+<h3 id="toc_15">Editor/IDE</h3>
+
+<p>在平日的開發editor中加入linter，即時在coding的時候知道哪裡有問題。</p>
+
+<h4 id="toc_16">Sublime</h4>
+
+<ol>
+<li>安裝 <a href="https://packagecontrol.io/installation">Package Control</a> (非常多人用，基本上是sublime必需工具)</li>
+<li><code>Command + Shift + P</code>: &quot;Install packages&quot;</li>
+<li>安裝<code>SublimeLinter-eslint</code></li>
+</ol>
+
+<p><a href="https://github.com/SublimeLinter/SublimeLinter-eslint">Github: SublimeLinter-eslint</a><br/><br/>
+<a href="https://eslint.org/docs/user-guide/integrations#editors">Reference</a><br/><br/>
+(其他language也可以使用<a href="http://www.sublimelinter.com/en/latest/">Sublimelinter</a>)  </p>
+
+<h3 id="toc_17">Build tools</h3>
+
+<p>Integrate進build tools可以在例如每次webpack build的時候、github deploy的時候lint一次，確保application build符合linting規則。</p>
+
+<p><a href="https://eslint.org/docs/user-guide/integrations#build-tools">Reference</a></p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="15213187968523.html" 
+          title="Previous Post: 在Django裡處理One-To-Many Relation">&laquo; 在Django裡處理One-To-Many Relation</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15213187968700.html" 
+          title="Next Post: 解決nodejs的relative import地獄">解決nodejs的relative import地獄 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15217393506091.html">Django 新手上路</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>

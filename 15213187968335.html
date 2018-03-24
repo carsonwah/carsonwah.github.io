@@ -1,0 +1,564 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  在iOS app裡加入Google Maps (Swift 4) - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>在iOS app裡加入Google Maps (Swift 4)</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='ios.html'>iOS</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15213187968335.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>相信很多App都需要用到地圖功能，除了Apple原生的MapKit之外，功能齊全的Google Map SDK也是不錯的選擇。<br/>
+本篇blog介紹如何開始使用Google Map SDK，和一些常用但官方沒有教的功能。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">安裝 (Installation)</h2>
+
+<p>主要步驟：</p>
+
+<ol>
+<li>安裝SDK</li>
+<li>取得API</li>
+<li>在初始化App的時候(AppDelegate.swift)設定好API Key</li>
+</ol>
+
+<p>跟隨<a href="https://developers.google.com/maps/documentation/ios-sdk/start">官方文檔</a>照做就可以了。</p>
+
+<p>建議使用Cocoapods安裝SDK，一個非常熱門又方便ios dependencies管理工具。</p>
+
+<h2 id="toc_1">開始使用 (Quickstart)</h2>
+
+<h3 id="toc_2">顯示地圖</h3>
+
+<p>官方的<a href="https://developers.google.com/maps/documentation/ios-sdk/start#6">新手教學</a>只教你如何將MapView填滿整個ViewController，<br/>
+但很多時候MapView只是一個ViewController的subview，<br/>
+這時候就不能跟官方教學做。</p>
+
+<h4 id="toc_3">1. 在Storyboard裡建立一個MapView</h4>
+
+<p>先把UIView拖到ViewController之上<br/>
+<img src="media/15213187968335/ui_view.png" alt="UIView"/></p>
+
+<p>設置好layout contraints<br/>
+<img src="media/15213187968335/constraints.png" alt="Constraints"/></p>
+
+<p>關於怎樣控制XCode裡的Auto Layout，可以看看<a href="https://www.raywenderlich.com/160527/auto-layout-tutorial-ios-11-getting-started">Raywenderlich的一篇教學</a>。</p>
+
+<p><strong>重點：把UIView的Class改成GMSMapView</strong><br/>
+<img src="media/15213187968335/map_view.png" alt="MapView"/></p>
+
+<h4 id="toc_4">2. 在ViewController裡建立IBOutlet</h4>
+
+<blockquote>
+<p>用途：在ViewController裡建立IBOutlet var，讓它可以在code裡面控制storyboard裡的view。這是一個常做的動作。</p>
+</blockquote>
+
+<p>開啟Storyboard，開啟&quot;Assistant Editor&quot;<br/>
+<img src="media/15213187968335/assistant_editor.png" alt="Assistant Editor"/></p>
+
+<p>把你的MapView &quot;control+drag&quot; 到ViewController裡，將它命名為<code>mapView</code>。</p>
+
+<p>應該會產生以下的variable：</p>
+
+<pre><code class="language-swift">import GoogleMaps
+
+class SomeViewController: UIViewController {
+  @IBOutlet weak var mapView: GMSMapView!
+  // ...
+}
+</code></pre>
+
+<p>現在我們可以從ViewController裡控制這個mapView了。</p>
+
+<h4 id="toc_5">3. 設置MapView的初始位置</h4>
+
+<p>在<code>ViewDidLoad()</code>裡初始化mapView的camera：</p>
+
+<pre><code class="language-swift">let camera = GMSCameraPosition.camera(withLatitude: 123.123123, longitude: 123.123123, zoom: 15)
+mapView.camera = camera
+</code></pre>
+
+<p>到這裡就完成初始化了，可以Run app看一看成果。</p>
+
+<p><img src="media/15213187968335/run_app.png" alt="run_app" class="mw_img_center" style="width:300px;display: block; clear:both; margin: 0 auto;"/></p>
+
+<h3 id="toc_6">顯示Markers</h3>
+
+<pre><code class="language-swift">let position = CLLocationCoordinate2D(latitude: lat, longitude: long)  // lat &amp; long must be Double
+let marker = GMSMarker(position: position)
+marker.title = &quot;Hello World&quot;  // 用家按下marker時會顯示出來
+marker.map = routeDetailMapView
+</code></pre>
+
+<p><em>(我本來以為會是類似<code>mapView.add(marker)</code>，但原來是反過來，把<code>mapView</code> assign到<code>marker.map</code>當中。)</em></p>
+
+<h2 id="toc_7">其他常用功能 (Other frequently used features)</h2>
+
+<p>以下是一些很常用到的功能，但官方竟然<strong>沒有教</strong>！</p>
+
+<h3 id="toc_8">以Markers的位置決定初始範圍 (Rescale MapView to fit markers)</h3>
+
+<p>剛才我們使用<code>GMSCameraPosition.camera(withLatitude:, longitude:, zoom:)</code>來初始化地圖的視角，<br/>
+但實際情況下，我地通常會有一堆點要顯示，但中心點的lat, long, zoom level全部都很難計算出來。</p>
+
+<p>這時可以使用<code>GMSCoordinateBounds</code>，它提供了<code>includingCoordinate()</code>，會自動計算新的bounds去迎合新的location。<br/>
+最後把MapView <code>animate</code> 到這個bound。（<code>GMSCoordinateBounds</code> object好像只能用在<code>.animate()</code>這個方法，而且可以fit into location的只有這種方法）</p>
+
+<pre><code class="language-swift">// 假設有個這樣的structure
+struct Location {
+    var lat: Double
+    var long: Double
+}
+
+// Loop through所有locations，讓每個location都fit進bounds裡面
+let initialBounds = GMSCoordinateBounds()
+let bounds = locations.reduce(initialBounds) { bound, location in
+    bound.includingCoordinate(CLLocationCoordinate2D(latitude: location.lat, longitude: location.long))
+}
+mapView.animate(with: .fit(bounds, withPadding: 30.0))  // 如果沒有padding你的markers就會貼著地圖邊緣
+</code></pre>
+
+<p>這裡使用了&quot;reduce&quot;和&quot;closure&quot;的syntax，如果看不懂可以看看<a href="https://useyourloaf.com/blog/swift-guide-to-map-filter-reduce/">這篇教學</a>。</p>
+
+<h3 id="toc_9">繪畫點對點路線 (Draw point-to-point routes)</h3>
+
+<p>我本來以為畫路線直接<code>.drawRoute()</code>就能完成，但原來Google Map iOS SDK<strong>竟然沒有這個功能</strong>。</p>
+
+<p>要達到這個目的，需要另外動用到<a href="https://developers.google.com/maps/documentation/directions/start">Google Directions API</a>。<br/>
+詳細就不多談了，我把我的implementation放在這裡，有興趣的話可以參考使用。</p>
+
+<p>步驟簡述：</p>
+
+<ol>
+<li>準備好GET Request的params，包括：origin, destination, waypoints</li>
+<li>Send GET Request到Google Directions API，然後得到某條encoded string，裡面帶有整條路線的資訊
+
+<ul>
+<li>詳細的response格式可參考<a href="https://developers.google.com/maps/documentation/directions/intro#DirectionsResponses">官方文件</a></li>
+<li>下面使用了<a href="https://github.com/Alamofire/Alamofire">Alamofire</a>和<a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a>來處理request和response</li>
+</ul></li>
+<li>使用<code>GMSPath.init(fromEncodedPath:)</code>和<code>GMSPolyline.init(path:)</code>把encoded string變成<code>GMSPolyline</code> object</li>
+<li>把polyline畫在地圖上</li>
+</ol>
+
+<pre><code class="language-swift">import Alamofire
+import SwiftyJSON
+// ...
+class RouteDetailViewController: UIViewController {
+    @IBOutlet weak var mapView: GMSMapView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // initialize map, etc...
+        drawRouteOnMap()
+    }
+    func drawRouteOnMap() {
+        let stops = self.route.stops  // 每個stop裡面都有lat和long
+        let numberOfStops = stops.count
+        
+        guard numberOfStops &gt; 2 else {
+            print(&quot;numberOfStops less than 2, cannot draw route&quot;)
+            return
+        }
+        
+        let origin = &quot;\(stops[0].lat),\(stops[0].long)&quot;
+        let destination = &quot;\(stops[numberOfStops-1].lat),\(stops[numberOfStops-1].long)&quot;
+        let waypoints = stops.map() { &quot;\(String($0.lat)),\(String($0.long))&quot; } .joined(separator: &quot;|&quot;)
+        
+        let parameters: Parameters = [
+            &quot;origin&quot;: origin,
+            &quot;destination&quot;: destination,
+            &quot;waypoints&quot;: waypoints,
+            &quot;mode&quot;: &quot;driving&quot;,
+            &quot;key&quot;: &quot;xxxxxxx&quot;
+        ]
+        
+        let url = &quot;https://maps.googleapis.com/maps/api/directions/json&quot;
+        
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { response in
+            debugPrint(response)
+            
+            guard let data = response.data else {
+                print(&quot;Invalid data response&quot;)
+                return
+            }
+            
+            // 把data轉換成SwiftyJSON format
+            guard let json = try? JSON(data: data) else {
+                print(&quot;Parse JSON error&quot;)
+                return
+            }
+            
+            let routes = json[&quot;routes&quot;].arrayValue
+            // routes是一個array，但一般沒有特別specify的話只會有一個route
+            for route in routes
+            {
+                let routeOverviewPolyline = route[&quot;overview_polyline&quot;].dictionary
+                let points = routeOverviewPolyline?[&quot;points&quot;]?.stringValue
+                // 這裡的points就是那條encoded string
+                let path = GMSPath.init(fromEncodedPath: points!)
+                let polyline = GMSPolyline.init(path: path)
+                polyline.map = self.mapView
+            }
+        }
+    }
+}
+</code></pre>
+
+<p><em>注意由於Directions API Key只能使用server restriction，如果要在iOS上直接使用，只能用沒有restriction的API Key，所以較好的做法是經自己的server去處理這些request。</em></p>
+
+<blockquote>
+<p>Versions:<br/>
+- XCode 9.2<br/>
+- Swift 4</p>
+</blockquote>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="15213187968255.html" 
+          title="Previous Post: 在React Native處理Permissions">&laquo; 在React Native處理Permissions</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15213187968464.html" 
+          title="Next Post: 由零建立Vue.js WebApp及專案結構解釋">由零建立Vue.js WebApp及專案結構解釋 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15217393506091.html">Django 新手上路</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>

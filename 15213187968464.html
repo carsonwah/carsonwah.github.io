@@ -1,0 +1,518 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  由零建立Vue.js WebApp及專案結構解釋 - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>由零建立Vue.js WebApp及專案結構解釋</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='vuejs.html'>vuejs</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15213187968464.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個<a href="https://en.wikipedia.org/wiki/Single-page_application">SPA(Single-page application)</a>。</p>
+
+<p>這裡紀錄了如何建立一個用上 <code>node.js</code>, <code>npm</code>, <code>webpack</code>, <code>vue-router</code>, <code>vuex</code> 的Vue.js專案。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">I. 安裝 Vue</h2>
+
+<p>以下參照了<a href="https://vuejs.org/v2/guide/installation.html#CLI">官方文檔</a>所寫的步驟：</p>
+
+<pre><code class="language-bash"># 安裝 vue-cli
+$ npm install --global vue-cli
+# 用 &quot;webpack&quot; template 開一個新project
+$ vue init webpack my-project
+</code></pre>
+
+<p>然後vue-cli會問一些問題去幫你決定如何初始化你的專案，<code>vue-router</code>最好選安裝，用來做網頁的routing。</p>
+
+<pre><code class="language-bash"># 安裝 dependencies
+$ cd my-project
+$ npm install
+# 試行
+$ npm run dev
+</code></pre>
+
+<h3 id="toc_1">Project Structure</h3>
+
+<p>現在你的Project大概長這樣：</p>
+
+<pre><code class="language-bash">.
+├── build/  # 放專案管理工具
+├── config/  # 放config檔
+├── dist/  # 經compile後的完整網頁，由npm run build建立
+├── index.html  # 整個project的根檔案
+├── node_modules/  # npm modules
+├── package.json  # npm dependencies
+├── src/  # 你的code
+├── static/  # 放static files如圖片等
+└── test/  # UI tests
+</code></pre>
+
+<h3 id="toc_2">運作流程</h3>
+
+<blockquote>
+<p>趕時間的朋友可跳過這part到<a href="%7B%7B%3C%20ref%20%22#ii-vue-router%22%20%3E%7D%7D">Part II</a></p>
+</blockquote>
+
+<p>理解這個初始project如何運作，對日後擴展你的application有很大幫助。</p>
+
+<h4 id="toc_3">Dev server</h4>
+
+<p>執行<code>npm run dev</code>，會調用<code>build/dev-server.js</code>，裡面會使用<code>webpack</code>去打包project。</p>
+
+<h4 id="toc_4">Webpack config</h4>
+
+<p>使用<code>vue init</code>建立的project會使用webpack一個叫<a href="https://vue-loader.vuejs.org/en/"><code>vue-loader</code></a>的plugin來打包project。</p>
+
+<p>由於<code>build/webpack.base.config.js</code>寫了：</p>
+
+<pre><code class="language-javascript">entry: {
+    app: &#39;./src/main.js&#39;
+  }
+</code></pre>
+
+<p>所以會把你的<code>src/main.js</code>裡import了的<code>App.vue</code>（以至裡面一層層的<code>.vue</code>檔）打包成一個龐大的<code>js</code>檔（對，整個project純粹就是一個<code>js</code>檔）。</p>
+
+<h4 id="toc_5">main.js</h4>
+
+<p><code>src/main.js</code>裡建立了一個Vue instance：</p>
+
+<pre><code class="language-javascript">new Vue({
+  el: &#39;#app&#39;,
+  router,
+  components: { App },
+  template: &#39;&lt;App/&gt;&#39;,
+});
+</code></pre>
+
+<p><code>el: #app</code>意思就是會inject到<code>html</code>裡的<code>&lt;div id=&quot;app&quot;&gt;</code>。</p>
+
+<h4 id="toc_6">index.html</h4>
+
+<p><code>index.html</code>是整個project的root檔，好似甚麼都沒有。</p>
+
+<p>執行一次<code>npm run build</code>後，可以看看<code>dist/index.html</code>：</p>
+
+<pre><code>&lt;div id=app&gt;&lt;/div&gt;
+&lt;script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js&gt;&lt;/script&gt;
+&lt;script type=text/javascript src=/static/js/vendor.5973cf24864eecc78c48.js&gt;&lt;/script&gt;
+&lt;script type=text/javascript src=/static/js/app.cda9eea43bd2acedfa05.js&gt;
+</code></pre>
+
+<p>三個<code>js</code>檔都是<code>webpack</code>打包<code>main.js</code>後的產物，執行這些檔後，你的app就會被inject到<code>&lt;div id=&quot;app&quot;&gt;</code>。</p>
+
+<h2 id="toc_7">II. Vue Router</h2>
+
+<p>主要檔案就是<code>src/router/index.js</code>裡的<code>new Router()</code>和<code>App.vue</code>裡的<code>&lt;router-view/&gt;</code>。</p>
+
+<p>詳情可參照<a href="https://router.vuejs.org/en/">官方文檔</a>。</p>
+
+<h2 id="toc_8">III. Vuex</h2>
+
+<p><a href="https://vuex.vuejs.org/en/">Vuex</a>是一個state管理工具，強調一個application只能有一個 <code>centralized store</code> ，而且只能透過 <code>mutation</code> 去改變它。</p>
+
+<h3 id="toc_9">好處</h3>
+
+<ol>
+<li>各component可以共同share data，不用pass來pass去</li>
+<li>所有對store的改動都一目瞭然，因為全部都是<code>mutation</code>，方便debug</li>
+</ol>
+
+<blockquote>
+<p><a href="https://reactjs.org/">React.js</a>也有個相似的工具—<a href="https://redux.js.org/introduction">Redux</a>，他們的概念都來自<code>Flux</code>。</p>
+</blockquote>
+
+<p>如果你的project規模不少的話，其實很難避免使用<code>Vuex</code>，所以我建議先把它裝了。</p>
+
+<pre><code class="language-bash">$ npm install vuex --save  # --save代表安裝到當前project當中
+</code></pre>
+
+<p>按照官方的<a href="https://vuex.vuejs.org/en/structure.html">example</a>創建 <code>src/store/</code> folder，在<code>src/store/index.js</code>加入store：<br/>
+```javascript<br/>
+const store = new Vuex.Store({<br/>
+  state: {<br/>
+    count: 0<br/>
+  },<br/>
+  mutations: {<br/>
+    increment (state) {<br/>
+      state.count++<br/>
+    }<br/>
+  }<br/>
+})</p>
+
+<p>export default store<br/>
+```</p>
+
+<p>在<code>App.vue</code>加入：</p>
+
+<pre><code class="language-javascript">import store from &#39;./store&#39;;  // import
+
+// ...
+
+new Vue({
+  el: &#39;#app&#39;,
+  router,
+  store,  // 加入store到app裡面
+  components: { App },
+  template: &#39;&lt;App/&gt;&#39;,
+});
+</code></pre>
+
+<p>之後在<code>.vue</code>檔裡面就可以用<code>this.$store</code>來使用store了。</p>
+
+<hr/>
+
+<p>以上就是一個完整的Vue single-page application了，Vue的modularity使這個project可以擴展到非常大規模也沒有問題，除了performance很好，code也容易維護。</p>
+
+<p>日後再寫Vue的入門教學吧。</p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="15213187968335.html" 
+          title="Previous Post: 在iOS app裡加入Google Maps (Swift 4)">&laquo; 在iOS app裡加入Google Maps (Swift 4)</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15213187968523.html" 
+          title="Next Post: 在Django裡處理One-To-Many Relation">在Django裡處理One-To-Many Relation &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15217393506091.html">Django 新手上路</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>
