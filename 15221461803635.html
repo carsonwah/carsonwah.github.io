@@ -1,0 +1,595 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  React Native教學 - Part 1 詳盡新手入門 - Carson's Tech Note
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>React Native教學 - Part 1 詳盡新手入門</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/3/28</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="15221461803635.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>React Native近年相當熱門，很多人說可以取代傳統寫App的方法。以下是安裝和開始使用的新手入門、以及需要知道細節、工具的選擇等等。知道多一點<del>，免得大家走上不歸路</del>。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">甚麼是React Native？</h2>
+
+<blockquote>
+<p>簡而言之，React Native就是一個讓你可以用javascript開發native apps的library。</p>
+</blockquote>
+
+<p>2013年，Facebook開源自己內部開發的React - 一個用javascript開發前端UI的架構。</p>
+
+<p>2015年，Facebook推出React Native，同樣基於React的架構，分別在於render出來的不是DOM，而家iOS或Android的native elements。</p>
+
+<h2 id="toc_1">安裝React Native</h2>
+
+<p><a href="https://nodejs.org/en/"><em>(請先安裝Node.js)</em></a></p>
+
+<h3 id="toc_2">三種版本</h3>
+
+<p>React Native分為傳統的Native版、CRNA (Create React Native App)版和Expo版：</p>
+
+<ol>
+<li>傳統Native版：iOS和Android的App entry point分開，但App裡面可以共用Component，以及<strong>可以安裝各自平台的Native package</strong>（最重要的分別）</li>
+<li> CRNA版：只有一個<code>App.js</code>，基本上iOS和Android都是同一個App，<strong>不用處理平台間的分別，甚至不用安裝XCode或Android Studio</strong>，<strong>但一些有Native dependencies的library不能用</strong>。</li>
+<li>Expo版：不屬於官方版本，但本人推薦使用，以下會詳述。</li>
+</ol>
+
+<p>建立CRNA project後如果想轉回Native版，也可以<strong>eject</strong>你的project，eject後build process會比較複雜，詳情可看<a href="https://facebook.github.io/react-native/docs/getting-started.html#caveats">這裡</a>。</p>
+
+<h2 id="toc_3">I. 傳統Native版</h2>
+
+<h3 id="toc_4">安裝與運行</h3>
+
+<p>各平台安裝步驟不同，請按<a href="https://facebook.github.io/react-native/docs/getting-started.html">官方指示</a>做。</p>
+
+<pre><code class="language-bash">react-native init ProjectName
+react-native run-ios
+react-native run-android
+</code></pre>
+
+<h3 id="toc_5">Project Structure</h3>
+
+<pre><code class="language-bash">.
+├── App.js  # App root component，所有JS code由這裡開始
+├── android/  # Android native project
+├── app.json  # React Native app config
+├── index.js  # App entry point
+├── ios/  # iOS native project
+├── node_modules/  # JS libraries
+├── package.json  # JS dependencies
+└── yarn.lock
+</code></pre>
+
+<h4 id="toc_6">運作Logic</h4>
+
+<p><code>ios/</code>和<code>android/</code>裡的native project裡會調用react native去獲得<strong>Root Component</strong>，default就是指向<code>index.js</code>。</p>
+
+<p>打開<code>index.js</code>可以看到：</p>
+
+<pre><code class="language-javascript">import { AppRegistry } from &#39;react-native&#39;;
+import App from &#39;./App&#39;;  // import了App.js
+
+AppRegistry.registerComponent(&#39;ReactNativeSampleProject&#39;, () =&gt; App);
+</code></pre>
+
+<p><code>App.js</code>：</p>
+
+<pre><code class="language-javascript">// ...
+export default class App extends Component&lt;Props&gt; {
+    // ...
+}
+// ...
+</code></pre>
+
+<p>所以<code>App.js</code>就成為了你的<strong>Root Component</strong>，之後可以在這個<code>App</code>裡面加入你的JS Component，慢慢擴展你的App。</p>
+
+<h2 id="toc_7">II. CRNA版</h2>
+
+<h3 id="toc_8">安裝與運行</h3>
+
+<p>按<a href="https://facebook.github.io/react-native/docs/getting-started.html">官方指示</a>安裝。</p>
+
+<pre><code class="language-bash">create-react-native-app AwesomeProject
+
+cd AwesomeProject
+npm start
+</code></pre>
+
+<h3 id="toc_9">Project Structure</h3>
+
+<pre><code class="language-bash">.
+├── App.js
+├── App.test.js  # 基於Jest的test
+├── README.md
+├── app.json
+├── node_modules
+├── package.json
+└── yarn.lock
+</code></pre>
+
+<h4 id="toc_10">與Native版本的分別</h4>
+
+<p>與Native版本最大分別就是沒有<code>ios/</code>和<code>android/</code>兩個Native projects，取而代之，<code>node_modules/expo</code>會直接使用<code>App.js</code>作為你的<strong>Root Component</strong>。</p>
+
+<h4 id="toc_11">運作Logic</h4>
+
+<p>看一看<code>package.json</code>：</p>
+
+<pre><code class="language-javascript">&quot;scripts&quot;: {
+    &quot;start&quot;: &quot;react-native-scripts start&quot;,  // == npm start
+    &quot;eject&quot;: &quot;react-native-scripts eject&quot;,
+    &quot;android&quot;: &quot;react-native-scripts android&quot;,
+    &quot;ios&quot;: &quot;react-native-scripts ios&quot;,
+    &quot;test&quot;: &quot;jest&quot;
+  },
+&quot;dependencies&quot;: {
+    &quot;expo&quot;: &quot;^26.0.0&quot;,  // expo
+    &quot;react&quot;: &quot;16.3.0-alpha.1&quot;,
+    &quot;react-native&quot;: &quot;0.54.0&quot;
+  }
+</code></pre>
+
+<p>執行<code>npm start</code>時會用上<code>react-native-scripts</code>，其實就是一個便利的工具去調用<code>node_modules/expo</code>去執行你的App。</p>
+
+<p><em>（有興趣可以看看<code>node_modules/expo/AppEntry.js</code>）</em><br/>
+<em>（所以說到底其實整個CRNA版本都是<a href="https://docs.expo.io/versions/v26.0.0/workflow/create-react-native-app">依賴Expo運作</a>）</em></p>
+
+<h2 id="toc_12">III. 真正cross-platform react-native - Expo</h2>
+
+<p><a href="https://expo.io/">Expo</a>是一個幫助你開發React Native project的package，非常推薦使用。</p>
+
+<h3 id="toc_13">為甚麼要用Expo？</h3>
+
+<ul>
+<li>Dev: 完全不需要處理Native的東西，可以專注寫Javascript。</li>
+<li>Library: Expo提供一堆API讓你access到native的module，例如Camera、Contact、FileSystem等等。</li>
+<li>Test Running: 提供Expo client app，可在iOS或Android device即時執行、傳送Debug messages、Hot Reload等等。</li>
+<li>Release: Expo的Server會分別用幫你build <code>.ipa</code>和<code>.apk</code>檔，不用開XCode或Android Studio。</li>
+<li>Update: 透過Expo，User打開App時可以自動 OTA(Over-The-Air) Update 你的App到最新版本。</li>
+</ul>
+
+<h3 id="toc_14">安裝與運行</h3>
+
+<p>Expo有兩種方法建立project：</p>
+
+<ol>
+<li>Expo XDE (一個mac/windows/linux的software)</li>
+<li>Command Line Tool: <code>exp</code></li>
+</ol>
+
+<p><a href="https://docs.expo.io/versions/v26.0.0/introduction/installation">安裝教學</a><br/>
+<a href="https://docs.expo.io/versions/v26.0.0/workflow/up-and-running">用XDE來新建Project</a><br/>
+本人建議用XDE來日常開發，用exp來deploy、publish和build project。</p>
+
+<h3 id="toc_15">Project Structure</h3>
+
+<p>與CRNA版本也是大同小異，要注意的是<a href="https://docs.expo.io/versions/v26.0.0/workflow/configuration"><code>app.json</code></a>在這裡是很重要的。</p>
+
+<h2 id="toc_16">Notes</h2>
+
+<p>知道多一點，比較多一點，可以令你更容易做對的決定。</p>
+
+<h3 id="toc_17">Push Notification各版本做法</h3>
+
+<h4 id="toc_18">Expo版本</h4>
+
+<h5 id="toc_19">1. Expo本身的<a href="https://docs.expo.io/versions/v26.0.0/guides/push-notifications">Push Notification功能</a></h5>
+
+<ul>
+<li>Apple Push Certificate: 在經過Expo server build project的時候，他們會幫你處理Push Certificate</li>
+<li>Register token: 要在自己server儲存<code>Expo Token</code></li>
+<li>Send: Send request to Expo server with tokens</li>
+</ul>
+
+<h5 id="toc_20">2. Firebase Cloud Messaging (new in v26.0.0)</h5>
+
+<p><a href="https://docs.expo.io/versions/v26.0.0/guides/using-fcm">https://docs.expo.io/versions/v26.0.0/guides/using-fcm</a></p>
+
+<h4 id="toc_21">Native版本</h4>
+
+<p>可以使用各種現有Native工具，而一般大公司多數已經推出react native版本的工具。</p>
+
+<h5 id="toc_22">1. OneSignal</h5>
+
+<p><a href="https://github.com/geektimecoil/react-native-onesignal">https://github.com/geektimecoil/react-native-onesignal</a></p>
+
+<h5 id="toc_23">2. Firebase</h5>
+
+<p><a href="https://github.com/invertase/react-native-firebase">https://github.com/invertase/react-native-firebase</a><br/>
+<a href="https://rnfirebase.io/docs/v3.1.x/messaging/reference/messaging">https://rnfirebase.io/docs/v3.1.x/messaging/reference/messaging</a></p>
+
+<h5 id="toc_24">3. AWS</h5>
+
+<h6 id="toc_25">AWS Mobile Client</h6>
+
+<p>你的user開啟app時，用AWS Mobile Client register他們到aws，然後可以叫aws send notification給這些users。</p>
+
+<p><a href="https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html">https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html</a></p>
+
+<h6 id="toc_26">React Native SDK（不能用）</h6>
+
+<p>我找到三個sdk：</p>
+
+<ol>
+<li><a href="https://github.com/aws/aws-amplify">aws-amplify</a>：Pure JS library，無法處理Push Notification</li>
+<li><a href="https://github.com/aws/aws-sdk-js">aws-skd-js</a>：同上</li>
+<li><a href="https://github.com/awslabs/aws-sdk-react-native">aws-sdk-react-native</a>：已日久失修，不知還能否用</li>
+</ol>
+
+<h6 id="toc_27">Amazon SNS Mobile Push（不能用）</h6>
+
+<p>基本上是自己取得APN或FCM/GCM token，然後自己動手send到aws，全人手。。。</p>
+
+<ul>
+<li>Procedures: <a href="https://docs.aws.amazon.com/sns/latest/dg/mobile-push-pseudo.html">https://docs.aws.amazon.com/sns/latest/dg/mobile-push-pseudo.html</a></li>
+<li>Setup: <a href="https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send.html">https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send.html</a></li>
+</ul>
+
+<h4 id="toc_28">CRNA版本</h4>
+
+<p>CRNA App基本上不能做Push Notification，唯一出路就是變成其他版本。</p>
+
+<ol>
+<li>使用Expo：Expo工具可以直接運行CRNA project</li>
+<li>Detach to ExpoKit：會變成native版本，但可以使用<code>ExpoKit</code>，提供Expo的Push Notification功能。</li>
+<li>Detach to bare React Native：變成native版本，可以直接用上述的各種libraries和services。</li>
+</ol>
+
+<p>詳情請細閱<a href="https://github.com/react-community/create-react-native-app/issues/153">這個issue</a>。</p>
+
+<h3 id="toc_29">Over-The-Air Update各版本做法</h3>
+
+<ul>
+<li>Expo：依賴Expo的<a href="https://docs.expo.io/versions/v26.0.0/workflow/publishing">publish方法</a>，可以分channel update</li>
+<li>Native版：使用非常著名、由Microsoft推出的<a href="https://github.com/Microsoft/react-native-code-push">CodePush</a></li>
+<li>CRNA：沒有辦法，要像上述一樣選一個方案<del>進化</del>。</li>
+</ul>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="15213187968255.html" 
+          title="Next Post: 在React Native處理Permissions">在React Native處理Permissions &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="15221461803635.html">React Native教學 - Part 1 詳盡新手入門</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>
