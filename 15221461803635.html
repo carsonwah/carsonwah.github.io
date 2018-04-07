@@ -304,15 +304,25 @@ npm start
 
 <p>與CRNA版本也是大同小異，要注意的是<a href="https://docs.expo.io/versions/v26.0.0/workflow/configuration"><code>app.json</code></a>在這裡是很重要的。</p>
 
-<h2 id="toc_16">Notes</h2>
+<h3 id="toc_16">Detach</h3>
+
+<p>日後如果真的需要加入native code的話，可以選擇<strong>detach</strong>。Detach後會出現<code>ios</code>和<code>android</code>的Native project，你可以fully customize它們，裡面default會使用Expo的方法來運行你的<code>App.js</code>。</p>
+
+<ul>
+<li><a href="https://forums.expo.io/t/is-ota-js-update-still-available-after-detaching/8661">OTA JS Update still available</a></li>
+<li><a href="https://forums.expo.io/t/is-it-possible-to-undetach-a-project/8660/2">可以undetach</a></li>
+<li><a href="https://docs.expo.io/versions/latest/expokit/expokit">可以透過ExpoKit來使用本來Expo的功能</a></li>
+</ul>
+
+<h2 id="toc_17">Notes</h2>
 
 <p>知道多一點，比較多一點，可以令你更容易做對的決定。</p>
 
-<h3 id="toc_17">Push Notification各版本做法</h3>
+<h3 id="toc_18">Push Notification各版本做法</h3>
 
-<h4 id="toc_18">Expo版本</h4>
+<h4 id="toc_19">Expo版本</h4>
 
-<h5 id="toc_19">1. Expo本身的<a href="https://docs.expo.io/versions/v26.0.0/guides/push-notifications">Push Notification功能</a></h5>
+<h5 id="toc_20">1. Expo本身的<a href="https://docs.expo.io/versions/v26.0.0/guides/push-notifications">Push Notification功能</a></h5>
 
 <ul>
 <li>Apple Push Certificate: 在經過Expo server build project的時候，他們會幫你處理Push Certificate</li>
@@ -320,32 +330,32 @@ npm start
 <li>Send: Send request to Expo server with tokens</li>
 </ul>
 
-<h5 id="toc_20">2. Firebase Cloud Messaging (new in v26.0.0)</h5>
+<h5 id="toc_21">2. Firebase Cloud Messaging (new in v26.0.0)</h5>
 
 <p><a href="https://docs.expo.io/versions/v26.0.0/guides/using-fcm">https://docs.expo.io/versions/v26.0.0/guides/using-fcm</a></p>
 
-<h4 id="toc_21">Native版本</h4>
+<h4 id="toc_22">Native版本</h4>
 
 <p>可以使用各種現有Native工具，而一般大公司多數已經推出react native版本的工具。</p>
 
-<h5 id="toc_22">1. OneSignal</h5>
+<h5 id="toc_23">1. OneSignal</h5>
 
 <p><a href="https://github.com/geektimecoil/react-native-onesignal">https://github.com/geektimecoil/react-native-onesignal</a></p>
 
-<h5 id="toc_23">2. Firebase</h5>
+<h5 id="toc_24">2. Firebase</h5>
 
 <p><a href="https://github.com/invertase/react-native-firebase">https://github.com/invertase/react-native-firebase</a><br/>
 <a href="https://rnfirebase.io/docs/v3.1.x/messaging/reference/messaging">https://rnfirebase.io/docs/v3.1.x/messaging/reference/messaging</a></p>
 
-<h5 id="toc_24">3. AWS</h5>
+<h5 id="toc_25">3. AWS</h5>
 
-<h6 id="toc_25">AWS Mobile Client</h6>
+<h6 id="toc_26">AWS Mobile Client</h6>
 
 <p>你的user開啟app時，用AWS Mobile Client register他們到aws，然後可以叫aws send notification給這些users。</p>
 
 <p><a href="https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html">https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html</a></p>
 
-<h6 id="toc_26">React Native SDK（不能用）</h6>
+<h6 id="toc_27">React Native SDK（不能用）</h6>
 
 <p>我找到三個sdk：</p>
 
@@ -355,7 +365,7 @@ npm start
 <li><a href="https://github.com/awslabs/aws-sdk-react-native">aws-sdk-react-native</a>：已日久失修，不知還能否用</li>
 </ol>
 
-<h6 id="toc_27">Amazon SNS Mobile Push（不能用）</h6>
+<h6 id="toc_28">Amazon SNS Mobile Push（不能用）</h6>
 
 <p>基本上是自己取得APN或FCM/GCM token，然後自己動手send到aws，全人手。。。</p>
 
@@ -364,7 +374,7 @@ npm start
 <li>Setup: <a href="https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send.html">https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send.html</a></li>
 </ul>
 
-<h4 id="toc_28">CRNA版本</h4>
+<h4 id="toc_29">CRNA版本</h4>
 
 <p>CRNA App基本上不能做Push Notification，唯一出路就是變成其他版本。</p>
 
@@ -376,7 +386,7 @@ npm start
 
 <p>詳情請細閱<a href="https://github.com/react-community/create-react-native-app/issues/153">這個issue</a>。</p>
 
-<h3 id="toc_29">Over-The-Air Update各版本做法</h3>
+<h3 id="toc_30">Over-The-Air Update各版本做法</h3>
 
 <ul>
 <li>Expo：依賴Expo的<a href="https://docs.expo.io/versions/v26.0.0/workflow/publishing">publish方法</a>，可以分channel update</li>
