@@ -162,7 +162,7 @@
 
 <p>首先要分辨你的git connection是屬於哪一種：</p>
 
-<p>{{% figure src=&quot;/images/git/git_clone.png&quot; alt=&quot;git clone methods&quot; title=&quot;git clone methods&quot; %}}</p>
+<p><img src="media/15213187968912/git_clone.png" alt="git_clone"/></p>
 
 <p>按下綠色button後預設是用https，再按&quot;Use SSH&quot;才會是ssh。</p>
 
@@ -229,13 +229,13 @@ Enter passphrase (empty for no passphrase): # 可不填，這是用來加密你�
 
 <ol>
 <li>在背景開啟ssh-agent: <code>eval &quot;$(ssh-agent -s)&quot;</code><br/></li>
-<li><p>更改<code>~/.ssh/config</code>:<br/><br/>
-<code>sh<br/>
-Host *<br/>
-AddKeysToAgent yes<br/>
-UseKeychain yes<br/>
-IdentityFile ~/.ssh/id_rsa<br/>
-</code></p></li>
+<li><p>更改<code>~/.ssh/config</code>:  </p>
+
+<pre><code class="language-sh">Host *
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/id_rsa
+</code></pre></li>
 <li><p><code>ssh-add -K ~/.ssh/id_rsa</code><br/><br/>
 <code>-K</code>代表<code>Store passphrases in your keychain.</code></p></li>
 </ol>
@@ -258,7 +258,7 @@ IdentityFile ~/.ssh/id_rsa<br/>
 </ul></li>
 </ol>
 
-<p>{{% figure src=&quot;/images/git/git_deploy_key.png&quot; alt=&quot;Git deploy keys&quot; title=&quot;Git deploy keys&quot; %}}</p>
+<p><img src="media/15213187968912/git_deploy_key.png" alt="git_deploy_key"/></p>
 
 <p>References:<br/><br/>
 <a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/"><em>Mac以外的系統看這裡</em></a></p>

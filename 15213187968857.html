@@ -173,7 +173,7 @@ $ git push -u origin master
 
 <h3 id="toc_2">1. Initialize git</h3>
 
-<pre><code class="language-shell">$ git init # 新增.git資料夾
+<pre><code class="language-bash">$ git init # 新增.git資料夾
 $ git status # 查看檔案狀態
 $ git add . # 加入所有檔案到下個commit
 $ git commit -m &quot;First commit&quot; # commit已加入的檔案
@@ -183,14 +183,14 @@ $ git commit -m &quot;First commit&quot; # commit已加入的檔案
 
 <p>先在Github新增一個repo，並複製remote url (clone或download那裡)。</p>
 
-<pre><code class="language-shell">$ git remote add origin https://github.com/NAME/REPO.git
+<pre><code class="language-bash">$ git remote add origin https://github.com/NAME/REPO.git
 </code></pre>
 
 <p><strong><em>Remote</em></strong>是一個git directory的遠端位置，在這個情況，我們的<strong>remote</strong>就是放在github上的repository網址。</p>
 
 <p>現在可以執行<code>git remote -v</code>看一看。</p>
 
-<pre><code>origin  https://github.com/NAME/REPO.git (fetch)
+<pre><code class="language-bash">origin  https://github.com/NAME/REPO.git (fetch)
 origin  https://github.com/NAME/REPO.git (push)
 </code></pre>
 
@@ -200,7 +200,7 @@ origin  https://github.com/NAME/REPO.git (push)
 
 <p>所有檔案都加入並commit好了，remote url也設置好了，這時可以push到github了。</p>
 
-<pre><code class="language-shell">$ git push
+<pre><code class="language-bash">$ git push
 
 fatal: The current branch master has no upstream branch.
 To push the current branch and set the remote as upstream, use
@@ -214,7 +214,7 @@ To push the current branch and set the remote as upstream, use
 
 <p>我們現在是由 <em>local</em> 的 <em>master</em> push到 <em>github</em> 的 <em>master</em> ：</p>
 
-<pre><code class="language-sh">$ git push origin master # push到origin(剛剛新增的remote)的master branch
+<pre><code class="language-bash">$ git push origin master # push到origin(剛剛新增的remote)的master branch
 </code></pre>
 
 <p>而<code>--set-upstream</code>或<code>-u</code>就是代表以後 <em>local master</em> 都是直接push到 <em>origin master</em> ，下次就直接打<code>git push</code>可以了。</p>
@@ -223,7 +223,7 @@ To push the current branch and set the remote as upstream, use
 
 <p><code>git pull</code>也是同樣情況，如果push的時候local branch不夠remote branch up-to-date的話，會有以下error：</p>
 
-<pre><code>! [rejected]        master -&gt; master (fetch first)
+<pre><code class="language-bash">! [rejected]        master -&gt; master (fetch first)
 error: failed to push some refs to &#39;https://github.com/carsonwah/gohugo-demo.git&#39;
 hint: Updates were rejected because the remote contains work that you do
 hint: not have locally. This is usually caused by another repository pushing
@@ -236,7 +236,7 @@ hint: See the &#39;Note about fast-forwards&#39; in &#39;git push --help&#39; fo
 
 <p><code>git pull</code>就是<code>fetch</code>和<code>merge</code>的合體，但直接<code>git pull</code>又會有以下error：</p>
 
-<pre><code> * [new branch]      master     -&gt; origin/master
+<pre><code class="language-bash"> * [new branch]      master     -&gt; origin/master
 There is no tracking information for the current branch.
 Please specify which branch you want to merge with.
 See git-pull(1) for details.
@@ -250,7 +250,7 @@ If you wish to set tracking information for this branch you can do so with:
 
 <p>原來<code>git pull</code>也要和<code>git push</code>一樣，設置對應的remote branch。剛才還沒完成<code>git push --set-upstream</code>，所以還未有upstream目的地。pull不能用<code>-u</code>(不知道為甚麼)，要透過<code>git branch</code> 直接設置：</p>
 
-<pre><code class="language-sh">$ git branch --set-upstream-to=origin/master master  # 或 git branch -u origin/master master
+<pre><code class="language-bash">$ git branch --set-upstream-to=origin/master master  # 或 git branch -u origin/master master
 # 然後pull
 $ git pull --allow-unrelated-histories  # 需要加上--allow-unrelated-histories，因為local和remote完全沒有共同history，git default是不允許的
 </code></pre>
