@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  git pull或push不用再打密碼 - Carson's Tech Note
+  在React Native處理Permissions - Carson's Tech Note
   
   </title>
   
@@ -134,19 +134,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>git pull或push不用再打密碼</h1>
+          <h1>在React Native處理Permissions</h1>
      
         <div class="read-more clearfix">
           <span class="date">2018/3/18</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='git.html'>Git</a></span>
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
            
          
           <span class="comments">
             
-              <a href="15213187968912.html#disqus_thread">comments</a>
+              <a href="2018-03-18-react-native-handling-permissions.html#disqus_thread">comments</a>
             
 
             
@@ -156,116 +156,82 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>快速設置Git，以後<code>git pull</code> <code>git push</code>都不用再打帳號密碼了。</p>
+      <p>在Apps上取用user的資料或硬件前，都必先得到user的同意(Permission)。但iOS和Android的取得都不同，所以在React Native上要小心處理。</p>
 
 <span id="more"></span><!-- more -->
 
-<p>首先要分辨你的git connection是屬於哪一種：</p>
+<h2 id="toc_0">I. React Native</h2>
 
-<p><img src="media/15213187968912/git_clone.png" alt="git_clone"/></p>
+<h3 id="toc_1">iOS</h3>
 
-<p>按下綠色button後預設是用https，再按&quot;Use SSH&quot;才會是ssh。</p>
+<p>在初次取用某些需要permission的module時，會彈出dialog問user是否批准。</p>
 
-<hr/>
+<p>例如想獲取<a href="https://facebook.github.io/react-native/docs/geolocation.html">user的location</a>：<code>navigator.geolocation.getCurrentPosition()</code>時，會在第一次的時候先問user，再視情況返回success callback或error callback。</p>
 
-<h2 id="toc_0">1. Connecting over HTTPS (password caching)</h2>
+<p>同時需要在<code>info.plist</code>裡加入相關的dialog message，例如有關location的<code>NSLocationWhenInUseUsageDescription</code>，裡面要清楚解釋為甚麼要用user的位置，否則有機會因此被Apple reject你的app。</p>
 
-<p>例如: <code>git clone https://github.com/{username}/{repo name}.git</code></p>
+<h3 id="toc_2">Android</h3>
 
-<h3 id="toc_1">設置步驟(Mac)：</h3>
+<p>Android的情況比較複雜。</p>
+
+<p>以前的Android一向是在安裝時列明所需權限，不用之後逐一問的。但自API &gt;= 23開始，Android也改為runtime問user了。</p>
+
+<h4 id="toc_3">API &lt; 23</h4>
+
+<p>在<code>AndroidManifest.xml</code>裡加入所需permissions。</p>
+
+<h4 id="toc_4">API &gt;= 23</h4>
+
+<p>使用<a href="https://facebook.github.io/react-native/docs/permissionsandroid.html">PermissionsAndroid</a> module。</p>
+
+<h3 id="toc_5">相關工具</h3>
+
+<p><a href="https://github.com/yonahforst/react-native-permissions">react-native-permissions</a></p>
+
+<h2 id="toc_6">II. Expo</h2>
+
+<p>Expo是一個讓你可以用 <em>pure javascript</em> 寫 <em>cross-platform</em> apps 的工具，它會幫你處理好native相關的東西，例如compile成.apk和.ipa、code push等等。</p>
+
+<h3 id="toc_7">取用permissions</h3>
+
+<p>Expo提供<a href="https://docs.expo.io/versions/latest/sdk/permissions.html"><code>Permission</code></a> module，可以查看permission狀態，也可以問user獲取permissions，非常方便。</p>
+
+<h3 id="toc_8">Configuration</h3>
+
+<p>簡單來說：</p>
 
 <ol>
-<li><p>查看有沒有安裝<em>osxkeychain helper</em>: <code>git credential-osxkeychain</code><br/><br/>
-如果沒有可以用brew安裝: <code>brew install git</code></p></li>
-<li><p><code>git config --global credential.helper osxkeychain</code></p></li>
+<li>在app.json加入permission dialog message (for iOS)</li>
+<li>在app.json加入所需permissions (for 舊Android)</li>
+<li>使用Permission API取得使用權</li>
 </ol>
 
-<p>然後下次需要輸入時就可以把username和password都存到keychain，下次就不用再打帳號密碼了。</p>
+<p><a href="https://docs.expo.io/versions/latest/guides/configuration.html#permissions">app.json configuration</a></p>
 
-<p>想移除的話只要<code>git credential-osxkeychain erase</code>就可以了。<br/><br/>
-<a href="https://stackoverflow.com/questions/11067818/how-do-you-reset-the-stored-credentials-in-git-credential-osxkeychain"><em>無法移除可以參考這裡</em></a></p>
+<p><a href="https://github.com/expo/expo/blob/master/exponent-view-template/ios/exponent-view-template/Supporting/Info.plist#L28-L41">Supporting permissions</a></p>
 
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/caching-your-github-password-in-git/"><em>Mac以外的系統看這裡</em></a></p>
+<h2 id="toc_9">Notes: Push notification</h2>
 
-<blockquote>
-<p><strong>不建議</strong>的做法：<code>git remote set-url origin https://name:password@github.com/repo.git</code><br/><br/>
-這樣你的密碼會以plain text形式儲存在電腦。</p>
-</blockquote>
+<p>Push notification permission is a special case, unlike others like camera, location, etc.</p>
 
-<hr/>
-
-<h2 id="toc_2">2. Connecting over SSH (deploy keys)</h2>
-
-<p>例如: <code>git clone git@github.com:{username}/{repo name}.git</code></p>
-
-<h3 id="toc_3">設置步驟(Mac)：</h3>
-
-<h4 id="toc_4">1. 創建ssh用的key</h4>
-
-<blockquote>
-<p>先檢查原本機內有沒有ssh key<br/><br/>
-<code>sh<br/>
-ls -al ~/.ssh<br/>
-</code><br/>
-如果發現<code>id_rsa.pub</code>可以跳過這步驟。</p>
-</blockquote>
-
-<pre><code class="language-sh">ssh-keygen -t rsa -b 4096 -C &quot;xxx@xxx.com&quot; # 換成你的Github account
-Enter a file in which to save the key (/Users/xxx/.ssh/id_rsa): # 把enter按下去就是了
-Enter passphrase (empty for no passphrase): # 可不填，這是用來加密你的private key讓其不會plain text地儲存在電腦
-</code></pre>
-
-<p>現在應該會有兩個新檔案：  </p>
+<h3 id="toc_10">iOS</h3>
 
 <ul>
-<li>~/.ssh/id_rsa: private key<br/></li>
-<li>~/.ssh/id_rsa.pub: public key<br/></li>
+<li>Ask permission in runtime</li>
+<li>Cannot customize permission dialog message</li>
 </ul>
 
-<h4 id="toc_5">2. 把ssh key加到ssh-agent</h4>
-
-<p>當你的repo link是<code>git@github.com:...</code>，每次<code>git pull</code>或<code>git push</code>之類的時候都會動用到ssh-agent。  </p>
-
-<ol>
-<li>在背景開啟ssh-agent: <code>eval &quot;$(ssh-agent -s)&quot;</code><br/></li>
-<li><p>更改<code>~/.ssh/config</code>:  </p>
-
-<pre><code class="language-sh">Host *
-AddKeysToAgent yes
-UseKeychain yes
-IdentityFile ~/.ssh/id_rsa
-</code></pre></li>
-<li><p><code>ssh-add -K ~/.ssh/id_rsa</code><br/><br/>
-<code>-K</code>代表<code>Store passphrases in your keychain.</code></p></li>
-</ol>
-
-<p><em>(如果設置了passphrase而沒有跟隨以上步驟，每次動用ssh的時候都會需要輸入一次passphrase。)</em></p>
-
-<p>References:<br/><br/>
-<a href="https://stackoverflow.com/questions/10032461/git-keeps-asking-me-for-my-ssh-key-passphrase"><em>passphrase問題</em></a><br/><br/>
-<a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"><em>Mac以外的系統看這裡</em></a>  </p>
-
-<h4 id="toc_6">3. 到Github加入你的public key</h4>
-
-<ol>
-<li>複製<code>~/.ssh/id_rsa.pub</code>檔的內容: <code>pbcopy &lt; ~/.ssh/id_rsa.pub</code><br/></li>
-<li>到Github repo setting加入新Deploy key<br/>
+<h3 id="toc_11">Android</h3>
 
 <ul>
-<li>Title只是用來分辨的名稱<br/></li>
-<li>Key就是剛才複製的的public key</li>
+<li>Permission is granted along with installation (<a href="https://stackoverflow.com/questions/37294076/push-notifications-gcm-permission-at-runtime">stackoverflow</a>)</li>
+<li>No dialog will be shown</li>
+<li>Notification format can be customized
+
+<ul>
+<li>Expo: 可以在<code>app.json</code> <a href="https://docs.expo.io/versions/latest/guides/configuration.html#notification">customize notification的樣式</a></li>
 </ul></li>
-</ol>
-
-<p><img src="media/15213187968912/git_deploy_key.png" alt="git_deploy_key"/></p>
-
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/"><em>Mac以外的系統看這裡</em></a></p>
-
-<hr/>
-
-<p><a href="https://help.github.com/articles/set-up-git/"><em>Github官方英文教學</em></a></p>
+</ul>
 
 
     
@@ -276,16 +242,16 @@ IdentityFile ~/.ssh/id_rsa
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="15213187968857.html" 
-          title="Previous Post: 將本地Project放到Github">&laquo; 將本地Project放到Github</a>
+          <a href="2018-03-28-react-native-part3-component.html" 
+          title="Previous Post: React Native教學 - Part 3 Component">&laquo; React Native教學 - Part 3 Component</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15213187969014.html" 
-          title="Next Post: Hugo的專案結構">Hugo的專案結構 &raquo;</a>
+          <a  href="15213187968335.html" 
+          title="Next Post: 在iOS app裡加入Google Maps (Swift 4)">在iOS app裡加入Google Maps (Swift 4) &raquo;</a>
       
       </p>
         </div>

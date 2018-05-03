@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  git pull或push不用再打密碼 - Carson's Tech Note
+  React Native教學 - Part 2.5 選擇Navigation Library - Carson's Tech Note
   
   </title>
   
@@ -134,19 +134,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>git pull或push不用再打密碼</h1>
+          <h1>React Native教學 - Part 2.5 選擇Navigation Library</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/4/30</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='git.html'>Git</a></span>
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
            
          
           <span class="comments">
             
-              <a href="15213187968912.html#disqus_thread">comments</a>
+              <a href="15250893394084.html#disqus_thread">comments</a>
             
 
             
@@ -156,116 +156,88 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>快速設置Git，以後<code>git pull</code> <code>git push</code>都不用再打帳號密碼了。</p>
+      <p>在Web app中，router負責處理url的改變，redirect頁面去各個page。在Mobile app的世界，這種功能更常稱為navigation。</p>
 
 <span id="more"></span><!-- more -->
 
-<p>首先要分辨你的git connection是屬於哪一種：</p>
+<h2 id="toc_0">I. Navigation發展史</h2>
 
-<p><img src="media/15213187968912/git_clone.png" alt="git_clone"/></p>
+<h3 id="toc_1">百花齊放</h3>
 
-<p>按下綠色button後預設是用https，再按&quot;Use SSH&quot;才會是ssh。</p>
+<p>以前的React Native community有很多各式各樣的navigation library：</p>
 
-<hr/>
-
-<h2 id="toc_0">1. Connecting over HTTPS (password caching)</h2>
-
-<p>例如: <code>git clone https://github.com/{username}/{repo name}.git</code></p>
-
-<h3 id="toc_1">設置步驟(Mac)：</h3>
-
-<ol>
-<li><p>查看有沒有安裝<em>osxkeychain helper</em>: <code>git credential-osxkeychain</code><br/><br/>
-如果沒有可以用brew安裝: <code>brew install git</code></p></li>
-<li><p><code>git config --global credential.helper osxkeychain</code></p></li>
-</ol>
-
-<p>然後下次需要輸入時就可以把username和password都存到keychain，下次就不用再打帳號密碼了。</p>
-
-<p>想移除的話只要<code>git credential-osxkeychain erase</code>就可以了。<br/><br/>
-<a href="https://stackoverflow.com/questions/11067818/how-do-you-reset-the-stored-credentials-in-git-credential-osxkeychain"><em>無法移除可以參考這裡</em></a></p>
-
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/caching-your-github-password-in-git/"><em>Mac以外的系統看這裡</em></a></p>
-
-<blockquote>
-<p><strong>不建議</strong>的做法：<code>git remote set-url origin https://name:password@github.com/repo.git</code><br/><br/>
-這樣你的密碼會以plain text形式儲存在電腦。</p>
-</blockquote>
-
-<hr/>
-
-<h2 id="toc_2">2. Connecting over SSH (deploy keys)</h2>
-
-<p>例如: <code>git clone git@github.com:{username}/{repo name}.git</code></p>
-
-<h3 id="toc_3">設置步驟(Mac)：</h3>
-
-<h4 id="toc_4">1. 創建ssh用的key</h4>
-
-<blockquote>
-<p>先檢查原本機內有沒有ssh key<br/><br/>
-<code>sh<br/>
-ls -al ~/.ssh<br/>
-</code><br/>
-如果發現<code>id_rsa.pub</code>可以跳過這步驟。</p>
-</blockquote>
-
-<pre><code class="language-sh">ssh-keygen -t rsa -b 4096 -C &quot;xxx@xxx.com&quot; # 換成你的Github account
-Enter a file in which to save the key (/Users/xxx/.ssh/id_rsa): # 把enter按下去就是了
-Enter passphrase (empty for no passphrase): # 可不填，這是用來加密你的private key讓其不會plain text地儲存在電腦
-</code></pre>
-
-<p>現在應該會有兩個新檔案：  </p>
+<p>React Native Core：</p>
 
 <ul>
-<li>~/.ssh/id_rsa: private key<br/></li>
-<li>~/.ssh/id_rsa.pub: public key<br/></li>
+<li><a href="https://facebook.github.io/react-native/docs/navigatorios.html#docsNav">NavigatorIOS</a>：只有iOS能用。</li>
+<li><a href="https://facebook.github.io/react-native/docs/0.43/navigator.html">Navigator</a> <em>(Removed)</em></li>
 </ul>
 
-<h4 id="toc_5">2. 把ssh key加到ssh-agent</h4>
-
-<p>當你的repo link是<code>git@github.com:...</code>，每次<code>git pull</code>或<code>git push</code>之類的時候都會動用到ssh-agent。  </p>
-
-<ol>
-<li>在背景開啟ssh-agent: <code>eval &quot;$(ssh-agent -s)&quot;</code><br/></li>
-<li><p>更改<code>~/.ssh/config</code>:  </p>
-
-<pre><code class="language-sh">Host *
-AddKeysToAgent yes
-UseKeychain yes
-IdentityFile ~/.ssh/id_rsa
-</code></pre></li>
-<li><p><code>ssh-add -K ~/.ssh/id_rsa</code><br/><br/>
-<code>-K</code>代表<code>Store passphrases in your keychain.</code></p></li>
-</ol>
-
-<p><em>(如果設置了passphrase而沒有跟隨以上步驟，每次動用ssh的時候都會需要輸入一次passphrase。)</em></p>
-
-<p>References:<br/><br/>
-<a href="https://stackoverflow.com/questions/10032461/git-keeps-asking-me-for-my-ssh-key-passphrase"><em>passphrase問題</em></a><br/><br/>
-<a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"><em>Mac以外的系統看這裡</em></a>  </p>
-
-<h4 id="toc_6">3. 到Github加入你的public key</h4>
-
-<ol>
-<li>複製<code>~/.ssh/id_rsa.pub</code>檔的內容: <code>pbcopy &lt; ~/.ssh/id_rsa.pub</code><br/></li>
-<li>到Github repo setting加入新Deploy key<br/>
+<p>Community：</p>
 
 <ul>
-<li>Title只是用來分辨的名稱<br/></li>
-<li>Key就是剛才複製的的public key</li>
-</ul></li>
+<li><a href="https://github.com/aksonov/react-native-router-flux"><code>aksonov/react-native-router-flux</code></a></li>
+<li><a href="https://github.com/t4t5/react-native-router"><code>react-native-router</code></a> <em>(Deprecated)</em></li>
+<li><a href="https://github.com/wix/react-native-navigation"><code>wix/react-native-navigation</code></a>：提供真正ios/android原生的navigation。</li>
+<li><a href="https://github.com/airbnb/native-navigation"><code>airbnb/native-navigation</code></a> <em>(Still beta)</em></li>
+<li><a href="https://github.com/expo/ex-navigation"><code>expo/ex-navigation</code></a> <em>(Deprecated)</em>：來自Expo team - 現在非常活躍的RN open source team，Expo一系列工具也是他們出品</li>
+<li><a href="https://github.com/ericvicenti/navigation-rfc"><code>ericvicenti/navigation-rfc</code> (NavigationExperimental)</a> <em>(Deprecated)</em></li>
+</ul>
+
+<p>React：</p>
+
+<ul>
+<li><a href="https://github.com/ReactTraining/react-router"><code>react-router</code></a>：就是React的官方router，提供binding讓RN apps也能使用。</li>
+<li><a href="https://github.com/LeoLeBras/react-router-navigation"><code>react-router-navigation</code></a>：<code>react-router</code>的一個plugin</li>
+</ul>
+
+<p>還有很多很多...</p>
+
+<h3 id="toc_2">官方欽定的React Navigation</h3>
+
+<p>當然百花齊放的後果就是很多都未達到production-use的要求，很多時候各library都會有自己的limitation和bug。</p>
+
+<p>最後在2016年，<code>ex-navigation</code>和<code>navigation-rfc</code>合併成為了<a href="https://github.com/react-navigation/react-navigation"><code>react-navigation</code></a></p>
+
+<p>然後Facebook也在<a href="https://facebook.github.io/react-native/docs/navigation.html">官方文檔</a>中推薦使用React Navigation，整個community都。</p>
+
+<h2 id="toc_3">II. 現時推薦的Navigation Libraries</h2>
+
+<p><em>（React Native世界變化得太快，本篇下筆日期為2018-05-01，日後可能有所變動。）</em></p>
+
+<h3 id="toc_4"><a href="https://github.com/react-navigation/react-navigation"><code>react-navigation</code></a></h3>
+
+<ul>
+<li>官方/Expo推薦、完全JS-based</li>
+<li><a href="https://github.com/react-navigation/react-navigation/issues/2031">React Navigation is just not good</a></li>
+</ul>
+
+<h3 id="toc_5"><a href="https://github.com/wix/react-native-navigation"><code>wix/react-native-navigation</code></a></h3>
+
+<p>提供真正ios/android原生的navigation、官方文檔也有提及</p>
+
+<h3 id="toc_6"><a href="https://github.com/aksonov/react-native-router-flux"><code>aksonov/react-native-router-flux</code></a></h3>
+
+<p><em>(Now v4 based on React Navigation)</em></p>
+
+<blockquote>
+<p>&quot;Every new major version of RNRF is based on different navigation framework and mostly preserves own API.&quot;</p>
+</blockquote>
+
+<ul>
+<li><a href="https://gist.github.com/aksonov/e2d7454421e44b1c4c72214d14053410">What is RNRF?</a></li>
+<li><a href="https://github.com/aksonov/react-native-router-flux/issues/2001">Why v4 exists if it&#39;s based on react navigation?</a></li>
+</ul>
+
+<h2 id="toc_7">III. 結論</h2>
+
+<p>React Native的libraries一直都變化得很快，可能不出一年半載又有新的navigation推出。但如果你是現在要投身開發RN app，我會推薦<strong>React Navigation</strong>，因為：</p>
+
+<ol>
+<li>最多Github stars</li>
+<li>官方推薦，只會越來越多人用</li>
+<li>完全JS-based，所以Expo apps也可以用</li>
 </ol>
-
-<p><img src="media/15213187968912/git_deploy_key.png" alt="git_deploy_key"/></p>
-
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/"><em>Mac以外的系統看這裡</em></a></p>
-
-<hr/>
-
-<p><a href="https://help.github.com/articles/set-up-git/"><em>Github官方英文教學</em></a></p>
 
 
     
@@ -276,16 +248,13 @@ IdentityFile ~/.ssh/id_rsa
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="15213187968857.html" 
-          title="Previous Post: 將本地Project放到Github">&laquo; 將本地Project放到Github</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15213187969014.html" 
-          title="Next Post: Hugo的專案結構">Hugo的專案結構 &raquo;</a>
+          <a  href="2018-04-01-react-native-part2-project-structure.html" 
+          title="Next Post: React Native教學 - Part 2 Project Structure">React Native教學 - Part 2 Project Structure &raquo;</a>
       
       </p>
         </div>
@@ -368,7 +337,7 @@ IdentityFile ~/.ssh/id_rsa
 	      
 		      
 			      <li class="post">
-			        <a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
+			        <a href="15250893394084.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
 			      </li>
 		     
 		  
@@ -386,7 +355,7 @@ IdentityFile ~/.ssh/id_rsa
 		  
 		      
 			      <li class="post">
-			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
+			        <a href="15221470476650.html">React Native教學 - Part 3 Component</a>
 			      </li>
 		     
 		  

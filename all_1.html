@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  git pull或push不用再打密碼 - Carson's Tech Note
+  Carson's Tech Note
   
   </title>
   
@@ -125,187 +125,78 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>git pull或push不用再打密碼</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
-
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='git.html'>Git</a></span>
-           
-         
-          <span class="comments">
-            
-              <a href="15213187968912.html#disqus_thread">comments</a>
-            
-
-            
-          </span>
-
-        </div>
-      </div><!-- article -->
-
-      <div class="article-content">
-      <p>快速設置Git，以後<code>git pull</code> <code>git push</code>都不用再打帳號密碼了。</p>
-
-<span id="more"></span><!-- more -->
-
-<p>首先要分辨你的git connection是屬於哪一種：</p>
-
-<p><img src="media/15213187968912/git_clone.png" alt="git_clone"/></p>
-
-<p>按下綠色button後預設是用https，再按&quot;Use SSH&quot;才會是ssh。</p>
-
-<hr/>
-
-<h2 id="toc_0">1. Connecting over HTTPS (password caching)</h2>
-
-<p>例如: <code>git clone https://github.com/{username}/{repo name}.git</code></p>
-
-<h3 id="toc_1">設置步驟(Mac)：</h3>
-
-<ol>
-<li><p>查看有沒有安裝<em>osxkeychain helper</em>: <code>git credential-osxkeychain</code><br/><br/>
-如果沒有可以用brew安裝: <code>brew install git</code></p></li>
-<li><p><code>git config --global credential.helper osxkeychain</code></p></li>
-</ol>
-
-<p>然後下次需要輸入時就可以把username和password都存到keychain，下次就不用再打帳號密碼了。</p>
-
-<p>想移除的話只要<code>git credential-osxkeychain erase</code>就可以了。<br/><br/>
-<a href="https://stackoverflow.com/questions/11067818/how-do-you-reset-the-stored-credentials-in-git-credential-osxkeychain"><em>無法移除可以參考這裡</em></a></p>
-
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/caching-your-github-password-in-git/"><em>Mac以外的系統看這裡</em></a></p>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="15213187969431.html">
+                
+                  <h1>在Jupyter同時使用Python2 + Python3</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p><em>(Updated on 2018-01-20)</em></p>
 
 <blockquote>
-<p><strong>不建議</strong>的做法：<code>git remote set-url origin https://name:password@github.com/repo.git</code><br/><br/>
-這樣你的密碼會以plain text形式儲存在電腦。</p>
-</blockquote>
-
-<hr/>
-
-<h2 id="toc_2">2. Connecting over SSH (deploy keys)</h2>
-
-<p>例如: <code>git clone git@github.com:{username}/{repo name}.git</code></p>
-
-<h3 id="toc_3">設置步驟(Mac)：</h3>
-
-<h4 id="toc_4">1. 創建ssh用的key</h4>
-
-<blockquote>
-<p>先檢查原本機內有沒有ssh key<br/><br/>
-<code>sh<br/>
-ls -al ~/.ssh<br/>
-</code><br/>
-如果發現<code>id_rsa.pub</code>可以跳過這步驟。</p>
-</blockquote>
-
-<pre><code class="language-sh">ssh-keygen -t rsa -b 4096 -C &quot;xxx@xxx.com&quot; # 換成你的Github account
-Enter a file in which to save the key (/Users/xxx/.ssh/id_rsa): # 把enter按下去就是了
-Enter passphrase (empty for no passphrase): # 可不填，這是用來加密你的private key讓其不會plain text地儲存在電腦
-</code></pre>
-
-<p>現在應該會有兩個新檔案：  </p>
-
-<ul>
-<li>~/.ssh/id_rsa: private key<br/></li>
-<li>~/.ssh/id_rsa.pub: public key<br/></li>
-</ul>
-
-<h4 id="toc_5">2. 把ssh key加到ssh-agent</h4>
-
-<p>當你的repo link是<code>git@github.com:...</code>，每次<code>git pull</code>或<code>git push</code>之類的時候都會動用到ssh-agent。  </p>
+<p><a href="http://jupyter.org/">Jupyter Notebook</a> (前身ipython notebook)是個很好用的coding工具，它可以：</p>
 
 <ol>
-<li>在背景開啟ssh-agent: <code>eval &quot;$(ssh-agent -s)&quot;</code><br/></li>
-<li><p>更改<code>~/.ssh/config</code>:  </p>
-
-<pre><code class="language-sh">Host *
-AddKeysToAgent yes
-UseKeychain yes
-IdentityFile ~/.ssh/id_rsa
-</code></pre></li>
-<li><p><code>ssh-add -K ~/.ssh/id_rsa</code><br/><br/>
-<code>-K</code>代表<code>Store passphrases in your keychain.</code></p></li>
+<li>用作快速prototyping：分段execute、即時修改memory中的variables</li>
+<li>用作寫報告：內容可以包括code、執行結果、圖表等等</li>
 </ol>
+</blockquote>
 
-<p><em>(如果設置了passphrase而沒有跟隨以上步驟，每次動用ssh的時候都會需要輸入一次passphrase。)</em></p>
-
-<p>References:<br/><br/>
-<a href="https://stackoverflow.com/questions/10032461/git-keeps-asking-me-for-my-ssh-key-passphrase"><em>passphrase問題</em></a><br/><br/>
-<a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"><em>Mac以外的系統看這裡</em></a>  </p>
-
-<h4 id="toc_6">3. 到Github加入你的public key</h4>
-
-<ol>
-<li>複製<code>~/.ssh/id_rsa.pub</code>檔的內容: <code>pbcopy &lt; ~/.ssh/id_rsa.pub</code><br/></li>
-<li>到Github repo setting加入新Deploy key<br/>
-
-<ul>
-<li>Title只是用來分辨的名稱<br/></li>
-<li>Key就是剛才複製的的public key</li>
-</ul></li>
-</ol>
-
-<p><img src="media/15213187968912/git_deploy_key.png" alt="git_deploy_key"/></p>
-
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/"><em>Mac以外的系統看這裡</em></a></p>
-
-<hr/>
-
-<p><a href="https://help.github.com/articles/set-up-git/"><em>Github官方英文教學</em></a></p>
+<p>以下會如何解釋分別以<code>pip</code>和<code>conda</code>處理 Jupyter 的 python environment。</p>
 
 
-    
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="15213187969431.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2018/3/18</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='python.html'>python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+                        <a href="15213187969431.html#disqus_thread">comments</a>
+                      
 
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="15213187968857.html" 
-          title="Previous Post: 將本地Project放到Github">&laquo; 將本地Project放到Github</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="15213187969014.html" 
-          title="Next Post: Hugo的專案結構">Hugo的專案結構 &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          
-
-          
-            <div id="disqus_thread"></div>
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
 
 
-
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   <a href="all.html">&laquo; Prev Page</a>  
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

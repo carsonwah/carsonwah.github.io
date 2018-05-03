@@ -276,21 +276,21 @@ $ npm run dev
 <pre><code class="language-bash">$ npm install vuex --save  # --save代表安裝到當前project當中
 </code></pre>
 
-<p>按照官方的<a href="https://vuex.vuejs.org/en/structure.html">example</a>創建 <code>src/store/</code> folder，在<code>src/store/index.js</code>加入store：<br/>
-```javascript<br/>
-const store = new Vuex.Store({<br/>
-  state: {<br/>
-    count: 0<br/>
-  },<br/>
-  mutations: {<br/>
-    increment (state) {<br/>
-      state.count++<br/>
-    }<br/>
-  }<br/>
-})</p>
+<p>按照官方的<a href="https://vuex.vuejs.org/en/structure.html">example</a>創建 <code>src/store/</code> folder，在<code>src/store/index.js</code>加入store：</p>
 
-<p>export default store<br/>
-```</p>
+<pre><code class="language-javascript">const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  }
+})
+
+export default store
+</code></pre>
 
 <p>在<code>App.vue</code>加入：</p>
 
@@ -416,33 +416,37 @@ new Vue({
 	      
 		      
 			      <li class="post">
+			        <a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="2018-04-01-react-native-part2-project-structure.html">React Native教學 - Part 2 Project Structure</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="15221461803635.html">React Native教學 - Part 1 詳盡新手入門</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="15213187968255.html">在React Native處理Permissions</a>
+			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="15213187968335.html">在iOS app裡加入Google Maps (Swift 4)</a>
+			        <a href="2018-03-18-react-native-handling-permissions.html">在React Native處理Permissions</a>
 			      </li>
 		     
 		  
 		      
-			      <li class="post">
-			        <a href="15213187968464.html">由零建立Vue.js WebApp及專案結構解釋</a>
-			      </li>
-		     
 		  
 		      
-			      <li class="post">
-			        <a href="15213187968523.html">在Django裡處理One-To-Many Relation</a>
-			      </li>
-		     
 		  
 		      
 		  

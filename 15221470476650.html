@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  git pull或push不用再打密碼 - Carson's Tech Note
+  React Native教學 - Part 3 Component - Carson's Tech Note
   
   </title>
   
@@ -134,19 +134,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>git pull或push不用再打密碼</h1>
+          <h1>React Native教學 - Part 3 Component</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/3/28</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='git.html'>Git</a></span>
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
            
          
           <span class="comments">
             
-              <a href="15213187968912.html#disqus_thread">comments</a>
+              <a href="15221470476650.html#disqus_thread">comments</a>
             
 
             
@@ -156,116 +156,230 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>快速設置Git，以後<code>git pull</code> <code>git push</code>都不用再打帳號密碼了。</p>
+      <p>在開發傳統web的frontend，一般是分開<code>html</code>, <code>css</code>, <code>js</code>三種文件來寫，但在React的世界裡，所有東西都存在於js檔當中。這些js檔主要都是圍繞<strong>Components</strong>來開發。以下介紹有關<strong>React Component的概念和實作</strong>。</p>
 
 <span id="more"></span><!-- more -->
 
-<p>首先要分辨你的git connection是屬於哪一種：</p>
+<p><em>本篇有些地方講述有關React的概念，對ReactJS熟悉的朋友可以跳過那部分</em></p>
 
-<p><img src="media/15213187968912/git_clone.png" alt="git_clone"/></p>
+<h2 id="toc_0">I. 建立第一個基本Component</h2>
 
-<p>按下綠色button後預設是用https，再按&quot;Use SSH&quot;才會是ssh。</p>
+<h3 id="toc_1">Import</h3>
 
-<hr/>
-
-<h2 id="toc_0">1. Connecting over HTTPS (password caching)</h2>
-
-<p>例如: <code>git clone https://github.com/{username}/{repo name}.git</code></p>
-
-<h3 id="toc_1">設置步驟(Mac)：</h3>
+<p>兩種方法import component：</p>
 
 <ol>
-<li><p>查看有沒有安裝<em>osxkeychain helper</em>: <code>git credential-osxkeychain</code><br/><br/>
-如果沒有可以用brew安裝: <code>brew install git</code></p></li>
-<li><p><code>git config --global credential.helper osxkeychain</code></p></li>
+<li><code>import React, { Component } from &#39;react&#39;</code></li>
+<li><code>import React from &#39;react&#39;</code>，然後用<code>React.Component</code></li>
 </ol>
 
-<p>然後下次需要輸入時就可以把username和password都存到keychain，下次就不用再打帳號密碼了。</p>
+<p>個人推薦[1]。注意即使只用到Component也要一併<strong>import React</strong>。</p>
 
-<p>想移除的話只要<code>git credential-osxkeychain erase</code>就可以了。<br/><br/>
-<a href="https://stackoverflow.com/questions/11067818/how-do-you-reset-the-stored-credentials-in-git-credential-osxkeychain"><em>無法移除可以參考這裡</em></a></p>
+<h3 id="toc_2">基本結構</h3>
 
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/caching-your-github-password-in-git/"><em>Mac以外的系統看這裡</em></a></p>
+<p>取自<a href="http://facebook.github.io/react-native/">React Native home page</a></p>
 
-<blockquote>
-<p><strong>不建議</strong>的做法：<code>git remote set-url origin https://name:password@github.com/repo.git</code><br/><br/>
-這樣你的密碼會以plain text形式儲存在電腦。</p>
-</blockquote>
+<pre><code class="language-javascript">import React, { Component } from &#39;react&#39;;
+import { Text, View } from &#39;react-native&#39;;
 
-<hr/>
-
-<h2 id="toc_2">2. Connecting over SSH (deploy keys)</h2>
-
-<p>例如: <code>git clone git@github.com:{username}/{repo name}.git</code></p>
-
-<h3 id="toc_3">設置步驟(Mac)：</h3>
-
-<h4 id="toc_4">1. 創建ssh用的key</h4>
-
-<blockquote>
-<p>先檢查原本機內有沒有ssh key<br/><br/>
-<code>sh<br/>
-ls -al ~/.ssh<br/>
-</code><br/>
-如果發現<code>id_rsa.pub</code>可以跳過這步驟。</p>
-</blockquote>
-
-<pre><code class="language-sh">ssh-keygen -t rsa -b 4096 -C &quot;xxx@xxx.com&quot; # 換成你的Github account
-Enter a file in which to save the key (/Users/xxx/.ssh/id_rsa): # 把enter按下去就是了
-Enter passphrase (empty for no passphrase): # 可不填，這是用來加密你的private key讓其不會plain text地儲存在電腦
+class WhyReactNativeIsSoGreat extends Component {
+  render() {
+    return (
+      &lt;View&gt;
+        &lt;Text&gt;
+          If you like React on the web, you&#39;ll like React Native.
+        &lt;/Text&gt;
+        &lt;Text&gt;
+          You just use native components like &#39;View&#39; and &#39;Text&#39;,
+          instead of web components like &#39;div&#39; and &#39;span&#39;.
+        &lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }
+}
 </code></pre>
 
-<p>現在應該會有兩個新檔案：  </p>
-
 <ul>
-<li>~/.ssh/id_rsa: private key<br/></li>
-<li>~/.ssh/id_rsa.pub: public key<br/></li>
+<li><code>class</code>是ES6的新功能，作用就是和其他語言的class相近，react native使用自家的<a href="https://github.com/facebook/metro">Metro bundler</a></li>
 </ul>
 
-<h4 id="toc_5">2. 把ssh key加到ssh-agent</h4>
-
-<p>當你的repo link是<code>git@github.com:...</code>，每次<code>git pull</code>或<code>git push</code>之類的時候都會動用到ssh-agent。  </p>
-
-<ol>
-<li>在背景開啟ssh-agent: <code>eval &quot;$(ssh-agent -s)&quot;</code><br/></li>
-<li><p>更改<code>~/.ssh/config</code>:  </p>
-
-<pre><code class="language-sh">Host *
-AddKeysToAgent yes
-UseKeychain yes
-IdentityFile ~/.ssh/id_rsa
-</code></pre></li>
-<li><p><code>ssh-add -K ~/.ssh/id_rsa</code><br/><br/>
-<code>-K</code>代表<code>Store passphrases in your keychain.</code></p></li>
-</ol>
-
-<p><em>(如果設置了passphrase而沒有跟隨以上步驟，每次動用ssh的時候都會需要輸入一次passphrase。)</em></p>
-
-<p>References:<br/><br/>
-<a href="https://stackoverflow.com/questions/10032461/git-keeps-asking-me-for-my-ssh-key-passphrase"><em>passphrase問題</em></a><br/><br/>
-<a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"><em>Mac以外的系統看這裡</em></a>  </p>
-
-<h4 id="toc_6">3. 到Github加入你的public key</h4>
-
-<ol>
-<li>複製<code>~/.ssh/id_rsa.pub</code>檔的內容: <code>pbcopy &lt; ~/.ssh/id_rsa.pub</code><br/></li>
-<li>到Github repo setting加入新Deploy key<br/>
+<h3 id="toc_3">Render</h3>
 
 <ul>
-<li>Title只是用來分辨的名稱<br/></li>
-<li>Key就是剛才複製的的public key</li>
+<li>每個Component都<strong>必須</strong>override <code>render()</code> method</li>
+<li><code>render()</code>裡面<strong>必須</strong>return一個Component
+
+<ul>
+<li>Component多數以<strong>JSX</strong> declare</li>
+<li><em>如果要return多個平排的Component</em></li>
 </ul></li>
-</ol>
+</ul>
 
-<p><img src="media/15213187968912/git_deploy_key.png" alt="git_deploy_key"/></p>
+<h3 id="toc_4">JSX</h3>
 
-<p>References:<br/><br/>
-<a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/"><em>Mac以外的系統看這裡</em></a></p>
+<p><a href="http://facebook.github.io/jsx/">JSX (Javascript XML)</a>是Facebook提出的一種語法，希望在JS檔案中，也可以方便地建立UI Component。</p>
 
-<hr/>
+<p>React很大程度上依賴這種語法，例如上面的<code>render()</code>裡面return了一個以JSX寫成的Component。</p>
 
-<p><a href="https://help.github.com/articles/set-up-git/"><em>Github官方英文教學</em></a></p>
+<h3 id="toc_5">Props passing</h3>
+
+<p>Parent可以把一些data以 <em>props</em> 的形式，pass到child component當中。</p>
+
+<pre><code class="language-javascript">&lt;CustomComponent data=&#39;Hello World&#39;&gt;
+&lt;/CustomComponent&gt;
+</code></pre>
+
+<p>很重要也一定會用到，下一篇會詳細談。</p>
+
+<h3 id="toc_6">理解ES2015/ES6</h3>
+
+<p>如果沒有接觸過ES6版本的javascript的話可以先看看<a href="https://babeljs.io/learn-es2015/">這裡</a>理解一下新的語法（例如<code>import</code>, <code>class</code>, <code>extends</code>, <code>() =&gt; {}</code>），基本上React Native的開發經常會使用到ES6甚至ES7的功能。</p>
+
+<h2 id="toc_7">II. 使用更多Components</h2>
+
+<p>Components是app的核心，react-native提供各種基本的Native UI Components，可以直接使用，也可以基於它們開發自己的Custom Components。</p>
+
+<h3 id="toc_8">Native Components</h3>
+
+<p><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">官方列表</a></p>
+
+<h3 id="toc_9">Custom Components</h3>
+
+<p>例如在<code>src/components/Button/index.js</code>中：</p>
+
+<pre><code class="language-javascript">import React, { Component } from &#39;react&#39;;
+import { Button } from &#39;react-native&#39;;
+
+export default class CustomButton extends Component {
+  render() {
+    return (
+      &lt;View style={{ backgroundColor: &#39;red&#39;}}&gt;
+        &lt;Button onPress={this.props.onPress} /&gt;
+      &lt;/View&gt;
+    );
+  }
+};
+</code></pre>
+
+<p>然後在其他地方：</p>
+
+<pre><code class="language-javascript">import CustomButton from &#39;@components/Button&#39;;
+...
+&lt;CustomButton onPress={this.onPressButton} /&gt;
+</code></pre>
+
+<h2 id="toc_10">III. Customizing Components</h2>
+
+<h3 id="toc_11">CSS in js</h3>
+
+<p>在React Native的世界裡，<code>css</code>只是一些<strong>JS objects</strong>。</p>
+
+<h4 id="toc_12">Inline寫法</h4>
+
+<pre><code class="language-javascript">&lt;View style={{backgroundColor: &#39;red&#39;}}&gt;
+</code></pre>
+
+<ul>
+<li><code>style={}</code>是JSX寫法，<code>{}</code>裡面容許任何valid JS code
+
+<ul>
+<li>有時只是string的話可以省略，例如：<code>title=&#39;hello&#39;</code></li>
+</ul></li>
+<li><code>{backgroundColor: &#39;red&#39;}</code>是一個js object</li>
+</ul>
+
+<h4 id="toc_13">慣常做法</h4>
+
+<p>在Component檔裡面直接define一個styles object，例如以下例子：</p>
+
+<pre><code class="language-javascript">
+import React, { Component } from &#39;react&#39;;
+import { Button } from &#39;react-native&#39;;
+
+export default class CustomButton extends Component {
+  render() {
+    return (
+      &lt;View style={styles.buttonWrapper}&gt;
+        &lt;Button onPress={this.props.onPress} /&gt;
+      &lt;/View&gt;
+    );
+  }
+};
+
+const styles = {
+  buttonWrapper: {
+    backgroundColor: &#39;red&#39;
+  },
+};
+</code></pre>
+
+<ul>
+<li>一般css會用<code>background-color</code>，但所有react-native的style都是<strong>camelCase</strong></li>
+<li>盡量使用<code>const</code>，有時可以用<code>let</code>，永遠不要用<code>var</code></li>
+<li>backgroundColor可以用顏色名、Hex code等，<a href="https://facebook.github.io/react-native/docs/colors.html">官方Color list</a></li>
+<li><a href="https://facebook.github.io/react-native/docs/view-style-props.html">官方View style props list</a></li>
+</ul>
+
+<h3 id="toc_14">Flexbox Layout</h3>
+
+<p>使用前應先理解Web上的flexbox如何運作：</p>
+
+<ul>
+<li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">A Complete Guide to Flexbox | CSS-Tricks</a></li>
+<li><a href="https://www.w3schools.com/css/css3_flexbox.asp">CSS Flexbox (Flexible Box) - W3Schools</a></li>
+<li><a href="https://facebook.github.io/react-native/docs/flexbox.html">RN官方文檔 - Layout with Flexbox</a></li>
+</ul>
+
+<h4 id="toc_15">大小settings</h4>
+
+<p>常用的：</p>
+
+<ul>
+<li><code>flex</code>：Real numbers, e.g. 1</li>
+<li><code>height/width</code>：例如&#39;100%&#39;，或者10（代表10 device pixels）</li>
+<li><code>minHeight/maxHeight/minWidth/maxWidth</code></li>
+</ul>
+
+<h4 id="toc_16">排版settings</h4>
+
+<p>主要常用的：</p>
+
+<ul>
+<li><code>flexDirection</code>：<code>column</code>或者<code>row</code>，<strong>default是<code>column</code></strong>（不同於reactjs）</li>
+<li><code>justifyContent</code></li>
+<li><code>alignItems</code></li>
+</ul>
+
+<p>以例子學習：</p>
+
+<pre><code class="language-javascript">  return (
+    &lt;View style={styles.wrapper}&gt;
+      &lt;Text&gt;Hello World&lt;/Text&gt;
+    &lt;/View&gt;
+    )
+...
+const styles = {
+  wrapper: {
+    flexDirection: &#39;column&#39;,  // 其實這行可以不寫
+    justifyContent: &#39;flex-start&#39;,
+    alignItems: &#39;center&#39;,
+  }
+}
+</code></pre>
+
+<p>Expo snack：<a href="https://snack.expo.io/B18E8Kuaz">https://snack.expo.io/B18E8Kuaz</a></p>
+
+<p>結果：</p>
+
+<p><img src="media/15221470476650/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-03%2020.52.37.png" alt="螢幕快照 2018-05-03 20.52.37" style="width:300px;"/></p>
+
+<p>其他就自行發掘吧。</p>
+
+<h2 id="toc_17">IV. 結語</h2>
+
+<p>這篇介紹了有關React Native Components的基本概念，現在這些Component只能<code>render()</code> UI，沒有甚麼功能。</p>
+
+<p>下一篇會詳述Component中可以override的methods，使它們能做更多事，例如send request to server。</p>
 
 
     
@@ -276,16 +390,16 @@ IdentityFile ~/.ssh/id_rsa
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="15213187968857.html" 
-          title="Previous Post: 將本地Project放到Github">&laquo; 將本地Project放到Github</a>
+          <a href="15221461803635.html" 
+          title="Previous Post: React Native教學 - Part 1 詳盡新手入門">&laquo; React Native教學 - Part 1 詳盡新手入門</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15213187969014.html" 
-          title="Next Post: Hugo的專案結構">Hugo的專案結構 &raquo;</a>
+          <a  href="2018-03-18-react-native-handling-permissions.html" 
+          title="Next Post: 在React Native處理Permissions">在React Native處理Permissions &raquo;</a>
       
       </p>
         </div>
@@ -368,7 +482,7 @@ IdentityFile ~/.ssh/id_rsa
 	      
 		      
 			      <li class="post">
-			        <a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
+			        <a href="15250893394084.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
 			      </li>
 		     
 		  
@@ -386,7 +500,7 @@ IdentityFile ~/.ssh/id_rsa
 		  
 		      
 			      <li class="post">
-			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
+			        <a href="15221470476650.html">React Native教學 - Part 3 Component</a>
 			      </li>
 		     
 		  
