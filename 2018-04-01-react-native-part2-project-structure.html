@@ -160,7 +160,7 @@
 
 <span id="more"></span><!-- more -->
 
-<h2 id="toc_0">Overview</h2>
+<h2 id="toc_0">I. Overview</h2>
 
 <p>以Expo app為例，個人推薦的structure如下：</p>
 
@@ -265,7 +265,7 @@
 <li>utils/：就是普通util functions</li>
 </ul>
 
-<h2 id="toc_8">善用package.json</h2>
+<h2 id="toc_8">II. 善用package.json</h2>
 
 <p><code>package.json</code>是<a href="15213187968700.html">解決無限&#39;../../../&#39;地獄的良藥</a>。</p>
 
@@ -284,9 +284,27 @@
 
 <p><em>(packager就是類似webpack的工具，幫你打包起整個專案（連同用到的libraries）成一個單獨的js檔)</em></p>
 
-<h2 id="toc_9">Send request with axios</h2>
+<h2 id="toc_9">III. Send requests with axios</h2>
 
-<p><a href="https://facebook.github.io/react-native/docs/network.html">https://facebook.github.io/react-native/docs/network.html</a></p>
+<p>個人推薦使用<a href="https://facebook.github.io/react-native/docs/network.html">axios</a>來進行ajax requests，以Promise的形式處理所有response，非常方便，而且Github stars已經突破40000，顯示它現在有多受歡迎。</p>
+
+<h3 id="toc_10">Usage</h3>
+
+<pre><code>axios.post(&#39;/user&#39;, {
+    firstName: &#39;Fred&#39;,
+    lastName: &#39;Flintstone&#39;
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+</code></pre>
+
+<h3 id="toc_11">Interceptor</h3>
+
+<p>通常app都會有個對應的backend server，</p>
 
 
     
@@ -389,6 +407,12 @@
 	      
 		      
 			      <li class="post">
+			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
 			      </li>
 		     
@@ -402,12 +426,6 @@
 		      
 			      <li class="post">
 			        <a href="15221461803635.html">React Native教學 - Part 1 詳盡新手入門</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
 			      </li>
 		     
 		  
