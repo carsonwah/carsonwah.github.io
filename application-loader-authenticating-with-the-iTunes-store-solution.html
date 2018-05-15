@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  React Native教學 - Part 2 Project Structure - Carson's Tech Note
+  XCode / Application Loader上傳套件卡關研究 - Carson's Tech Note
   
   </title>
   
@@ -136,19 +136,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>React Native教學 - Part 2 Project Structure</h1>
+          <h1>XCode / Application Loader上傳套件卡關研究</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/4/1</span>
+          <span class="date">2018/5/2</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
+              <span class="posted-in"><a href='ios.html'>iOS</a></span>
            
          
           <span class="comments">
             
-              <a href="2018-04-01-react-native-part2-project-structure.html#disqus_thread">comments</a>
+              <a href="application-loader-authenticating-with-the-iTunes-store-solution.html#disqus_thread">comments</a>
             
 
             
@@ -158,164 +158,74 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>在開始開發任何專案前，最好先決定如何structure整個專案。沒有好的structure，日後規模漸大，開發起來只會越來越困難。</p>
+      <p>使用XCode或Application Loader提交<code>.ipa</code>檔到App Store時，很多人都試過卡在一個頗常見、但意外地存在了好幾年的bug...</p>
+
+<blockquote>
+<p>&quot;Authenticating with the iTunes store&quot;</p>
+</blockquote>
+
+<p>以下歸納網上流傳的各種解決方法：</p>
 
 <span id="more"></span><!-- more -->
 
-<h2 id="toc_0">I. Overview</h2>
+<h3 id="toc_0">1. 切換網絡（if possible）</h3>
 
-<p>以Expo app為例，個人推薦的structure如下：</p>
+<p>有可能是因為網絡問題</p>
 
-<h3 id="toc_1">Project-level</h3>
+<h3 id="toc_1">2. 重設ITMS Transporter</h3>
 
-<pre><code class="language-bash">.
-├── App.js  # App entry point
-├── app.json  # CRNA / Expo 用到的config檔
-├── assets/  # 放Icon、圖片等
-├── .eslintrc.js  # ESLint config檔
-├── node_modules/  # npm packages
-├── package.json  # npm dependencies
-└── src/  # 所有js檔案
+<blockquote>
+<p><a href="https://stackoverflow.com/a/43695235/6025730">https://stackoverflow.com/a/43695235/6025730</a></p>
+</blockquote>
+
+<h3 id="toc_2">3. 允許HTTPS使用Port 80</h3>
+
+<blockquote>
+<p><a href="https://stackoverflow.com/a/19918707/6025730">https://stackoverflow.com/a/19918707/6025730</a></p>
+</blockquote>
+
+<h3 id="toc_3">4. Check firewall</h3>
+
+<p>可能port的權限問題</p>
+
+<h3 id="toc_4">5. Change version number</h3>
+
+<p>可能你忘了改version number</p>
+
+<blockquote>
+<p><a href="https://stackoverflow.com/a/29821156/6025730">https://stackoverflow.com/a/29821156/6025730</a></p>
+</blockquote>
+
+<h3 id="toc_5">6. 同時Submit兩個App</h3>
+
+<p>可能Authenticate成功但這邊收不到結果，所以同時再提交一個就成功了</p>
+
+<blockquote>
+<p><a href="https://stackoverflow.com/a/21730787/6025730">https://stackoverflow.com/a/21730787/6025730</a></p>
+</blockquote>
+
+<h4 id="toc_6">開啟兩個Application Loader方法</h4>
+
+<pre><code class="language-bash"># -n 代表 new, -a 代表 application
+open -n -a /path/to/Application Loader.app
+
+# 再開一個
+open -n -a /path/to/Application Loader.app
 </code></pre>
 
-<ul>
-<li>最好一開始便Setup好ESLint，確保Project code是consistent。（可參考<a href="15213187968640.html">建置eslint開發環境</a>）</li>
-</ul>
+<h3 id="toc_7">7. Just Wait</h3>
 
-<h3 id="toc_2">src/</h3>
+<blockquote>
+<p><a href="https://stackoverflow.com/a/27136379/6025730">https://stackoverflow.com/a/27136379/6025730</a></p>
+</blockquote>
 
-<pre><code>.
-├── AppStartUpWrapper.js
-├── ReduxWrapper.js
-├── common/
-├── components/
-├── constants/
-├── containers/
-├── navigation/
-├── package.json
-├── redux/
-├── services/
-└── utils/
-</code></pre>
+<p><em>（傻的嗎？）</em></p>
 
-<h4 id="toc_3">App Hierarchy</h4>
+<h3 id="toc_8">8. 其他程式取用了你的port</h3>
 
-<ul>
-<li><code>App.js</code>：root
+<p>我試完上述1-7，才發現<a href="https://stackoverflow.com/a/19739910/6025730">這篇不起眼的回覆</a>，他說Skype會block了一些ports（應該是443），要關了才可以。</p>
 
-<ul>
-<li><code>ReduxWrapper.js</code>：加入Redux store
-
-<ul>
-<li><code>AppStartUpWrapper.js</code>：加入notification listener / deeplink listener等等
-
-<ul>
-<li><code>navigation/</code>：加入Navigation
-
-<ul>
-<li>各個containers/screens
-
-<ul>
-<li>各個components</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
-
-<h4 id="toc_4">redux/</h4>
-
-<p>建議使用<a href="https://redux.js.org">Redux</a>，方便「跨Component」共用data。如果不用Redux或類似工具，所有data和callback都要一層一層地pass下去，十分麻煩。</p>
-
-<p>不過Redux的概念需要一些時間掌握，建議先看Dan Abramov（Redux作者）<a href="https://www.youtube.com/watch?v=xsSnOQynTHs">一段還在開發Redux時的演講</a>，理解一下Redux的初衷和優點。</p>
-
-<p>日後再寫關於Redux的教學。</p>
-
-<h4 id="toc_5">navigation/</h4>
-
-<p>每個App都需要一個Navigation Library，例如如果你選擇的是<a href="https://reactnavigation.org">React Navigation</a>，你的App是Tab-based，結構可能長這樣：</p>
-
-<ul>
-<li>TabNavigator
-
-<ul>
-<li>StackNavigator</li>
-<li>StackNavigator</li>
-<li>StackNavigator</li>
-</ul></li>
-</ul>
-
-<p>把這些Navigators放在<code>navigation/</code>裡。</p>
-
-<p>相關教學：<a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 - Part 2.5 選擇Navigation Library</a></p>
-
-<h4 id="toc_6">components/ vs containers/</h4>
-
-<ul>
-<li>components/：
-
-<ul>
-<li>放置Reusable、不依賴Redux、收到甚麼props就顯示甚麼的<strong>Components</strong></li>
-</ul></li>
-<li>containers/ (或者叫screens/或views/)：
-
-<ul>
-<li><strong>Containers</strong>負責使用各種Components，排版，處理data的互動</li>
-<li>可以是頁面，也可以是頁面的一部分</li>
-</ul></li>
-</ul>
-
-<h4 id="toc_7">其他folders</h4>
-
-<ul>
-<li>common/：放置各Components會共用到的東西，例如主要顏色，按鈕大小等等</li>
-<li>constants/：放置自行定義的constants，例如model的enum、API keys、Server endpoint等等。</li>
-<li>redux/：放置所有Action Creators、Reducers</li>
-<li>services/：提供其他地方會重複取用的服務，例如Server request</li>
-<li>utils/：就是普通util functions</li>
-</ul>
-
-<h2 id="toc_8">II. 善用package.json</h2>
-
-<p><code>package.json</code>是<a href="15213187968700.html">解決無限&#39;../../../&#39;地獄的良藥</a>。</p>
-
-<p>一般node project只會在top-level有一個<code>package.json</code>，但這裡的<code>src/</code>也有一個：</p>
-
-<pre><code class="language-json">{
-  &quot;name&quot;: &quot;@&quot;
-}
-</code></pre>
-
-<p>這個其實是React Native所使用的<a href="https://github.com/facebook/metro">Metro bundler</a>提供的一個<a href="https://stackoverflow.com/a/50041634/6025730">預設功能</a>，只要在任何一個灺方中建立一個這樣的<code>package.json</code>，就可以命名當前的path為這個名字。日後可以直接用<code>import xxx from &#39;@/xxx&#39;</code>，而不用<code>from &#39;../../../xxx&#39;</code>。</p>
-
-<p>由於所有js檔都在<code>src/</code>當中，所以所有import都可以由<code>@/</code>開始了。</p>
-
-<p>你也可以把所有folder都命名一遍，但建議加&#39;@&#39;在前面，例如&#39;@component&#39;, &#39;@utils&#39;等去命名，避免與npm packages撞名</p>
-
-<p><em>(packager就是類似webpack的工具，幫你打包起整個專案（連同用到的libraries）成一個單獨的js檔)</em></p>
-
-<h2 id="toc_9">III. Send requests with axios</h2>
-
-<p>個人推薦使用<a href="https://facebook.github.io/react-native/docs/network.html">axios</a>來進行ajax requests，以Promise的形式處理所有response，非常方便，而且Github stars已經突破40000，顯示它現在有多受歡迎。</p>
-
-<h3 id="toc_10">Usage</h3>
-
-<pre><code>axios.post(&#39;/user&#39;, {
-    firstName: &#39;Fred&#39;,
-    lastName: &#39;Flintstone&#39;
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-</code></pre>
-
-<h3 id="toc_11">Interceptor</h3>
-
-<p>通常app都會有個對應的backend server，[TODO]</p>
+<p>然後我才驚覺，因身處內地，用了Shadowsocks翻出來，可能有影響，果不其然關了它，換成VPN就沒有問題了。</p>
 
 
     
@@ -326,16 +236,16 @@
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="2018-04-30-react-native-part2.5-choosing-navigation.html" 
-          title="Previous Post: React Native教學 - Part 2.5 選擇Navigation Library">&laquo; React Native教學 - Part 2.5 選擇Navigation Library</a>
+          <a href="delegation-pattern.html" 
+          title="Previous Post: Delegation pattern">&laquo; Delegation pattern</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15221461803635.html" 
-          title="Next Post: React Native教學 - Part 1 詳盡新手入門">React Native教學 - Part 1 詳盡新手入門 &raquo;</a>
+          <a  href="2018-03-28-react-native-part3-component.html" 
+          title="Next Post: React Native教學 - Part 3 Component">React Native教學 - Part 3 Component &raquo;</a>
       
       </p>
         </div>
