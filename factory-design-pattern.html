@@ -1,0 +1,623 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/asset/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/asset/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/asset/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/asset/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/asset/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/asset/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/asset/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- /Favicon -->
+    <title>
+    
+  工廠設計模式 (Factory Design Pattern) - Carson's Tech Note
+  
+  </title>
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111343902-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111343902-1');
+</script>
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+        
+            <li><a href="software-engineering.html">Software Engineering</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>工廠設計模式 (Factory Design Pattern)</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/5/15</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='design-pattern.html'>Design Pattern</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="factory-design-pattern.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>工廠設計模式屬於「創建型模式」，規範「如何創建新Object」的程序設計。簡單來說就是故名思義，把創建的過程交給「工廠（Factory）」去做，而不是用家自己做。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">好處</h2>
+
+<ul>
+<li>可以隱藏object instantiation的過程，一旦過程有變，只需在一個地方修改，甚至不用改，只需要增加新的Factory。</li>
+<li>減輕class constructor的負擔，使class更輕量。</li>
+<li>在compile的時候client不需要知道他想獲取哪個concrete class，可以透過argument來向工廠獲取不同種類的。</li>
+</ul>
+
+<h2 id="toc_1">壞處</h2>
+
+<ul>
+<li>要寫多很Factory，會增加code的複雜程度。</li>
+<li>增加了code之間的dependencies，如果要看懂一個object instantiation過程，可能要在project裡跳來跳去，影響可讀性。</li>
+</ul>
+
+<h2 id="toc_2">三種模式</h2>
+
+<p>工廠設計模式主要分為三種模式，如果直接google &quot;Factory pattern&quot;，會出現各式各樣的解釋，如果不分清楚這三種模式，很容易搞亂概念。</p>
+
+<h3 id="toc_3">1. Simple Factory Pattern</h3>
+
+<p>著重避免到處製造新Object（Object instantiation），而是統一在工廠（Factory）生產。用家（Client）只能透過工廠製作出想要的object。</p>
+
+<h4 id="toc_4">Static Factory Method</h4>
+
+<p>在Super-class裡面建立一個Factory method，return不同的sub-class instances。（不要和下面的<strong>Factory Method</strong>搞亂）</p>
+
+<pre><code class="language-java">public abstract class Car {
+    public static Car factory(Color color) {
+        switch(color) {
+            case &quot;RED&quot;:
+                return new RedCar();
+            case &quot;BLUE&quot;:
+                return new BlueCar();
+        }
+    }
+}
+public class RedCar extends Car {...}
+public class BlueCar extends Car {...}
+
+Car redCar = car.factory(&quot;RED&quot;);
+</code></pre>
+
+<h4 id="toc_5">Simple Factory</h4>
+
+<p>開一個新的Factory Class，負責生產Objects：</p>
+
+<pre><code class="language-java">public abstract class Car {...}
+public class RedCar extends Car {...}
+public class BlueCar extends Car {...}
+
+public class CarFactory() {
+    public Car createCarFromColor(Color color) {
+        switch(color) {
+            case &quot;RED&quot;:
+                return new RedCar();
+            case &quot;BLUE&quot;:
+                return new BlueCar();
+        }
+    }
+}
+
+CarFactory factory = new CarFactory();
+Car redCar = factory.createCarFromColor(&quot;RED&quot;);
+</code></pre>
+
+<h3 id="toc_6">2. Factory Method Pattern</h3>
+
+<blockquote>
+<p><em>Define an interface for creating an object, but let subclasses decide which class to instantiate. The Factory method lets a class defer instantiation it uses to subclasses. - <a href="https://en.wikipedia.org/wiki/Design_Patterns">Gang Of Four</a></em></p>
+</blockquote>
+
+<p>簡單來說照這個定義，我應該先定義Factory的<strong>interface</strong>，再用implement了這個inter-frface的<strong>subclass</strong>來製造object。</p>
+
+<p>按照這個定義的最基本Design：</p>
+
+<p><img src="media/15263233997887/Fig01-FactoryMethodClasses.png" alt="Fig01-FactoryMethodClasses"/><br/>
+<em>From <a href="https://www.codeproject.com/Articles/1135918/Factory-Patterns-Factory-Method-Pattern">Factory Patterns - Factory Method Pattern (Prajapati, 2016)</a></em></p>
+
+<p>對比Simple Factory，這種做法讓實際的製作過程延遲到subclass當中，日後擴充就更容易了。</p>
+
+<h4 id="toc_7">Factory Method + Abstract Factory + Template Methods</h4>
+
+<p>Factory Method通常會伴隨著<strong>Abstract Factory</strong>和<strong>Template Method Pattern</strong>，就如以下例子。</p>
+
+<pre><code class="language-java">public abstract class Product { ... }
+
+public class ConcreteProduct extends Product { ... }
+
+// interface for creating an object
+public abstract class Creator {
+  public void createProduct() {
+    return this.factoryMethod();
+  }
+  public abstract Product factoryMethod();
+}
+
+// let subclasses decide which class to instantiate
+public class ConcreteCreator extends Creator {
+  public Product factoryMethod() { return new ConcreteProduct(); }
+}
+
+ConcreteCreator creator = new ConcreteCreator();
+Product product = creator.createProduct();
+</code></pre>
+
+<p>雖然這也算是<strong>Abstract Factory</strong>，但在定義上它比<strong>Factory Method</strong>更著重工廠可以製造&quot;families of related objects&quot;，詳見下文。</p>
+
+<h3 id="toc_8">3. Abstract Factory Pattern</h3>
+
+<blockquote>
+<p><em>Provide an interface for creating families of related or dependent objects without specifying their concrete classes. - Gang Of Four</em></p>
+</blockquote>
+
+<h4 id="toc_9">甚麼時候要由Factory Method升級做Abstract Factory？</h4>
+
+<ul>
+<li>當Factory需要製造很多相似種類的objects的時候，例如一個工廠要生產各種汽車，還要生產各種電動車，還有腳踏車，etc。</li>
+</ul>
+
+<h4 id="toc_10">例子</h4>
+
+<p>假設有汽車和電動車，一個造車工廠應該要能夠製造這兩種車：</p>
+
+<pre><code class="language-java">public abstract class PetrolCar { ... }
+
+public class ConcretePetrolCar extends PetrolCar { ... }
+
+public abstract class ElectricCar { ... }
+
+public class ConcreteElectricCar extends ElectricCar { ... }
+
+public abstract class CarFactory {
+  public PetrolCar manufacturePetrolCar();
+  public ElectricCar manufactureElectricCar();
+}
+
+public class GermanyCarFactory extends CarFactory {
+  public PetrolCar manufacturePetrolCar() { return new ConcretePetrolCar(); }
+  public ElectricCar manufactureElectricCar() { return new ConcreteElectricCar(); }
+}
+
+CarFactory factory = new GermanyCarFactory();
+PetrolCar petrolCar = factory.manufacturePetrolCar();
+ElectricCar electricCar = factory.manufactureElectricCar();
+</code></pre>
+
+<p>在這種設計下，我們可以隨時增加不同的工廠去生產不同汽車：</p>
+
+<pre><code class="language-java">public class VeryCheapPetrolCar extends PetrolCar { ... }
+
+public class ChinaCarFactory extends CarFactory {
+  public PetrolCar manufacturePetrolCar() { return new VeryCheapPetrolCar(); }
+  public ElectricCar manufactureElectricCar() { return new ConcreteElectricCar(); }
+}
+
+CarFactory chinaFactory = new ChinaCarFactory();
+PetrolCar veryCheapPetrolCar = chinaFactory.manufacturePetrolCar();
+</code></pre>
+
+<p>雖然需要寫更多class出來，但使用abstract factory pattern後，例如在上面的例子中解耦（decouple）了汽車和它們的生產過程。在Client的角度，我不需要理會你有甚麼種類的汽車，反正我就選一個<code>CarFactory</code>去生產一些<code>PetrolCar</code>給我就可以了。這樣大大增加了日後擴充的自由度，以及方便寫Unit test。</p>
+
+<ul>
+<li><a href="https://stackoverflow.com/a/4211307/6025730">StackOverflow - Design Patterns: Abstract Factory vs Factory Method</a></li>
+<li><a href="https://www.codeproject.com/Articles/1137307/Factory-Patterns-Abstract-Factory-Pattern">Factory Patterns - Abstract Factory Pattern</a></li>
+</ul>
+
+<h2 id="toc_11">Factory Pattern應該甚麼時候用？ When to use?</h2>
+
+<ol>
+<li>當你的class constructor很擁腫的時候</li>
+<li>當你create object時需要用到很多「這個class不需要知道」的東西</li>
+<li>當你不在乎sub-class，只在乎super-class的時候（例如你只要一些<code>Animal</code>，不在乎<code>Dog</code>或<code>Cat</code>）</li>
+<li>當你有很多sub-classes，而它們的create方法大同小異的時候</li>
+<li><a href="https://softwareengineering.stackexchange.com/a/253264">其實你不一定需要Factory</a></li>
+</ol>
+
+<h3 id="toc_12">例子</h3>
+
+<pre><code class="language-java">interface Connection {
+    void open();
+}
+public class HTTPConnection implements Connection {
+    URL url;
+    public HTTPConnection(URL url) {
+        this.url = url;
+    }
+    public void open() {
+        // Open url with browser
+    }
+}
+public class SSHConnection implements Connection {
+    Server destinationServer;
+    public SSHConnection(Server destinationServer) {
+        this.destinationServer = destinationServer;
+    }
+    public void open() {
+        // Open a terminal and ssh into the destination server
+    }
+}
+</code></pre>
+
+<p>例如現在有一條<code>String link = &quot;https://www.xxx.com&quot;;</code>，如果我要開啟它，豈不是要分辨它是<code>HTTPConnection</code>、製作一個<code>URL</code> object、然後instantiate它，才能使用<code>open()</code>？</p>
+
+<p>這時候就可以寫一個factory，在factory裡做完所有這些步驟，最後反正是給我一個可以<code>open()</code>的connection就可以了。最後變成：</p>
+
+<pre><code class="language-java">ConnectionFactory factory = new ConnectionFactory();
+Connection conn = factory.createConnection(link);
+conn.open();
+</code></pre>
+
+<p>是不是有夠簡潔呢～</p>
+
+<p><em>（如果已經有進行中的<code>Connection</code>，你還可以叫工廠return現有的，而不用建立新<code>Connection</code>！不過這個很個別的例子了。）</em></p>
+
+<h2 id="toc_13">References</h2>
+
+<ul>
+<li><a href="https://softwareengineering.stackexchange.com/questions/253254/why-should-i-use-a-factory-class-instead-of-direct-object-construction">StackExchange - Why should I use a factory class instead of direct object construction?</a></li>
+<li><a href="https://sourcemaking.com/design_patterns/factory_method/python/1">Factory Method in Python</a></li>
+<li><a href="http://monkeycoding.com/?p=967">簡單工廠模式(Simple Factory Pattern)</a></li>
+<li><a href="https://www.quora.com/What-are-the-pros-and-cons-of-the-factory-design-pattern">Quora - What are the pros and cons of the factory design pattern?</a></li>
+<li><a href="https://www.journaldev.com/1392/factory-design-pattern-in-java">Factory Design Pattern in Java</a></li>
+<li><a href="https://vivekcek.wordpress.com/2013/03/17/simple-factory-vs-factory-method-vs-abstract-factory-by-example/">Simple Factory Vs Factory Method Vs Abstract Factory by Example</a></li>
+<li><a href="https://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory">StackOverflow - Design Patterns: Factory vs Factory method vs Abstract Factory</a></li>
+<li><a href="https://softwareengineering.stackexchange.com/questions/200647/why-is-the-factory-method-design-pattern-more-useful-than-having-classes-and-cal">StackExchange - Why is the factory method design pattern more useful than having classes and calling them individually?</a></li>
+<li><a href="https://dzone.com/articles/constructors-or-static-factory-methods">Constructors or Static Factory Methods?</a></li>
+<li><a href="https://www.codeproject.com/Articles/1131770/Factory-Patterns-Simple-Factory-Pattern">Factory Patterns - Simple Factory Pattern</a></li>
+</ul>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="delegation-pattern.html" 
+          title="Previous Post: 委託模式 (Delegation pattern)">&laquo; 委託模式 (Delegation pattern)</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="application-loader-authenticating-with-the-iTunes-store-solution.html" 
+          title="Next Post: XCode / Application Loader上傳套件卡關研究">XCode / Application Loader上傳套件卡關研究 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+        
+            <a href="software-engineering.html"><strong>Software Engineering</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="delegation-pattern.html">委託模式 (Delegation pattern)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="factory-design-pattern.html">工廠設計模式 (Factory Design Pattern)</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="application-loader-authenticating-with-the-iTunes-store-solution.html">XCode / Application Loader上傳套件卡關研究</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>
