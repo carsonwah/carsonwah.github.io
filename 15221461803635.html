@@ -205,9 +205,9 @@
 
 <p>建立CRNA project後如果想轉回Native版，也可以<strong>eject</strong>你的project，eject後build process會比較複雜，詳情可看<a href="https://facebook.github.io/react-native/docs/getting-started.html#caveats">這裡</a>。</p>
 
-<h2 id="toc_4">I. 傳統Native版</h2>
+<h3 id="toc_4">I. 傳統Native版</h3>
 
-<h3 id="toc_5">安裝與運行</h3>
+<h4 id="toc_5">安裝與運行</h4>
 
 <p>各平台安裝步驟不同，請按<a href="https://facebook.github.io/react-native/docs/getting-started.html">官方指示</a>做。</p>
 
@@ -216,7 +216,7 @@ react-native run-ios
 react-native run-android
 </code></pre>
 
-<h3 id="toc_6">Project Structure</h3>
+<h4 id="toc_6">Project Structure</h4>
 
 <pre><code class="language-bash">.
 ├── App.js  # App root component，所有JS code由這裡開始
@@ -229,7 +229,7 @@ react-native run-android
 └── yarn.lock
 </code></pre>
 
-<h4 id="toc_7">運作Logic</h4>
+<h5 id="toc_7">運作Logic</h5>
 
 <p><code>ios/</code>和<code>android/</code>裡的native project裡會調用react native去獲得<strong>Root Component</strong>，default就是指向<code>index.js</code>。</p>
 
@@ -252,9 +252,9 @@ export default class App extends Component&lt;Props&gt; {
 
 <p>所以<code>App.js</code>就成為了你的<strong>Root Component</strong>，之後可以在這個<code>App</code>裡面加入你的JS Component，慢慢擴展你的App。</p>
 
-<h2 id="toc_8">II. CRNA版</h2>
+<h3 id="toc_8">II. CRNA版</h3>
 
-<h3 id="toc_9">安裝與運行</h3>
+<h4 id="toc_9">安裝與運行</h4>
 
 <p>按<a href="https://facebook.github.io/react-native/docs/getting-started.html">官方指示</a>安裝。</p>
 
@@ -264,7 +264,7 @@ cd AwesomeProject
 npm start
 </code></pre>
 
-<h3 id="toc_10">Project Structure</h3>
+<h4 id="toc_10">Project Structure</h4>
 
 <pre><code class="language-bash">.
 ├── App.js
@@ -276,11 +276,11 @@ npm start
 └── yarn.lock
 </code></pre>
 
-<h4 id="toc_11">與Native版本的分別</h4>
+<h5 id="toc_11">與Native版本的分別</h5>
 
 <p>與Native版本最大分別就是沒有<code>ios/</code>和<code>android/</code>兩個Native projects，取而代之，<code>node_modules/expo</code>會直接使用<code>App.js</code>作為你的<strong>Root Component</strong>。</p>
 
-<h4 id="toc_12">運作Logic</h4>
+<h5 id="toc_12">運作Logic</h5>
 
 <p>看一看<code>package.json</code>：</p>
 
@@ -303,11 +303,11 @@ npm start
 <p><em>（有興趣可以看看<code>node_modules/expo/AppEntry.js</code>）</em><br/>
 <em>（所以說到底其實整個CRNA版本都是<a href="https://docs.expo.io/versions/v26.0.0/workflow/create-react-native-app">依賴Expo運作</a>）</em></p>
 
-<h2 id="toc_13">III. 真正cross-platform react-native - Expo</h2>
+<h3 id="toc_13">III. 真正cross-platform react-native - Expo</h3>
 
 <p><a href="https://expo.io/">Expo</a>是一個幫助你開發React Native project的package，非常推薦使用。</p>
 
-<h3 id="toc_14">為甚麼要用Expo？</h3>
+<h4 id="toc_14">為甚麼要用Expo？</h4>
 
 <ul>
 <li>Dev: 完全不需要處理Native的東西，可以專注寫Javascript。</li>
@@ -317,7 +317,18 @@ npm start
 <li>Update: 透過Expo，User打開App時可以自動 OTA(Over-The-Air) Update 你的App到最新版本。</li>
 </ul>
 
-<h3 id="toc_15">安裝與運行</h3>
+<h4 id="toc_15">缺點</h4>
+
+<p>雖然Expo很方便，但也有一些缺點要留意：</p>
+
+<ul>
+<li>有時Expo提供的功能會有bug</li>
+<li>新版本推出得很快，而舊版本也deprecate得很快</li>
+<li>Build standalone (<code>.ipa</code>/<code>.apk</code>)需要經Expo，但有時會有bug，尤其新版本剛推出的一兩個星期</li>
+<li>Standalone的size有點大，最小約20-30MB</li>
+</ul>
+
+<h4 id="toc_16">安裝與運行</h4>
 
 <p>Expo有兩種方法建立project：</p>
 
@@ -330,11 +341,11 @@ npm start
 <a href="https://docs.expo.io/versions/v26.0.0/workflow/up-and-running">用XDE來新建Project</a><br/>
 本人建議用XDE來日常開發，用exp來deploy、publish和build project。</p>
 
-<h3 id="toc_16">Project Structure</h3>
+<h4 id="toc_17">Project Structure</h4>
 
 <p>與CRNA版本也是大同小異，要注意的是<a href="https://docs.expo.io/versions/v26.0.0/workflow/configuration"><code>app.json</code></a>在這裡是很重要的。</p>
 
-<h3 id="toc_17">Detach</h3>
+<h4 id="toc_18">Detach</h4>
 
 <p>日後如果真的需要加入native code的話，可以選擇<strong>detach</strong>。Detach後會出現<code>ios</code>和<code>android</code>的Native project，你可以fully customize它們，裡面default會使用Expo的方法來運行你的<code>App.js</code>。</p>
 
@@ -344,15 +355,15 @@ npm start
 <li><a href="https://forums.expo.io/t/is-it-possible-to-undetach-a-project/8660/2">可以undetach</a></li>
 </ul>
 
-<h2 id="toc_18">Notes</h2>
+<h2 id="toc_19">Notes</h2>
 
 <p>知道多一點，比較多一點，可以令你更容易做對的決定。</p>
 
-<h3 id="toc_19">Push Notification各版本做法</h3>
+<h3 id="toc_20">Push Notification各版本做法</h3>
 
-<h4 id="toc_20">Expo版本</h4>
+<h4 id="toc_21">Expo版本</h4>
 
-<h5 id="toc_21">1. Expo本身的<a href="https://docs.expo.io/versions/v26.0.0/guides/push-notifications">Push Notification功能</a></h5>
+<h5 id="toc_22">1. Expo本身的<a href="https://docs.expo.io/versions/v26.0.0/guides/push-notifications">Push Notification功能</a></h5>
 
 <ul>
 <li>Apple Push Certificate: 在經過Expo server build project的時候，他們會幫你處理Push Certificate</li>
@@ -360,32 +371,32 @@ npm start
 <li>Send: Send request to Expo server with tokens</li>
 </ul>
 
-<h5 id="toc_22">2. Firebase Cloud Messaging (new in v26.0.0)</h5>
+<h5 id="toc_23">2. Firebase Cloud Messaging (new in v26.0.0)</h5>
 
 <p><a href="https://docs.expo.io/versions/v26.0.0/guides/using-fcm">https://docs.expo.io/versions/v26.0.0/guides/using-fcm</a></p>
 
-<h4 id="toc_23">Native版本</h4>
+<h4 id="toc_24">Native版本</h4>
 
 <p>可以使用各種現有Native工具，而一般大公司多數已經推出react native版本的工具。</p>
 
-<h5 id="toc_24">1. OneSignal</h5>
+<h5 id="toc_25">1. OneSignal</h5>
 
 <p><a href="https://github.com/geektimecoil/react-native-onesignal">https://github.com/geektimecoil/react-native-onesignal</a></p>
 
-<h5 id="toc_25">2. Firebase</h5>
+<h5 id="toc_26">2. Firebase</h5>
 
 <p><a href="https://github.com/invertase/react-native-firebase">https://github.com/invertase/react-native-firebase</a><br/>
 <a href="https://rnfirebase.io/docs/v3.1.x/messaging/reference/messaging">https://rnfirebase.io/docs/v3.1.x/messaging/reference/messaging</a></p>
 
-<h5 id="toc_26">3. AWS</h5>
+<h5 id="toc_27">3. AWS</h5>
 
-<h6 id="toc_27">AWS Mobile Client</h6>
+<h6 id="toc_28">AWS Mobile Client</h6>
 
 <p>你的user開啟app時，用AWS Mobile Client register他們到aws，然後可以叫aws send notification給這些users。</p>
 
 <p><a href="https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html">https://docs.aws.amazon.com/aws-mobile/latest/developerguide/getting-started.html</a></p>
 
-<h6 id="toc_28">React Native SDK（不能用）</h6>
+<h6 id="toc_29">React Native SDK（不能用）</h6>
 
 <p>我找到三個sdk：</p>
 
@@ -395,7 +406,7 @@ npm start
 <li><a href="https://github.com/awslabs/aws-sdk-react-native">aws-sdk-react-native</a>：已日久失修，不知還能否用</li>
 </ol>
 
-<h6 id="toc_29">Amazon SNS Mobile Push（不能用）</h6>
+<h6 id="toc_30">Amazon SNS Mobile Push（不能用）</h6>
 
 <p>基本上是自己取得APN或FCM/GCM token，然後自己動手send到aws，全人手。。。</p>
 
@@ -404,7 +415,7 @@ npm start
 <li>Setup: <a href="https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send.html">https://docs.aws.amazon.com/sns/latest/dg/mobile-push-send.html</a></li>
 </ul>
 
-<h4 id="toc_30">CRNA版本</h4>
+<h4 id="toc_31">CRNA版本</h4>
 
 <p>CRNA App基本上不能做Push Notification，唯一出路就是變成其他版本。</p>
 
@@ -416,7 +427,7 @@ npm start
 
 <p>詳情請細閱<a href="https://github.com/react-community/create-react-native-app/issues/153">這個issue</a>。</p>
 
-<h3 id="toc_31">Over-The-Air Update各版本做法</h3>
+<h3 id="toc_32">Over-The-Air Update各版本做法</h3>
 
 <ul>
 <li>Expo：依賴Expo的<a href="https://docs.expo.io/versions/v26.0.0/workflow/publishing">publish方法</a>，可以分channel update</li>
@@ -527,6 +538,12 @@ npm start
 	      
 		      
 			      <li class="post">
+			        <a href="rails-part1-hello-world-project.html">Ruby on Rails教學 Part 1 - Hello World Project</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="delegation-pattern.html">委託模式 (Delegation pattern)</a>
 			      </li>
 		     
@@ -546,12 +563,6 @@ npm start
 		      
 			      <li class="post">
 			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 - Part 2.5 選擇Navigation Library</a>
 			      </li>
 		     
 		  

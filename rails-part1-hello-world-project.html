@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  Django - Carson's Tech Note
+  Ruby on Rails教學 Part 1 - Hello World Project - Carson's Tech Note
   
   </title>
   
@@ -127,70 +127,231 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="15213187968523.html">
-                
-                  <h1>在Django裡處理One-To-Many Relation</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>建立Relational Database的時候常常會用到One-To-Many Relation，一般都是以Foreign Key的形式儲存。</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Ruby on Rails教學 Part 1 - Hello World Project</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/5/22</span>
 
-<p>Django功能十分齊全，但它的model inheritance設計令所有功能都非常&quot;implicit&quot;，一些功能如果不知道要到哪裡define的話根本無從入手。<br/>
-所以這篇就來紀錄一下如何用Django的ORM處理One-To-Many的Model吧</p>
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Ruby%20on%20Rails.html'>Ruby on Rails</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="rails-part1-hello-world-project.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>Ruby on Rails（簡稱Rails或RoR）是一個Ruby語言的Web開發框架，自2004年推出以來一直非常受歡迎。其特色是它致力以最少的code完成最多的功能，很多時候一行已經可以完成其他框架的一堆if-case（雖然有人會不喜歡自己的code太過於magical，包括我）。</p>
+
+<p>以下按官方教學的流程，嘗試建立一個基本的Hello World project吧。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">架構理念</h2>
+
+<blockquote>
+<ul>
+<li>It is designed to make programming web applications easier by <strong>making assumptions</strong> about what every developer needs to get started.</li>
+<li>Rails is <strong>opinionated</strong> software. It makes the assumption that there is a &quot;best&quot; way to do things.</li>
+<li><strong>Don&#39;t Repeat Yourself (DRY)</strong></li>
+<li><strong>Convention Over Configuration</strong></li>
+</ul>
+</blockquote>
+
+<h2 id="toc_1">&quot;Hello World&quot; project</h2>
+
+<h3 id="toc_2">安裝</h3>
+
+<pre><code class="language-bash">$ ruby -v
+$ sqlite3 --version
+$ gem install rails
+$ rails --version
+</code></pre>
+
+<h3 id="toc_3">建立及運行</h3>
+
+<pre><code class="language-bash">$ rails new blog
+$ cd blog
+$ bin/rails server
+</code></pre>
+
+<p>Browse <a href="http://localhost:3000">http://localhost:3000</a>.</p>
+
+<h3 id="toc_4">Project Structure</h3>
+
+<p>以下只列重要的：</p>
+
+<pre><code class="language-bash">.
+├── Gemfile # Project dependencies
+├── Rakefile # Makefile in Ruby syntax
+├── app # 你的整個application，包括models, views, controllers等等
+├── config # 就是config啊
+├── db # 就是database啊
+├── package.json # npm dependencies，例如以前用jquery需要serve一個static js library file，現在可用npm package代替
+├── public # 放置static files
+├── test # Test files
+└── vendor # 通常用來放3rd-party gems
+</code></pre>
+
+<h3 id="toc_5">新增一個page</h3>
+
+<h4 id="toc_6">先新增page相關的檔案</h4>
+
+<p>Create a new controller and view.</p>
+
+<pre><code class="language-bash">$ bin/rails generate controller Welcome index
+
+create  app/controllers/welcome_controller.rb
+ route  get &#39;welcome/index&#39;
+invoke  erb
+create    app/views/welcome
+create    app/views/welcome/index.html.erb
+invoke  test_unit
+create    test/controllers/welcome_controller_test.rb
+invoke  helper
+create    app/helpers/welcome_helper.rb
+invoke    test_unit
+invoke  assets
+invoke    coffee
+create      app/assets/javascripts/welcome.coffee
+invoke    scss
+create      app/assets/stylesheets/welcome.scss
+</code></pre>
+
+<ul>
+<li><code>$ bin/rails generate controller</code>代表</li>
+</ul>
+
+<h4 id="toc_7">新增了甚麼？</h4>
+
+<ul>
+<li>新controller：<code>app/controllers/welcome_controller.rb</code></li>
+<li>新view：<code>app/views/welcome/index.html.erb</code></li>
+<li>其他：
+
+<ul>
+<li><code>app/helpers/welcome_helper.rb</code></li>
+<li><code>app/assets/javascripts/welcome.coffee</code></li>
+<li><code>app/assets/stylesheets/welcome.scss</code></li>
+</ul></li>
+</ul>
+
+<h5 id="toc_8">Namespacing</h5>
+
+<p>由此可見每次新增controller和view都會在：</p>
+
+<ul>
+<li><code>app/controllers/*_controller.rb</code></li>
+<li><code>app/views/welcome/*.html.erb</code></li>
+</ul>
+
+<p>如果想更仔細分folder，可以在controller的名字前加上：</p>
+
+<pre><code class="language-bash">$ bin/rails generate controller home/welcome index
+</code></pre>
+
+<h4 id="toc_9">這個page應顯示甚麼？</h4>
+
+<p>改一下這個新的<strong>view</strong>:</p>
+
+<pre><code class="language-html">&lt;h1&gt;Hello, Rails!&lt;/h1&gt;
+</code></pre>
+
+<h4 id="toc_10">怎樣到達這個view？</h4>
+
+<p>Route &quot;request to home page&quot; to the new <strong>controller</strong>:</p>
+
+<pre><code class="language-ruby">Rails.application.routes.draw do
+  get &#39;welcome/index&#39;
+ 
+  root &#39;welcome#index&#39;  # add this line
+end
+</code></pre>
+
+<h5 id="toc_11">解釋</h5>
+
+<ul>
+<li><code>get welcome/index</code>代表將<code>/welcome/index</code>的request都交給<code>welcome</code> <strong>controller</strong>中的<code>index</code> <strong>action</strong>處理。
+
+<ul>
+<li>如<code>/welcome/hello</code>就是同一controller的<code>hello</code> action，如此類推。</li>
+</ul></li>
+<li><code>root welcome#index</code>代表將<code>/</code>(root)的request都是交給<code>welcome</code> controller的<code>index</code>處理。（注意這裡是<code>#</code>）</li>
+</ul>
+
+<p>查看 <a href="http://localhost:3000">http://localhost:3000</a> 或者 <a href="http://localhost:3000/welcome/index">http://localhost:3000/welcome/index</a>.</p>
+
+<h2 id="toc_12">建立一個Sample Application</h2>
+
+<p>篇幅所限，請參閱<a href="http://guides.rubyonrails.org/getting_started.html#getting-up-and-running">Rails的官方教學</a>。</p>
+
+<p>這部分主要嘗試：</p>
+
+<ul>
+<li>建立一個新resource</li>
+<li>建立對應的model、view和controller</li>
+<li>嘗試Rails提供的<code>.erb</code> template rendering方法</li>
+<li>為controller加入對應Frontend的CURD功能</li>
+<li>體驗Rails<strong>「背後幫你全部處理好了」</strong>的威力</li>
+</ul>
+
+<h2 id="toc_13">RESTful API Server</h2>
+
+<p>以上的例子是一般後台渲染(Server-side rendering)的網頁結構。如果只想用Rails作為Backend，支援Frontend application、提供RESTful API等等，可以參照官方的文檔 - <a href="http://guides.rubyonrails.org/api_app.html">API-only application</a>。</p>
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968523.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Django.html'>Django</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968523.html#disqus_thread">comments</a>
-                      
+    
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="delegation-pattern.html" 
+          title="Next Post: 委託模式 (Delegation pattern)">委託模式 (Delegation pattern) &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
