@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  Ruby on Rails - Carson's Tech Note
+  React Native教學 Part 3.5 - 概念分析：Declarative Programming - Carson's Tech Note
   
   </title>
   
@@ -127,69 +127,226 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="rails-part1-hello-world-project.html">
-                
-                  <h1>Ruby on Rails教學 Part 1 - Hello World Project</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>Ruby on Rails（簡稱Rails或RoR）是一個Ruby語言的Web開發框架，自2005年推出以來一直非常受歡迎。其特色是它致力以最少的code完成最多的功能，很多時候一行已經可以完成其他框架的一堆if-case（雖然有人會不喜歡自己的code太過於magical，包括我）。</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>React Native教學 Part 3.5 - 概念分析：Declarative Programming</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/5/28</span>
 
-<p>以下按官方教學的流程，嘗試建立一個基本的Hello World project吧。</p>
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="react-native-part3.5-declarative.html#disqus_thread">comments</a>
+            
 
+            
+          </span>
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="rails-part1-hello-world-project.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/5/22</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Ruby%20on%20Rails.html'>Ruby on Rails</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="rails-part1-hello-world-project.html#disqus_thread">comments</a>
-                      
+        </div>
+      </div><!-- article -->
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
+      <div class="article-content">
+      <p>原生iOS和Android的開發者在初次使用React Native時，很容易感到迷惘、不適應（反之亦然），這是因為兩邊的設計理念不同，導致在開發過程中需要的思維也不相同。</p>
+
+<p>React的設計貫徹Declarative Programming（聲明式編程）的思想，與其相反的是Imperative Programming （命令式編程）。這篇介紹一下兩者有甚麼分別，讓大家理解一下兩種理念在實際使用上的分別。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">React的設計理念</h2>
+
+<p>React.js的設計理念主要有三：</p>
+
+<ol>
+<li><strong>Declarative</strong></li>
+<li><strong>Component-Based</strong></li>
+<li><strong>Learn Once, Write Anywhere</strong></li>
+</ol>
+
+<p><img src="media/15275025352188/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-28%2021.20.44.png" alt="React Design Principles"/></p>
+
+<p>後兩者應該頗易理解的，這篇就主要講解Declarative的概念吧。</p>
+
+<h2 id="toc_1">Imperative vs Declarative</h2>
+
+<h3 id="toc_2">定義</h3>
+
+<p>以下是取自Wiki的定義：</p>
+
+<h4 id="toc_3">Imperative</h4>
+
+<blockquote>
+<p>Imperative programming is a programming paradigm that <strong>uses statements that change a program&#39;s state</strong>. <a href="https://en.wikipedia.org/wiki/Imperative_programming">(Reference)</a></p>
+</blockquote>
+
+<h4 id="toc_4">Declarative</h4>
+
+<blockquote>
+<p>Declarative programming is a programming paradigm that <strong>expresses the logic of a computation without describing its control flow</strong>. <a href="https://en.wikipedia.org/wiki/Declarative_programming">(Reference)</a></p>
+</blockquote>
+
+<h3 id="toc_5">How（如何） vs What（甚麼）</h3>
+
+<ul>
+<li><p>Imperative是告訴程式如何做（How）一些事，其實就是平日programming常做的，你寫下指示，程式一步一步跟隨你的指示做。</p></li>
+<li><p>Declarative是聲明你需要甚麼（What），不用理會程式用甚麼方法、甚麼步驟做到。</p></li>
+</ul>
+
+<p>React Component中的<code>render()</code>方法，就是<strong>聲明</strong>不同狀態（state）下，應該顯示<strong>甚麼</strong>Component（而不是親自建立一些Component然後放到view裡面）。</p>
+
+<h2 id="toc_6">實際例子</h2>
+
+<h3 id="toc_7">SQL</h3>
+
+<h4 id="toc_8">Imperative</h4>
+
+<pre><code class="language-ruby">$name = []
+$city = []
+customers.each do |customer|
+    $name.push(customer.name)
+    $city.push(customer.city)
+end
+</code></pre>
+
+<h4 id="toc_9">Declarative</h4>
+
+<pre><code class="language-SQL">SELECT Name, City FROM Customers;
+</code></pre>
+
+<h3 id="toc_10">jQuery vs React</h3>
+
+<h4 id="toc_11">Imperative</h4>
+
+<pre><code class="language-javascript">$(&quot;#btn&quot;).click(function() {
+  $(this).toggleClass(&quot;highlight&quot;)
+  $(this).text() === &#39;Add Highlight&#39;
+    ? $(this).text(&#39;Remove Highlight&#39;)
+    : $(this).text(&#39;Add Highlight&#39;)
+})
+</code></pre>
+
+<h4 id="toc_12">Declarative</h4>
+
+<pre><code class="language-html">&lt;Btn
+  onToggleHighlight={this.handleToggleHighlight}
+  highlight={this.state.highlight}&gt;
+    {this.state.buttonText}
+&lt;/Btn&gt;
+</code></pre>
+
+<p><a href="https://tylermcginnis.com/imperative-vs-declarative-programming/">Reference</a></p>
+
+<h3 id="toc_13">iOS/Android vs React Native</h3>
+
+<p>以動態建立<code>Button</code>作為例子：</p>
+
+<h4 id="toc_14">Imperative</h4>
+
+<h5 id="toc_15">iOS</h5>
+
+<pre><code class="language-swift">class ViewController: UIViewController {
+    @IBOutlet weak var button: !
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-              
+        let buttons = [&quot;Button 1&quot;, &quot;Button 2&quot;]
+        for buttonName in buttons {
+            let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
+            button.setTitle(buttonName, for: .normal)
+            button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+            self.view.addSubview(button)
+        }
+        
+    }
+}
+</code></pre>
+
+<h5 id="toc_16">Android</h5>
+
+<pre><code class="language-java">public class MyActivity extends Activity {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        LinearLayout linearLayout = new LinearLayout(this);
+
+        String[] buttons = {&quot;Button 1&quot;, &quot;Button 2&quot;};
+        for ( int i = 0; i &lt; buttons.length; i++) {
+            Button button = new Button(this);
+            button.setText(buttons[i]);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // ...
+                }
+            });
+            linearLayout.addView(button);
+        }
+ 
+        setContentView(...);
+    }
+}
+</code></pre>
+
+<h4 id="toc_17">Declarative</h4>
+
+<pre><code class="language-javascript">class SomeView extends Component {
+  render() {
+    const buttons = [&quot;Button 1&quot;, &quot;Button 2&quot;]
+    return (
+      buttons.map(name =&gt;
+        &lt;Button title={name} onPress={this.onPressButton} /&gt;
+        );
+    )
+  }
+}
+</code></pre>
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="rails-part1-hello-world-project.html" 
+          title="Next Post: Ruby on Rails教學 Part 1 - Hello World Project">Ruby on Rails教學 Part 1 - Hello World Project &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

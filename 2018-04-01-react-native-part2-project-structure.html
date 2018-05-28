@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  React Native教學 - Part 2 Project Structure - Carson's Tech Note
+  React Native教學 Part 2 - Project Structure - Carson's Tech Note
   
   </title>
   
@@ -136,7 +136,7 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>React Native教學 - Part 2 Project Structure</h1>
+          <h1>React Native教學 Part 2 - Project Structure</h1>
      
         <div class="read-more clearfix">
           <span class="date">2018/4/1</span>
@@ -295,11 +295,11 @@
 
 <p><em>(packager就是類似webpack的工具，幫你打包起整個專案（連同用到的libraries）成一個單獨的js檔)</em></p>
 
-<h2 id="toc_9">III. Send requests with axios</h2>
+<h2 id="toc_9">III. 用axios來進行API Requests</h2>
 
 <p>個人推薦使用<a href="https://facebook.github.io/react-native/docs/network.html">axios</a>來進行ajax requests，以Promise的形式處理所有response，非常方便，而且Github stars已經突破40000，顯示它現在有多受歡迎。</p>
 
-<h3 id="toc_10">Usage</h3>
+<h3 id="toc_10">Basic Usage</h3>
 
 <pre><code>axios.post(&#39;/user&#39;, {
     firstName: &#39;Fred&#39;,
@@ -313,9 +313,140 @@
   });
 </code></pre>
 
+<p><a href="https://github.com/axios/axios#example">axios doc - Example</a></p>
+
 <h3 id="toc_11">Interceptor</h3>
 
-<p>通常app都會有個對應的backend server，[TODO]</p>
+<p>通常app都會有個對應的backend server，這時我們可以建立一個instance，專門負責對應這個server的requests：</p>
+
+<pre><code class="language-javascript">/*
+  A custom axios instance
+  Used for making request to server
+ */
+const service = axios.create({
+  baseURL: &#39;https://www.mybackend.com/api/v1&#39;,
+  timeout: 20000 // 20s timeout
+});
+
+export default service;
+</code></pre>
+
+<p>所有對backend的request都不用<code>axios</code>，而是用這個<code>service</code>（假設放於<code>src/services/request</code>）：</p>
+
+<pre><code class="language-javascript">import service from &#39;@services/request&#39;;
+
+service.get(&#39;/login/&#39;)
+    .then(response =&gt; {})
+    .catch(error =&gt; {});
+</code></pre>
+
+<p><a href="https://github.com/axios/axios#creating-an-instance">axios doc - Creating an instance</a></p>
+
+<p>建立了以上的instance後，我們可以做更多只屬於這個instance的customization。</p>
+
+<h3 id="toc_12">Interceptor</h3>
+
+<h4 id="toc_13">處理API Token</h4>
+
+<p>一般Login後得到的<strong>API Token</strong>都會放在<code>redux store</code>裡儲起，以後每次request到server都會放在header來認證使用者的身分。</p>
+
+<p>在沒有interceptor的情況下，所有endpoint都要自行取得token然後一併傳送：</p>
+
+<pre><code class="language-javascript">
+import service from &#39;@services/request&#39;;
+import { store } from &#39;@/ReduxWrapper&#39;;  // 傳入已初始化的store
+
+export const getUserProfile = () =&gt; {
+  const { token } = store.getState().user;  // 獲取store token
+  const auth_token = &#39;Token &#39; + token;
+  
+  return service.get(&#39;/me/&#39;, {
+    headers: {&#39;Authorization&#39;: auth_token},  // Send with auth token
+  });
+};
+</code></pre>
+
+<p>每個endpoint都要做一次，實在太麻煩了，我們可以加入<strong>Request Interceptor</strong>來幫忙。</p>
+
+<h4 id="toc_14">Request Interceptor</h4>
+
+<pre><code class="language-javascript">const service = axios.create(...);
+
+// 只需在create instance後執行一次就可以了
+service.interceptors.request.use(function (config) {
+    const token = store.getState().user.token;
+    if (token) {
+      // 在headers裡加入token
+      config.headers = {...config.headers, Authorization: `Token ${token}`}
+    }
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+});
+</code></pre>
+
+<p>使用各種endpoint時不用再擔心token的事了。（當然最好處理一下如果沒有token的case）</p>
+
+<pre><code class="language-javascript">import service from &#39;@services/request&#39;;
+
+service.get(&#39;/me/&#39;)
+    .then(response =&gt; {})
+    .catch(error =&gt; {});
+</code></pre>
+
+<h4 id="toc_15">Response Interceptor</h4>
+
+<p>同樣Response也可以使用interceptor。最常處理的case就是<strong>authentication過期</strong>，需要移除token和重新登入。</p>
+
+<pre><code class="language-javascript">service.interceptors.response.use(function (response) {
+  return response.data; // removing status code, etc
+}, function(error) {
+
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+
+    // =========================================================
+    // 這裡假設是401，你也可以和backend商量一個專門而設的code
+    if (error.response.status === 401 &amp;&amp; store.getState().user.token) {
+      /*
+        Token is provided in request AND Token invalid
+        Need to clear token in store
+       */
+      store.dispatch(logout());
+    }
+    // =========================================================
+        
+    return Promise.reject(error.response);
+
+  } else if (error.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    return Promise.reject(error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    return Promise.reject(error.message);
+  }
+
+});
+</code></pre>
+
+<p>需要注意的是Error有三種：</p>
+
+<ul>
+<li>有<code>error.response</code> = Server返回的status code非2xx</li>
+<li>沒有<code>error.response</code> &amp;&amp; 有<code>error.request</code> = Server沒有回應</li>
+<li>沒有<code>error.response</code> &amp;&amp; 沒有<code>error.request</code> = 建立request時發生錯誤，可能request interceptor有error</li>
+</ul>
+
+<p>詳細可看官方文檔<del>（雖然也沒有解釋甚麼）</del>。</p>
+
+<p><a href="https://github.com/axios/axios#interceptors">axios doc - Interceptors</a></p>
+
+<hr/>
+
+<p>下一篇：<a href="2018-04-30-react-native-part2.5-choosing-navigation.html">React Native教學 Part 2.5 - 選擇Navigation Library</a></p>
 
 
     
@@ -327,7 +458,7 @@
         <p class="text-left" style="padding:15px 0px;">
       
           <a href="2018-04-30-react-native-part2.5-choosing-navigation.html" 
-          title="Previous Post: React Native教學 - Part 2.5 選擇Navigation Library">&laquo; React Native教學 - Part 2.5 選擇Navigation Library</a>
+          title="Previous Post: React Native教學 Part 2.5 - 選擇Navigation Library">&laquo; React Native教學 Part 2.5 - 選擇Navigation Library</a>
       
         </p>
         </div>
@@ -335,7 +466,7 @@
       <p class="text-right" style="padding:15px 0px;">
       
           <a  href="15221461803635.html" 
-          title="Next Post: React Native教學 - Part 1 詳盡新手入門">React Native教學 - Part 1 詳盡新手入門 &raquo;</a>
+          title="Next Post: React Native教學 Part 1 - 詳盡新手入門">React Native教學 Part 1 - 詳盡新手入門 &raquo;</a>
       
       </p>
         </div>
@@ -365,7 +496,7 @@
                 <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
             
                 <h1>Carson's Tech Note</h1>
-                <div class="site-des">坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。</div>
+                <div class="site-des">「坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。」- 《學問與遊歷》</div>
                 <div class="social">
 
 
@@ -420,6 +551,12 @@
 	      
 		      
 			      <li class="post">
+			        <a href="react-native-part3.5-declarative.html">React Native教學 Part 3.5 - 概念分析：Declarative Programming</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="rails-part1-hello-world-project.html">Ruby on Rails教學 Part 1 - Hello World Project</a>
 			      </li>
 		     
@@ -439,12 +576,6 @@
 		      
 			      <li class="post">
 			        <a href="application-loader-authenticating-with-the-iTunes-store-solution.html">XCode / Application Loader上傳套件卡關研究</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="2018-03-28-react-native-part3-component.html">React Native教學 - Part 3 Component</a>
 			      </li>
 		     
 		  
