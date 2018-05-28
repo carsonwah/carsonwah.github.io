@@ -311,6 +311,12 @@ end
 }
 </code></pre>
 
+<h2 id="toc_18">效能的考慮</h2>
+
+<p>雖然聲明式好像很方便，但背後卻依賴程式知道你的<strong>甚麼</strong>是<strong>如何</strong>做出來。不止是component在screen上面顯示出來（這當然要做到啊），最麻煩的是當state變動時，如何有<strong>效率地重新刷新一次頁面</strong>。</p>
+
+<p>這方面React用到Virtual DOM和自家的diff演算法，把原本O(n<sup>3</sup>)的複雜度減至O(n)，詳細可看<a href="http://www.infoq.com/cn/articles/react-dom-diff">這篇文章</a>，這裡就不詳述了。</p>
+
 
     
 
@@ -319,6 +325,9 @@ end
       <div class="row">
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="django-admin-open-source-research.html" 
+          title="Previous Post: Django Admin Libraries彙總筆記">&laquo; Django Admin Libraries彙總筆記</a>
       
         </p>
         </div>
@@ -411,6 +420,12 @@ end
 	      
 		      
 			      <li class="post">
+			        <a href="django-admin-open-source-research.html">Django Admin Libraries彙總筆記</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="react-native-part3.5-declarative.html">React Native教學 Part 3.5 - 概念分析：Declarative Programming</a>
 			      </li>
 		     
@@ -430,12 +445,6 @@ end
 		      
 			      <li class="post">
 			        <a href="factory-design-pattern.html">工廠設計模式 (Factory Design Pattern)</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="application-loader-authenticating-with-the-iTunes-store-solution.html">XCode / Application Loader上傳套件卡關研究</a>
 			      </li>
 		     
 		  

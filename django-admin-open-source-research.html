@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  Software Engineering - Carson's Tech Note
+  Django Admin Libraries彙總筆記 - Carson's Tech Note
   
   </title>
   
@@ -127,109 +127,137 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="delegation-pattern.html">
-                
-                  <h1>委託模式 (Delegation pattern)</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>在物件導向程式設計中，有個守則叫做：</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Django Admin Libraries彙總筆記</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/5/28</span>
 
-<blockquote>
-<p>「多用合成，少用繼承」（Composition over inheritance）</p>
-</blockquote>
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Django.html'>Django</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="django-admin-open-source-research.html#disqus_thread">comments</a>
+            
 
-<p>而Delegation就是一個用合成取代繼承的好方法。</p>
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>紀錄一些擴充、改進django admin的open source libraries。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">總覽</h2>
+
+<ul>
+<li><a href="http://awesome-django.com/#awesome-django-admin-interface">http://awesome-django.com/#awesome-django-admin-interface</a></li>
+<li><a href="https://djangopackages.org/grids/g/admin-styling/">https://djangopackages.org/grids/g/admin-styling/</a></li>
+</ul>
+
+<h2 id="toc_1">精選</h2>
+
+<h3 id="toc_2">I. 美化介面類</h3>
+
+<h4 id="toc_3">Django Grappelli (~2400 stars)</h4>
+
+<p><a href="https://github.com/sehmaschine/django-grappelli">https://github.com/sehmaschine/django-grappelli</a></p>
+
+<p><img src="media/15275029253423/15275046463247.jpg" alt=""/></p>
+
+<h4 id="toc_4">Django Jet (~1500 stars)</h4>
+
+<p><a href="https://github.com/geex-arts/django-jet">https://github.com/geex-arts/django-jet</a><br/>
+<a href="http://jet.readthedocs.io/en/latest/getting_started.html">http://jet.readthedocs.io/en/latest/getting_started.html</a></p>
+
+<p><img src="media/15275029253423/15275030331192.png" alt=""/></p>
+
+<h4 id="toc_5">Django Suit (~1500 stars)</h4>
+
+<p><a href="https://github.com/darklow/django-suit">https://github.com/darklow/django-suit</a></p>
+
+<p><img src="media/15275029253423/15275047269206.png" alt=""/></p>
+
+<h4 id="toc_6">Responsive Django Admin (~600 stars)</h4>
+
+<p><a href="https://github.com/douglasmiranda/django-admin-bootstrap">https://github.com/douglasmiranda/django-admin-bootstrap</a></p>
+
+<p><img src="media/15275029253423/15275032297057.jpg" alt=""/></p>
+
+<h4 id="toc_7">django-admin-interface (~200 stars)</h4>
+
+<p><a href="https://github.com/fabiocaccamo/django-admin-interface">https://github.com/fabiocaccamo/django-admin-interface</a></p>
+
+<p><img src="media/15275029253423/15275032978161.gif" alt=""/></p>
+
+<h3 id="toc_8">II. 改進功能類</h3>
+
+<h4 id="toc_9">django-admin2 (~1000 stars)</h4>
+
+<p><a href="https://github.com/jazzband/django-admin2/">https://github.com/jazzband/django-admin2/</a></p>
+
+<p><img src="media/15275029253423/15275043369435.png" alt=""/></p>
+
+<h3 id="toc_10">III. 特異功能類</h3>
+
+<h4 id="toc_11">Wagtail CMS (~5500 stars)</h4>
+
+<p><a href="https://github.com/wagtail/wagtail">https://github.com/wagtail/wagtail</a></p>
+
+<p>Articles Website用，有很多自訂Page components，可以直接在admin panel publish <strong>rich text format</strong> articles。</p>
+
+<p><img src="media/15275029253423/15275033801084.jpg" alt=""/></p>
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="delegation-pattern.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/5/15</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='design-pattern.html'>Design Pattern</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="delegation-pattern.html#disqus_thread">comments</a>
-                      
+    
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="factory-design-pattern.html">
-                
-                  <h1>工廠設計模式 (Factory Design Pattern)</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>工廠設計模式屬於「創建型模式」，規範「如何創建新Object」的程序設計。簡單來說就是故名思義，把創建的過程交給「工廠（Factory）」去做，而不是用家自己做。</p>
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="react-native-part3.5-declarative.html" 
+          title="Next Post: React Native教學 Part 3.5 - 概念分析：Declarative Programming">React Native教學 Part 3.5 - 概念分析：Declarative Programming &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="factory-design-pattern.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/5/15</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='design-pattern.html'>Design Pattern</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="factory-design-pattern.html#disqus_thread">comments</a>
-                      
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
-
-
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
