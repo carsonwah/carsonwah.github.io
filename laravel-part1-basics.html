@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  React Native教學 Part 3 - Component - Carson's Tech Note
+  Laravel教學 Part 1 - 新手入門 - Carson's Tech Note
   
   </title>
   
@@ -136,19 +136,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>React Native教學 Part 3 - Component</h1>
+          <h1>Laravel教學 Part 1 - 新手入門</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/4/30</span>
+          <span class="date">2018/5/30</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
+              <span class="posted-in"><a href='laravel.html'>Laravel</a></span>
            
          
           <span class="comments">
             
-              <a href="2018-03-28-react-native-part3-component.html#disqus_thread">comments</a>
+              <a href="laravel-part1-basics.html#disqus_thread">comments</a>
             
 
             
@@ -158,234 +158,305 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>在開發傳統web的frontend，一般是分開<code>html</code>, <code>css</code>, <code>js</code>三種文件來寫，但在React的世界裡，所有東西都存在於js檔當中。這些js檔主要都是圍繞<strong>Components</strong>來開發。以下介紹有關<strong>React Component的概念和實作</strong>。</p>
+      <p>以下介紹初學Laravel需要知道的檔案結構和概念。</p>
 
 <span id="more"></span><!-- more -->
 
-<p><em>本篇有些地方講述有關React的概念，對ReactJS熟悉的朋友可以跳過那部分</em></p>
+<p><em>(基於Laravel v5.6)</em></p>
 
-<h2 id="toc_0">I. 建立第一個基本Component</h2>
-
-<h3 id="toc_1">Import</h3>
-
-<p>兩種方法import component：</p>
-
-<ol>
-<li><code>import React, { Component } from &#39;react&#39;</code></li>
-<li><code>import React from &#39;react&#39;</code>，然後用<code>React.Component</code></li>
-</ol>
-
-<p>個人推薦[1]。注意即使只用到Component也要一併<strong>import React</strong>。</p>
-
-<h3 id="toc_2">基本結構</h3>
-
-<p>取自<a href="http://facebook.github.io/react-native/">React Native home page</a></p>
-
-<pre><code class="language-javascript">import React, { Component } from &#39;react&#39;;
-import { Text, View } from &#39;react-native&#39;;
-
-class WhyReactNativeIsSoGreat extends Component {
-  render() {
-    return (
-      &lt;View&gt;
-        &lt;Text&gt;
-          If you like React on the web, you&#39;ll like React Native.
-        &lt;/Text&gt;
-        &lt;Text&gt;
-          You just use native components like &#39;View&#39; and &#39;Text&#39;,
-          instead of web components like &#39;div&#39; and &#39;span&#39;.
-        &lt;/Text&gt;
-      &lt;/View&gt;
-    );
-  }
-}
-</code></pre>
+<h2 id="toc_0">Routing</h2>
 
 <ul>
-<li><code>class</code>是ES6的新功能，作用就是和其他語言的class相近，react native使用自家的<a href="https://github.com/facebook/metro">Metro bundler</a></li>
-</ul>
-
-<h3 id="toc_3">Render</h3>
+<li>Web Views: <code>routes/web.php</code></li>
+<li>API: <code>routes/api.php</code>
 
 <ul>
-<li>每個Component都<strong>必須</strong>override <code>render()</code> method</li>
-<li><code>render()</code>裡面<strong>必須</strong>return一個Component
-
-<ul>
-<li>Component多數以<strong>JSX</strong> declare</li>
-<li><em><code>render()</code>只能return一個Component，如果要多於一個，需要用一個<code>&lt;View&gt;</code>來打包</em></li>
+<li>預設的<code>RouteServiceProvider</code>會把這裡所有routes都自動prefix了<code>api/</code></li>
 </ul></li>
 </ul>
 
-<h3 id="toc_4">JSX</h3>
+<h2 id="toc_1">Request &amp; Response</h2>
 
-<p><a href="http://facebook.github.io/jsx/">JSX (Javascript XML)</a>是Facebook提出的一種語法，希望在JS檔案中，也可以方便地建立UI Component。</p>
+<h3 id="toc_2">Callback function</h3>
 
-<p>React很大程度上依賴這種語法，例如上面的<code>render()</code>裡面return了一個以JSX寫成的Component。</p>
+<h4 id="toc_3">基本用法</h4>
 
-<h3 id="toc_5">Props passing</h3>
-
-<p>Parent可以把一些data以 <em>props</em> 的形式，pass到child component當中。</p>
-
-<pre><code class="language-javascript">&lt;CustomComponent data=&#39;Hello World&#39;&gt;
-&lt;/CustomComponent&gt;
+<pre><code class="language-php">Route::get(&#39;/&#39;, function () {
+    return &#39;Hello World&#39;;
+});
 </code></pre>
 
-<p>很重要也一定會用到，下一篇會詳細談。</p>
+<h4 id="toc_4">加上parameters</h4>
 
-<h3 id="toc_6">理解ES2015/ES6</h3>
+<pre><code class="language-php">Route::get(&#39;posts/{post}/comments/{comment}&#39;, function ($postId, $commentId) {
+    //
+});
 
-<p>如果沒有接觸過ES6版本的javascript的話可以先看看<a href="https://babeljs.io/learn-es2015/">這裡</a>理解一下新的語法（例如<code>import</code>, <code>class</code>, <code>extends</code>, <code>() =&gt; {}</code>），基本上React Native的開發經常會使用到ES6甚至ES7的功能。</p>
+// Optional
+Route::get(&#39;user/{name?}&#39;, function ($name = null) {
+    return $name;
+});
 
-<h2 id="toc_7">II. 使用更多Components</h2>
-
-<p>Components是app的核心，react-native提供各種基本的Native UI Components，可以直接使用，也可以基於它們開發自己的Custom Components。</p>
-
-<h3 id="toc_8">Native Components</h3>
-
-<p><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">官方列表</a></p>
-
-<h3 id="toc_9">Custom Components</h3>
-
-<p>例如在<code>src/components/Button/index.js</code>中：</p>
-
-<pre><code class="language-javascript">import React, { Component } from &#39;react&#39;;
-import { Button } from &#39;react-native&#39;;
-
-export default class CustomButton extends Component {
-  render() {
-    return (
-      &lt;View style={{ backgroundColor: &#39;red&#39;}}&gt;
-        &lt;Button onPress={this.props.onPress} /&gt;
-      &lt;/View&gt;
-    );
-  }
-};
+// Regex
+Route::get(&#39;user/{id}/{name}&#39;, function ($id, $name) {
+    //
+})-&gt;where([&#39;id&#39; =&gt; &#39;[0-9]+&#39;, &#39;name&#39; =&gt; &#39;[a-z]+&#39;]);
 </code></pre>
 
-<p>然後在其他地方：</p>
+<h3 id="toc_5">View response</h3>
 
-<pre><code class="language-javascript">import CustomButton from &#39;@components/Button&#39;;
-...
-&lt;CustomButton onPress={this.onPressButton} /&gt;
+<h4 id="toc_6">使用global view helper</h4>
+
+<pre><code class="language-php">Route::get(&#39;/&#39;, function () {
+    return view(&#39;welcome&#39;);
+});
 </code></pre>
 
-<h2 id="toc_10">III. Customizing Components</h2>
+<p>預設會返回<code>resources/views/{view_name}.blade.php</code>。</p>
 
-<h3 id="toc_11">CSS in js</h3>
+<h5 id="toc_7">Blade</h5>
 
-<p>在React Native的世界裡，<code>css</code>只是一些<strong>JS objects</strong>。</p>
+<p><code>.blade.php</code>代表它不是一般php檔，而是基於blade的template檔。</p>
 
-<h4 id="toc_12">Inline寫法</h4>
+<p><a href="https://laravel.com/docs/5.6/blade">Blade</a>是Laravel提供的一個Template Engine，提供方便的語法讓你render想要的資訊。</p>
 
-<pre><code class="language-javascript">&lt;View style={{backgroundColor: &#39;red&#39;}}&gt;
+<p><a href="https://www.culttt.com/2013/09/02/using-blade-laravel-4/">使用Blade Template Engine的好處</a></p>
+
+<h3 id="toc_8">Redirect</h3>
+
+<pre><code class="language-php">Route::get(&#39;dashboard&#39;, function () {
+    return redirect(&#39;home/dashboard&#39;);
+});
+</code></pre>
+
+<h3 id="toc_9">HTTP Response</h3>
+
+<pre><code class="language-php">Route::get(&#39;home&#39;, function () {
+    return response(&#39;Hello World&#39;, 200)
+                  -&gt;header(&#39;Content-Type&#39;, &#39;text/plain&#39;);
+});
+</code></pre>
+
+<h4 id="toc_10">JSON</h4>
+
+<pre><code class="language-php">return response()-&gt;json([
+    &#39;name&#39; =&gt; &#39;Abigail&#39;,
+    &#39;state&#39; =&gt; &#39;CA&#39;
+]);
+</code></pre>
+
+<h2 id="toc_11">Controller</h2>
+
+<p>一般以上的callback不適合放一大堆logics，更多時候我們會使用controller來處理。</p>
+
+<p><a href="https://laravel.com/docs/5.6/controllers">官方Controller Doc</a></p>
+
+<h3 id="toc_12">基本用法</h3>
+
+<pre><code class="language-bash">php artisan make:controller SomeController
+</code></pre>
+
+<p>新增於<code>app/Http/Controllers/{}.php</code>。</p>
+
+<pre><code class="language-php">Route::get(&#39;user/{id}&#39;, &#39;UserController@show&#39;);
+</code></pre>
+
+<h3 id="toc_13">Resource controller</h3>
+
+<p>提供基本CRUD的controller。</p>
+
+<h4 id="toc_14">新增Controller</h4>
+
+<pre><code class="language-bash">php artisan make:controller PhotoController --resource --model=Something
+</code></pre>
+
+<h4 id="toc_15">Define routes</h4>
+
+<pre><code class="language-php">Route::resource(&#39;photos&#39;, &#39;PhotoController&#39;);
+
+// multiple
+Route::resources([
+    &#39;photos&#39; =&gt; &#39;PhotoController&#39;,
+    &#39;posts&#39; =&gt; &#39;PostController&#39;
+]);
+
+// Partial
+Route::resource(&#39;photos&#39;, &#39;PhotoController&#39;)-&gt;only([
+    &#39;index&#39;, &#39;show&#39;
+]);
+
+// Except
+Route::resource(&#39;photos&#39;, &#39;PhotoController&#39;)-&gt;except([
+    &#39;create&#39;, &#39;store&#39;, &#39;update&#39;, &#39;destroy&#39;
+]);
+</code></pre>
+
+<h4 id="toc_16">Routes與對應Methods一覽</h4>
+
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Method</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>GET <code>/photos</code></td>
+<td>index</td>
+</tr>
+<tr>
+<td>GET <code>/photos/create</code></td>
+<td>create</td>
+</tr>
+<tr>
+<td>POST <code>/photos</code></td>
+<td>store</td>
+</tr>
+<tr>
+<td>GET <code>/photos/{photo}</code></td>
+<td>show</td>
+</tr>
+<tr>
+<td>GET <code>/photos/{photo}/edit</code></td>
+<td>edit</td>
+</tr>
+<tr>
+<td>PUT <code>/PATCH   /photos/{photo}</code></td>
+<td>update</td>
+</tr>
+<tr>
+<td>DELETE <code>/photos/{photo}</code></td>
+<td>destroy</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="toc_17">Model &amp; Database</h2>
+
+<h3 id="toc_18">Migration</h3>
+
+<p><a href="https://laravel.com/docs/5.6/migrations">官方Migration Doc</a></p>
+
+<p>一般Model都和Database脫不了關係，先了解一下DB migration怎麼做。</p>
+
+<h4 id="toc_19">新增Model &amp; DB Table</h4>
+
+<pre><code class="language-bash">php artisan make:model Something
+php artisan make:migration create_something_table
+# 或
+php artisan make:model Something
+php artisan make:migration something --create=something
+# 或
+php artisan make:model Something --migration
+# 或
+php artisan make:model Something -m
 </code></pre>
 
 <ul>
-<li><code>style={}</code>是JSX寫法，<code>{}</code>裡面容許任何valid JS code
-
-<ul>
-<li>有時只是string的話可以省略，例如：<code>title=&#39;hello&#39;</code></li>
-</ul></li>
-<li><code>{backgroundColor: &#39;red&#39;}</code>是一個js object</li>
+<li><code>create_xxx_table</code>是convention的命名方法</li>
+<li><code>--create=xxx</code>設定要新增的table名稱</li>
+<li>Model新增於<code>app/Something.php</code></li>
+<li>Migration新增於<code>database/migrations</code></li>
 </ul>
 
-<h4 id="toc_13">慣常做法</h4>
+<h5 id="toc_20">Default create</h5>
 
-<p>在Component檔裡面直接define一個styles object，例如以下例子：</p>
+<p>有<code>--create</code>或名稱為<code>create_xxx_table</code>或使用<code>-m</code>的話，會自動幫你加入create table相關的code：</p>
 
-<pre><code class="language-javascript">
-import React, { Component } from &#39;react&#39;;
-import { Button } from &#39;react-native&#39;;
-
-export default class CustomButton extends Component {
-  render() {
-    return (
-      &lt;View style={styles.buttonWrapper}&gt;
-        &lt;Button onPress={this.props.onPress} /&gt;
-      &lt;/View&gt;
-    );
-  }
-};
-
-const styles = {
-  buttonWrapper: {
-    backgroundColor: &#39;red&#39;
-  },
-};
-</code></pre>
-
-<ul>
-<li>一般css會用<code>background-color</code>，但所有react-native的style都是<strong>camelCase</strong></li>
-<li>盡量使用<code>const</code>，有時可以用<code>let</code>，永遠不要用<code>var</code></li>
-<li>backgroundColor可以用顏色名、Hex code等，<a href="https://facebook.github.io/react-native/docs/colors.html">官方Color list</a></li>
-<li><a href="https://facebook.github.io/react-native/docs/view-style-props.html">官方View style props list</a></li>
-</ul>
-
-<h3 id="toc_14">Flexbox Layout</h3>
-
-<p>使用前應先理解Web上的flexbox如何運作：</p>
-
-<ul>
-<li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">A Complete Guide to Flexbox | CSS-Tricks</a></li>
-<li><a href="https://www.w3schools.com/css/css3_flexbox.asp">CSS Flexbox (Flexible Box) - W3Schools</a></li>
-<li><a href="https://facebook.github.io/react-native/docs/flexbox.html">RN官方文檔 - Layout with Flexbox</a></li>
-</ul>
-
-<h4 id="toc_15">大小settings</h4>
-
-<p>常用的：</p>
-
-<ul>
-<li><code>flex</code>：Real numbers, e.g. 1</li>
-<li><code>height/width</code>：例如&#39;100%&#39;，或者10（代表10 device pixels）</li>
-<li><code>minHeight/maxHeight/minWidth/maxWidth</code></li>
-</ul>
-
-<h4 id="toc_16">排版settings</h4>
-
-<p>主要常用的：</p>
-
-<ul>
-<li><code>flexDirection</code>：<code>column</code>或者<code>row</code>，<strong>default是<code>column</code></strong>（不同於web flexbox）</li>
-<li><code>justifyContent</code></li>
-<li><code>alignItems</code></li>
-</ul>
-
-<p>以例子學習：</p>
-
-<pre><code class="language-javascript">  return (
-    &lt;View style={styles.wrapper}&gt;
-      &lt;Text&gt;Hello World&lt;/Text&gt;
-    &lt;/View&gt;
-    )
-...
-const styles = {
-  wrapper: {
-    flexDirection: &#39;column&#39;,  // 其實這行可以不寫
-    justifyContent: &#39;flex-start&#39;,
-    alignItems: &#39;center&#39;,
-  }
+<pre><code class="language-php">class Something extends Migration
+{
+    public function up()
+    {
+        Schema::create(&#39;something&#39;, function (Blueprint $table) {
+            $table-&gt;increments(&#39;id&#39;);
+            $table-&gt;timestamps();
+        });
+    }
+    public function down()
+    {
+        Schema::dropIfExists(&#39;something&#39;);
+    }
 }
 </code></pre>
 
-<p>Expo snack：<a href="https://snack.expo.io/B18E8Kuaz">https://snack.expo.io/B18E8Kuaz</a></p>
+<h4 id="toc_21">更改Model</h4>
 
-<p>結果：</p>
+<pre><code class="language-bash">php artisan make:migration add_votes_to_users_table --table=users
+</code></pre>
 
-<p><img src="media/15221470476650/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7%202018-05-03%2020.52.37.png" alt="螢幕快照 2018-05-03 20.52.37" style="width:300px;"/></p>
+<p>設定<code>--table=users</code>會自動加入以下code：</p>
 
-<p>其他就自行發掘吧。</p>
+<pre><code class="language-php">public function up()
+    {
+        Schema::table(&#39;users&#39;, function (Blueprint $table) {
+            //
+        });
+    }
+    public function down()
+    {
+        Schema::table(&#39;users&#39;, function (Blueprint $table) {
+            //
+        });
+    }
+</code></pre>
 
-<h2 id="toc_17">IV. 結語</h2>
+<h4 id="toc_22">執行Migration</h4>
 
-<p>這篇介紹了有關React Native Components的基本概念，現在這些Component只能<code>render()</code> UI，沒有甚麼功能。</p>
+<pre><code class="language-bash">php artisan migrate
+</code></pre>
 
-<p>日後會詳述Component中可以override的methods，使它們能做更多事，例如send request to server。</p>
+<p><em>（當然要先設置好Database）</em></p>
 
-<hr/>
+<h3 id="toc_23">Model</h3>
 
-<p>下一篇：<a href="react-native-part3.5-declarative.html">React Native教學 Part 3.5 - 概念分析：Declarative Programming</a></p>
+<p><a href="https://laravel.com/docs/5.6/eloquent">官方Model doc</a></p>
+
+<h4 id="toc_24">初始狀態</h4>
+
+<pre><code class="language-php">class Something extends Model
+{
+    //
+}
+</code></pre>
+
+<p>雖然甚麼也沒有，其實已經可以開始使用了。</p>
+
+<p>Laravel的models有很多<strong>by convention</strong>地存在的東西，例如<code>id</code>、<code>created_at</code>、<code>updated_at</code>等等。</p>
+
+<h4 id="toc_25">取得instances</h4>
+
+<pre><code class="language-php">use App\Flight;
+
+$flights = App\Flight::all();
+foreach ($flights as $flight) {
+    echo $flight-&gt;name;
+}
+
+$flights = App\Flight::where(&#39;active&#39;, 1)
+               -&gt;orderBy(&#39;name&#39;, &#39;desc&#39;)
+               -&gt;take(10)
+               -&gt;get();
+               
+$flight = App\Flight::find(1);
+
+$count = App\Flight::where(&#39;active&#39;, 1)-&gt;count();
+
+$max = App\Flight::where(&#39;active&#39;, 1)-&gt;max(&#39;price&#39;);
+</code></pre>
+
+<h4 id="toc_26">Available Methods</h4>
+
+<p><a href="https://laravel.com/docs/5.6/eloquent-collections#available-methods">https://laravel.com/docs/5.6/eloquent-collections#available-methods</a></p>
+
+<h4 id="toc_27">其他操作</h4>
+
+<p><a href="https://laravel.com/docs/5.6/eloquent#inserting-and-updating-models">https://laravel.com/docs/5.6/eloquent#inserting-and-updating-models</a></p>
+
+<h4 id="toc_28">Event &amp; Observer</h4>
+
+<p><a href="https://laravel.com/docs/5.6/eloquent#events">https://laravel.com/docs/5.6/eloquent#events</a></p>
 
 
     
@@ -396,16 +467,13 @@ const styles = {
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="application-loader-authenticating-with-the-iTunes-store-solution.html" 
-          title="Previous Post: XCode / Application Loader上傳套件卡關研究">&laquo; XCode / Application Loader上傳套件卡關研究</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="2018-04-30-react-native-part2.5-choosing-navigation.html" 
-          title="Next Post: React Native教學 Part 2.5 - 選擇Navigation Library">React Native教學 Part 2.5 - 選擇Navigation Library &raquo;</a>
+          <a  href="django-admin-open-source-research.html" 
+          title="Next Post: Django Admin Libraries彙總筆記">Django Admin Libraries彙總筆記 &raquo;</a>
       
       </p>
         </div>
