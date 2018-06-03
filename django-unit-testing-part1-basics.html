@@ -183,7 +183,8 @@ class AnimalTestCase(TestCase):
 </code></pre>
 
 <ul>
-<li>Django的test其實背後使用<a href="https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch">unittest</a>。但記得用<code>django.test.TestCase</code>，才能支援使用Database。</li>
+<li>Django的test其實背後使用<a href="https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch">unittest</a></li>
+<li>用<code>django.test.TestCase</code>，能支援db transaction，而相反<code>unittest.TestCase</code>能省下一些db lock時間，要自己衡量一下</li>
 <li><code>TestCase.setUp</code>是準備test data的地方（一般是建立database objects）</li>
 </ul>
 
