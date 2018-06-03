@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  Developer Tools - Carson's Tech Note
+  Django Unit Testing - Part 2 Mocking - Carson's Tech Note
   
   </title>
   
@@ -127,144 +127,260 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="15213187968804.html">
-                
-                  <h1>Git的常用指令和工作流程</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968804.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='git.html'>Git</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968804.html#disqus_thread">comments</a>
-                      
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Django Unit Testing - Part 2 Mocking</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/6/4</span>
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="15213187968857.html">
-                
-                  <h1>將本地Project放到Github</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">TL;DR</h2>
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Django.html'>Django</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="django-unit-testing-part2-mocking.html#disqus_thread">comments</a>
+            
 
-<pre><code class="language-shell">$ git init
-$ git add .
-$ git commit -m &quot;First commit&quot;
-$ git remote add origin https://github.com/NAME/REPO.git
-$ git push -u origin master
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p><strong>Mocking</strong>（模仿）對Testing十分重要，它可以取代本來system會做的某些功能，通常用於：</p>
+
+<ol>
+<li>Network Request（太費時了）</li>
+<li>一些複雜的Dependencies（避免需要準備太多東西/不想被其他module影響到）</li>
+<li>修改當前時間（尤其是依賴<code>datetime.now()</code>的function）</li>
+</ol>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">各種mock</h2>
+
+<p><a href="https://docs.python.org/3/library/unittest.mock.html">unittest.mock 官方文檔</a></p>
+
+<pre><code class="language-python">from django.test import mock
+# 本來是 from unittest import mock
+</code></pre>
+
+<h3 id="toc_1">Mock</h3>
+
+<p>建立一個<code>Mock</code> object來test：</p>
+
+<pre><code class="language-python">m = Mock()
+m.method()
+m.method.assert_called()  # OK
+
+m.hahaha()  # 甚麼名字也會自動變成valid method
+m.hahaha.assert_called_once()  # OK
+</code></pre>
+
+<p>最主要有幾種用法：</p>
+
+<ol>
+<li>spec</li>
+<li>side_effect</li>
+<li>return_value</li>
+</ol>
+
+<h4 id="toc_2">spec</h4>
+
+<p>設定這個mock是甚麼：</p>
+
+<pre><code class="language-python">mock = Mock(spec=3)
+isinstance(mock, int)  # True
+</code></pre>
+
+<pre><code class="language-python">def f(a, b, c): pass
+mock = Mock(spec=f)
+mock(1, 2, c=3)
+mock.assert_called_with(1, 2, 3)  # OK
+mock.assert_called_with(a=1, b=2, c=3)  # OK
+</code></pre>
+
+<h4 id="toc_3">side_effect</h4>
+
+<p>每次mock被call的時候都會run一次。</p>
+
+<p>可用作三種東西：</p>
+
+<h5 id="toc_4">Exception</h5>
+
+<pre><code class="language-python">mock = Mock(side_effect=KeyError(&#39;foo&#39;))
+mock()  # KeyError
+</code></pre>
+
+<h5 id="toc_5">Function</h5>
+
+<pre><code class="language-python">side_effect = lambda value: value + 1
+mock = Mock(side_effect=side_effect)
+mock(1)  # 2
+mock(-5)  # -4
+</code></pre>
+
+<h5 id="toc_6">Iterable</h5>
+
+<pre><code class="language-python">mock = Mock(side_effect=[1,2,3])
+mock()  # 1
+mock()  # 2
+mock()  # 3
+mock()  # StopIteration Error
+</code></pre>
+
+<h4 id="toc_7">return_value</h4>
+
+<p>最簡單的功能了，就是call的時候return一些固定的東西。</p>
+
+<p>(有<code>side_effect</code>的話，<code>side_effect</code>優先)</p>
+
+<pre><code class="language-python">mock = Mock(return_value=3)
+mock()  # 3
+mock()  # 3
+</code></pre>
+
+<h4 id="toc_8">MagicMock</h4>
+
+<p><code>MagicMock</code>是<code>Mock</code>的subclass，通常會直接這個而不用<code>Mock</code>，因為它支援了很多python的原生功能，例如<code>__str__</code>，詳細可見<a href="https://docs.python.org/3/library/unittest.mock.html#magicmock-and-magic-method-support">這裡</a>。</p>
+
+<p><a href="https://stackoverflow.com/questions/17181687/mock-vs-magicmock">StackOverflow - Mock vs MagicMock</a></p>
+
+<p>其他<code>Mock</code>的詳細用法可參見<a href="https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock">官方文檔</a>。</p>
+
+<h3 id="toc_9">patch</h3>
+
+<p>替換module裡的任何東西，可用作decorator或with-block。</p>
+
+<p><a href="https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch">https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch</a></p>
+
+<h4 id="toc_10">Patch一個class進去function argument</h4>
+
+<pre><code class="language-python">class SomeClass:
+    pass
+
+@patch(&#39;__main__.SomeClass&#39;)
+def function(normal_argument, mock_class):
+    print(normal_argument)
+    print(mock_class is SomeClass)
+
+function(123)
+# 123
+# True
+</code></pre>
+
+<h4 id="toc_11">Patch一個class成為Mock object：</h4>
+
+<pre><code class="language-python">class Class:
+    def method(self):
+        pass
+
+with patch(&#39;__main__.Class&#39;) as Mock:
+    instance = MockClass.return_value
+    instance.method.return_value = &#39;foo&#39;
+    assert Class() is instance  # OK
+    assert Class().method() == &#39;foo&#39;
+</code></pre>
+
+<h4 id="toc_12">替換成new_callable</h4>
+
+<pre><code class="language-python">thing = object()
+with patch(&#39;__main__.thing&#39;, new_callable=NonCallableMock) as mock_thing:
+    assert thing is mock_thing  # OK
+    thing()  # Error
+</code></pre>
+
+<h4 id="toc_13">return_value</h4>
+
+<pre><code class="language-python">from datetime import datetime
+with patch(&#39;__main__.datetime.now&#39;, return_value=datetime.now().replace(hour=0, minute=0)):
+        datetime.now()  # datetime(2018, xx, xx, 0, 0, x, xxxxxx)
+</code></pre>
+
+<h4 id="toc_14">side_effect</h4>
+
+<pre><code class="language-python">@mock.patch(&#39;requests.get&#39;, side_effect=mocked_requests_get)
+</code></pre>
+
+<h2 id="toc_15">實用例子</h2>
+
+<h3 id="toc_16">Mock network request</h3>
+
+<p>很好的例子：<a href="https://stackoverflow.com/a/28507806/6025730">https://stackoverflow.com/a/28507806/6025730</a></p>
+
+<h3 id="toc_17">Mock datetime</h3>
+
+<pre><code class="language-python">from django.test import TestCase, mock
+from django.utils import timezone
+
+from some_app.models import Restaurant
+
+class SomeTestCase(TestCase):
+    def setUp(self):
+        Restaurant.objects.create(
+            name=&#39;Test1&#39;,
+            auto_open_at=&#39;18:00&#39;,  # should auto open at 18:00
+        )
+
+    def test_auto_open_restaurants(self):
+        restaurant = Restaurant.active_objects.get(name=&#39;Test1&#39;)
+        self.assertEqual(restaurant.is_open, False)  # OK: Not opened yet
+        with mock.patch(
+                &#39;some_app.models.timezone.now&#39;,  # which will be used in auto_open_restaurants()
+                return_value=timezone.now().replace(hour=18, minute=0)  # Should consider timezone if django.settings.USE_TZ=true (e.g. 18:00 UTC+8 =&gt; 10:00 UTC)
+        ):
+            auto_open_restaurants()  # Should auto open here no matter when I run the test
+            restaurant = Restaurant.active_objects.get(name=&#39;Test1&#39;)
+            self.assertEqual(restaurant.is_open, True)  # OK
 </code></pre>
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968857.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='git.html'>Git</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968857.html#disqus_thread">comments</a>
-                      
+    
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="15213187968912.html">
-                
-                  <h1>git pull或push不用再打密碼</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>快速設置Git，以後<code>git pull</code> <code>git push</code>都不用再打帳號密碼了。</p>
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="django-unit-testing-part1-basics.html" 
+          title="Next Post: Django Unit Testing - Part 1 Basics">Django Unit Testing - Part 1 Basics &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968912.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='git.html'>Git</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968912.html#disqus_thread">comments</a>
-                      
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
-
-
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

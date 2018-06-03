@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  Developer Tools - Carson's Tech Note
+  Django Unit Testing - Part 1 Basics - Carson's Tech Note
   
   </title>
   
@@ -127,144 +127,146 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="15213187968804.html">
-                
-                  <h1>Git的常用指令和工作流程</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968804.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='git.html'>Git</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968804.html#disqus_thread">comments</a>
-                      
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>Django Unit Testing - Part 1 Basics</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/6/4</span>
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="15213187968857.html">
-                
-                  <h1>將本地Project放到Github</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2 id="toc_0">TL;DR</h2>
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Django.html'>Django</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="django-unit-testing-part1-basics.html#disqus_thread">comments</a>
+            
 
-<pre><code class="language-shell">$ git init
-$ git add .
-$ git commit -m &quot;First commit&quot;
-$ git remote add origin https://github.com/NAME/REPO.git
-$ git push -u origin master
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>Testing是寫出好Software的必備條件。它可以讓你推出新功能時有足夠信心你的system可以正常運作，不用人手到處test，也可以及早發現bug，等等等等。</p>
+
+<p>這篇就先看看在Django如何建立基本的test。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">Basic Test</h2>
+
+<pre><code class="language-python">from django.test import TestCase
+from myapp.models import Animal
+
+class AnimalTestCase(TestCase):
+    def setUp(self):
+        Animal.objects.create(name=&quot;lion&quot;, sound=&quot;roar&quot;)
+        Animal.objects.create(name=&quot;cat&quot;, sound=&quot;meow&quot;)
+
+    def test_animals_can_speak(self):
+        &quot;&quot;&quot;Animals that can speak are correctly identified&quot;&quot;&quot;
+        lion = Animal.objects.get(name=&quot;lion&quot;)
+        cat = Animal.objects.get(name=&quot;cat&quot;)
+        self.assertEqual(lion.speak(), &#39;The lion says &quot;roar&quot;&#39;)
+        self.assertEqual(cat.speak(), &#39;The cat says &quot;meow&quot;&#39;)
+</code></pre>
+
+<ul>
+<li>Django的test其實背後使用<a href="https://docs.python.org/3/library/unittest.mock.html#unittest.mock.patch">unittest</a>。但記得用<code>django.test.TestCase</code>，才能支援使用Database。</li>
+<li><code>TestCase.setUp</code>是準備test data的地方（一般是建立database objects）</li>
+</ul>
+
+<p>可到<a href="https://docs.python.org/3/library/unittest.html#basic-example">python unittest module</a>看更多test的做法。</p>
+
+<p><a href="https://docs.djangoproject.com/en/2.1/topics/testing/overview/">Django Test官方文檔</a></p>
+
+<h2 id="toc_1">File Structure</h2>
+
+<h3 id="toc_2">Default</h3>
+
+<p>預設建立app的時候，Django自動幫你加了一個<code>tests.py</code>：</p>
+
+<pre><code class="language-bash"># some_app/
+├── __init__.py
+├── apps.py
+├── migrations/
+├── models.py
+├── tests.py  # Here
+└── views.py
+</code></pre>
+
+<p>當你test這個app，用下面的command：</p>
+
+<pre><code class="language-bash">$ ./manage.py test some_app.tests
+</code></pre>
+
+<p>Django會自動找出<code>some_app.tests</code>裡的所有<code>TestCase</code>。</p>
+
+<p>如果你只想run一個TestCase，也可以：</p>
+
+<pre><code class="language-bash">$ ./manage.py test some_app.tests.AnimalTestCase
+</code></pre>
+
+<h3 id="toc_3">獨立檔案Structure</h3>
+
+<p>當<code>TestCase</code>變多，可以分開獨立檔案：</p>
+
+<pre><code class="language-bash">└── tests
+    ├── __init__.py
+    ├── some_tests.py
+    └── other_tests.py
 </code></pre>
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968857.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='git.html'>Git</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968857.html#disqus_thread">comments</a>
-                      
+    
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="15213187968912.html">
-                
-                  <h1>git pull或push不用再打密碼</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>快速設置Git，以後<code>git pull</code> <code>git push</code>都不用再打帳號密碼了。</p>
+      </div>
 
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="django-unit-testing-part2-mocking.html" 
+          title="Previous Post: Django Unit Testing - Part 2 Mocking">&laquo; Django Unit Testing - Part 2 Mocking</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="laravel-part1-basics.html" 
+          title="Next Post: Laravel教學 Part 1 - 新手入門">Laravel教學 Part 1 - 新手入門 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968912.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='git.html'>Git</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968912.html#disqus_thread">comments</a>
-                      
+          
+            <div id="disqus_thread"></div>
+          
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

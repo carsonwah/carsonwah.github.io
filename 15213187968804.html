@@ -184,29 +184,38 @@ $ git push --set-upstream origin some-branch
 
 <h2 id="toc_4">gitignore</h2>
 
-<h3 id="toc_5">移除tracking files</h3>
+<h3 id="toc_5">加入<code>.gitignore</code></h3>
 
-<pre><code class="language-bash"># 1. 新增這些files在.gitignore裡
-# 2. remove in git
+<pre><code>vim .gitignore
+git add .gitignore
+git commit -m &quot;Add .gitignore&quot;
+</code></pre>
+
+<h3 id="toc_6">更新tracking files</h3>
+
+<pre><code class="language-bash">
+# Remove tracking in git
 $ git rm -r --cached .
 $ git status
-# 應該一堆紅色...
-# 3. commit
+# 應該一堆綠色(deleted)和一堆紅色(untracked)...
+$ git add .
+$ git status
+# 需要從git ignore走的檔案會顯示為&quot;deleted&quot;
 $ git commit -m &quot;Remove tracking some files&quot;
 </code></pre>
 
-<h2 id="toc_6">Log: 查看git history</h2>
+<h2 id="toc_7">Log: 查看git history</h2>
 
 <pre><code class="language-bash">$ git log
 </code></pre>
 
-<h2 id="toc_7">Reset: 取消local commit</h2>
+<h2 id="toc_8">Reset: 取消local commit</h2>
 
 <pre><code class="language-bash">$ git reset HEAD~1  # 取消一個local commit
 $ git reset HEAD~2  # 兩個
 </code></pre>
 
-<h2 id="toc_8">Revert: 回復到幾個commit前的狀態</h2>
+<h2 id="toc_9">Revert: 回復到幾個commit前的狀態</h2>
 
 <p>重要概念1：不要想著能回到以前，git是version control工具，任何動作和history都需要被紀錄，包括「回復舊version」這動作。<br/>
 重要概念2：每revert一個commit都是一次改動，代表需要一次commit，但可以找方法squash做同一次commit。</p>
@@ -223,9 +232,9 @@ $ git revert --no-commit master~3..master  # A &lt;- B &lt;- C &lt;- D &lt;- BCD
 
 <p><a href="https://stackoverflow.com/questions/1463340/revert-multiple-git-commits">Reference</a></p>
 
-<h2 id="toc_9">Rebase:</h2>
+<h2 id="toc_10">Rebase:</h2>
 
-<h3 id="toc_10">Combine previous commits</h3>
+<h3 id="toc_11">Combine previous commits</h3>
 
 <p>可以和上面的<code>revert</code>組合使用，例如<code>revert master~4..master</code>後，出現四個用來revert的commits，然後用rebase來變做同一個commit。</p>
 
@@ -260,7 +269,7 @@ $ git revert --no-commit master~3..master  # A &lt;- B &lt;- C &lt;- D &lt;- BCD
 
 <p><a href="http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html">Reference</a></p>
 
-<h2 id="toc_11">Amend: 修改commit</h2>
+<h2 id="toc_12">Amend: 修改commit</h2>
 
 <p>修改上一條local commit的message，並加入現在的staged changes</p>
 
@@ -372,6 +381,18 @@ $ git commit --amend -m &quot;xxxx&quot;
 	      
 		      
 			      <li class="post">
+			        <a href="django-unit-testing-part2-mocking.html">Django Unit Testing - Part 2 Mocking</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="django-unit-testing-part1-basics.html">Django Unit Testing - Part 1 Basics</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="laravel-part1-basics.html">Laravel教學 Part 1 - 新手入門</a>
 			      </li>
 		     
@@ -385,18 +406,6 @@ $ git commit --amend -m &quot;xxxx&quot;
 		      
 			      <li class="post">
 			        <a href="react-native-part3.5-declarative.html">React Native教學 Part 3.5 - 概念分析：Declarative Programming</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="rails-part1-hello-world-project.html">Ruby on Rails教學 Part 1 - Hello World Project</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="delegation-pattern.html">委託模式 (Delegation pattern)</a>
 			      </li>
 		     
 		  
