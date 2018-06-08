@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  在iOS app裡加入Google Maps (Swift 4) - Carson's Tech Note
+  在Django建立定時執行的Cron jobs（工作排程） - Carson's Tech Note
   
   </title>
   
@@ -136,19 +136,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>在iOS app裡加入Google Maps (Swift 4)</h1>
+          <h1>在Django建立定時執行的Cron jobs（工作排程）</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/6/8</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='ios.html'>iOS</a></span>
+              <span class="posted-in"><a href='Django.html'>Django</a></span>
            
          
           <span class="comments">
             
-              <a href="15213187968335.html#disqus_thread">comments</a>
+              <a href="django-cron-jobs.html#disqus_thread">comments</a>
             
 
             
@@ -158,210 +158,157 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>相信很多App都需要用到地圖功能，除了Apple原生的MapKit之外，功能齊全的Google Map SDK也是不錯的選擇。<br/>
-本篇blog介紹如何開始使用Google Map SDK，和一些常用但官方沒有教的功能。</p>
+      <p>有時候我們需要server定時做某些東西，例如每天凌晨計算一天的營業額。</p>
+
+<p>一般Web Server只會在收到請求時作出相應行動，所以最簡單做法，就是開一個Admin endpoint，人手「激活」server去做某些事。</p>
+
+<p><strong>這當然很蠢啊。</strong></p>
+
+<p>這時候我們可以用Linux上的<code>crontab</code>去讓他「自動」、「定時」執行某些工作。</p>
 
 <span id="more"></span><!-- more -->
 
-<h2 id="toc_0">安裝 (Installation)</h2>
+<h2 id="toc_0">Cron</h2>
 
-<p>主要步驟：</p>
+<p><strong>Cron</strong>常見於Unix和Unix-like系統（下略稱Linux），<a href="https://zh.wikipedia.org/wiki/Cron">名字來源於希臘語chronos（χρόνος）</a>，原意是時間。一般透過<code>crontab</code>指令操作。</p>
 
-<ol>
-<li>安裝SDK</li>
-<li>取得API</li>
-<li>在初始化App的時候(AppDelegate.swift)設定好API Key</li>
-</ol>
+<p>Linux會在背景長期執行<code>cron daemon</code>，不斷檢查當前有沒有需要執行的<strong>Cron job</strong>。</p>
 
-<p>跟隨<a href="https://developers.google.com/maps/documentation/ios-sdk/start">官方文檔</a>照做就可以了。</p>
+<p>所以我們要建立工作排程，需要告訴<code>cron daemon</code>甚麼時候/頻率，需要做哪些事情。</p>
 
-<p>建議使用Cocoapods安裝SDK，一個非常熱門又方便ios dependencies管理工具。</p>
+<h3 id="toc_1">使用crontab</h3>
 
-<h2 id="toc_1">開始使用 (Quickstart)</h2>
+<h4 id="toc_2">修改crontab檔案</h4>
 
-<h3 id="toc_2">顯示地圖</h3>
-
-<p>官方的<a href="https://developers.google.com/maps/documentation/ios-sdk/start#6">新手教學</a>只教你如何將MapView填滿整個ViewController，<br/>
-但很多時候MapView只是一個ViewController的subview，<br/>
-這時候就不能跟官方教學做。</p>
-
-<h4 id="toc_3">1. 在Storyboard裡建立一個MapView</h4>
-
-<p>先把UIView拖到ViewController之上<br/>
-<img src="media/15213187968335/ui_view.png" alt="UIView"/></p>
-
-<p>設置好layout contraints<br/>
-<img src="media/15213187968335/constraints.png" alt="Constraints"/></p>
-
-<p>關於怎樣控制XCode裡的Auto Layout，可以看看<a href="https://www.raywenderlich.com/160527/auto-layout-tutorial-ios-11-getting-started">Raywenderlich的一篇教學</a>。</p>
-
-<p><strong>重點：把UIView的Class改成GMSMapView</strong><br/>
-<img src="media/15213187968335/map_view.png" alt="MapView"/></p>
-
-<h4 id="toc_4">2. 在ViewController裡建立IBOutlet</h4>
-
-<blockquote>
-<p>用途：在ViewController裡建立IBOutlet var，讓它可以在code裡面控制storyboard裡的view。這是一個常做的動作。</p>
-</blockquote>
-
-<p>開啟Storyboard，開啟&quot;Assistant Editor&quot;<br/>
-<img src="media/15213187968335/assistant_editor.png" alt="Assistant Editor"/></p>
-
-<p>把你的MapView &quot;control+drag&quot; 到ViewController裡，將它命名為<code>mapView</code>。</p>
-
-<p>應該會產生以下的variable：</p>
-
-<pre><code class="language-swift">import GoogleMaps
-
-class SomeViewController: UIViewController {
-  @IBOutlet weak var mapView: GMSMapView!
-  // ...
-}
+<pre><code class="language-bash">crontab -e  # e代表edit
 </code></pre>
 
-<p>現在我們可以從ViewController裡控制這個mapView了。</p>
+<h4 id="toc_3">基本格式</h4>
 
-<h4 id="toc_5">3. 設置MapView的初始位置</h4>
-
-<p>在<code>ViewDidLoad()</code>裡初始化mapView的camera：</p>
-
-<pre><code class="language-swift">let camera = GMSCameraPosition.camera(withLatitude: 123.123123, longitude: 123.123123, zoom: 15)
-mapView.camera = camera
+<pre><code class="language-bash">min hr day month weekday command
 </code></pre>
 
-<p>到這裡就完成初始化了，可以Run app看一看成果。</p>
+<h4 id="toc_4">透過例子學習</h4>
 
-<p><img src="media/15213187968335/run_app.png" alt="run_app" class="mw_img_center" style="width:300px;display: block; clear:both; margin: 0 auto;"/></p>
-
-<h3 id="toc_6">顯示Markers</h3>
-
-<pre><code class="language-swift">let position = CLLocationCoordinate2D(latitude: lat, longitude: long)  // lat &amp; long must be Double
-let marker = GMSMarker(position: position)
-marker.title = &quot;Hello World&quot;  // 用家按下marker時會顯示出來
-marker.map = routeDetailMapView
+<pre><code class="language-bash">*/25 20,21 1-10 12 1-6 /bin/sh backup.sh
 </code></pre>
 
-<p><em>(我本來以為會是類似<code>mapView.add(marker)</code>，但原來是反過來，把<code>mapView</code> assign到<code>marker.map</code>當中。)</em></p>
+<p>以上cron job代表：</p>
 
-<h2 id="toc_7">其他常用功能 (Other frequently used features)</h2>
+<p>每逢<strong>12月</strong>的<strong>1-10號</strong>（同時當天<strong>不是星期日</strong>）的<strong>20:00, 20:25, 20:50, 21:00, 21:25, 21:50</strong>執行<code>/bin/sh backup.sh</code>。</p>
 
-<p>以下是一些很常用到的功能，但官方竟然<strong>沒有教</strong>！</p>
+<h4 id="toc_5">Crontab格式教學</h4>
 
-<h3 id="toc_8">以Markers的位置決定初始範圍 (Rescale MapView to fit markers)</h3>
+<p><a href="http://crontab.guru/">http://crontab.guru/</a><br/>
+<a href="https://tecadmin.net/crontab-in-linux-with-20-examples-of-cron-schedule/">https://tecadmin.net/crontab-in-linux-with-20-examples-of-cron-schedule/</a><br/>
+<a href="https://stackoverflow.com/questions/16094545/how-can-i-run-a-cron-job-every-5-minutes-starting-from-a-time-other-than-0-minut">Special case</a></p>
 
-<p>剛才我們使用<code>GMSCameraPosition.camera(withLatitude:, longitude:, zoom:)</code>來初始化地圖的視角，<br/>
-但實際情況下，我地通常會有一堆點要顯示，但中心點的lat, long, zoom level全部都很難計算出來。</p>
+<h4 id="toc_6">列出當前Cron jobs</h4>
 
-<p>這時可以使用<code>GMSCoordinateBounds</code>，它提供了<code>includingCoordinate()</code>，會自動計算新的bounds去迎合新的location。<br/>
-最後把MapView <code>animate</code> 到這個bound。（<code>GMSCoordinateBounds</code> object好像只能用在<code>.animate()</code>這個方法，而且可以fit into location的只有這種方法）</p>
-
-<pre><code class="language-swift">// 假設有個這樣的structure
-struct Location {
-    var lat: Double
-    var long: Double
-}
-
-// Loop through所有locations，讓每個location都fit進bounds裡面
-let initialBounds = GMSCoordinateBounds()
-let bounds = locations.reduce(initialBounds) { bound, location in
-    bound.includingCoordinate(CLLocationCoordinate2D(latitude: location.lat, longitude: location.long))
-}
-mapView.animate(with: .fit(bounds, withPadding: 30.0))  // 如果沒有padding你的markers就會貼著地圖邊緣
+<pre><code class="language-bash">crontab -l  # l代表list
+# 會列出已注冊的cron jobs
 </code></pre>
 
-<p>這裡使用了&quot;reduce&quot;和&quot;closure&quot;的syntax，如果看不懂可以看看<a href="https://useyourloaf.com/blog/swift-guide-to-map-filter-reduce/">這篇教學</a>。</p>
+<h4 id="toc_7">時區</h4>
 
-<h3 id="toc_9">繪畫點對點路線 (Draw point-to-point routes)</h3>
+<p><strong>時區是crontab的天敵。</strong>很多時候我們用的linux機都是雲端機，例如在AWS、GCP、Azure等等地方租用linux，全都是海外地方，時區不同，所以crontab裡的17:00，可能是亞洲的05:00，要多加留意，尤其cron job很難test。</p>
 
-<p>我本來以為畫路線直接<code>.drawRoute()</code>就能完成，但原來Google Map iOS SDK<strong>竟然沒有這個功能</strong>。</p>
+<h5 id="toc_8">更改時區</h5>
 
-<p>要達到這個目的，需要另外動用到<a href="https://developers.google.com/maps/documentation/directions/start">Google Directions API</a>。<br/>
-詳細就不多談了，我把我的implementation放在這裡，有興趣的話可以參考使用。</p>
+<p>例如改成香港時區：</p>
 
-<p>步驟簡述：</p>
+<pre><code class="language-bash">sudo ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime  # ln = link, -s = symbolic, -f = --force
+sudo service cron restart
+</code></pre>
 
-<ol>
-<li>準備好GET Request的params，包括：origin, destination, waypoints</li>
-<li>Send GET Request到Google Directions API，然後得到某條encoded string，裡面帶有整條路線的資訊
+<p>其他時區都可以在<code>/usr/share/zoneinfo/</code>找到。</p>
+
+<p><a href="https://serverfault.com/questions/848829/how-to-use-timezone-with-cron-tab/848833">Reference: how to use TimeZone with Cron tab</a></p>
+
+<h2 id="toc_9">建立Django cron job</h2>
+
+<h3 id="toc_10">Naive做法</h3>
+
+<p>以上例子只能執行shell script，要開啟django執行工作，可以：</p>
+
+<pre><code class="language-bash"># run_django.sh
+cd ~/my_project/
+source env/bin/activate/
+./manage.py shell -c &quot;from some_app.models import Food; blahblahblah&quot;  # -c代表command
+</code></pre>
+
+<pre><code class="language-bash"># crontab
+*/10 * * * * /bin/sh /path/to/run_django.sh
+</code></pre>
+
+<p><strong>這樣也是太蠢了。</strong></p>
+
+<h3 id="toc_11">Open source tool</h3>
+
+<p>經過一些research，有以下三個Django插件做到這功能：</p>
 
 <ul>
-<li>詳細的response格式可參考<a href="https://developers.google.com/maps/documentation/directions/intro#DirectionsResponses">官方文件</a></li>
-<li>下面使用了<a href="https://github.com/Alamofire/Alamofire">Alamofire</a>和<a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a>來處理request和response</li>
-</ul></li>
-<li>使用<code>GMSPath.init(fromEncodedPath:)</code>和<code>GMSPolyline.init(path:)</code>把encoded string變成<code>GMSPolyline</code> object</li>
-<li>把polyline畫在地圖上</li>
-</ol>
+<li><a href="http://www.celeryproject.org">Celery: Distributed Task Queue</a>：殺雞焉用牛刀？</li>
+<li><a href="https://github.com/Tivix/django-cron">Tivix/django-cron</a>：Setup有點麻煩，多了一層多餘的Abstraction</li>
+<li><a href="https://github.com/kraiz/django-crontab">kraiz/django-crontab</a>：Dead simple</li>
+</ul>
 
-<pre><code class="language-swift">import Alamofire
-import SwiftyJSON
-// ...
-class RouteDetailViewController: UIViewController {
-    @IBOutlet weak var mapView: GMSMapView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // initialize map, etc...
-        drawRouteOnMap()
-    }
-    func drawRouteOnMap() {
-        let stops = self.route.stops  // 每個stop裡面都有lat和long
-        let numberOfStops = stops.count
-        
-        guard numberOfStops &gt; 2 else {
-            print(&quot;numberOfStops less than 2, cannot draw route&quot;)
-            return
-        }
-        
-        let origin = &quot;\(stops[0].lat),\(stops[0].long)&quot;
-        let destination = &quot;\(stops[numberOfStops-1].lat),\(stops[numberOfStops-1].long)&quot;
-        let waypoints = stops.map() { &quot;\(String($0.lat)),\(String($0.long))&quot; } .joined(separator: &quot;|&quot;)
-        
-        let parameters: Parameters = [
-            &quot;origin&quot;: origin,
-            &quot;destination&quot;: destination,
-            &quot;waypoints&quot;: waypoints,
-            &quot;mode&quot;: &quot;driving&quot;,
-            &quot;key&quot;: &quot;xxxxxxx&quot;
-        ]
-        
-        let url = &quot;https://maps.googleapis.com/maps/api/directions/json&quot;
-        
-        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { response in
-            debugPrint(response)
-            
-            guard let data = response.data else {
-                print(&quot;Invalid data response&quot;)
-                return
-            }
-            
-            // 把data轉換成SwiftyJSON format
-            guard let json = try? JSON(data: data) else {
-                print(&quot;Parse JSON error&quot;)
-                return
-            }
-            
-            let routes = json[&quot;routes&quot;].arrayValue
-            // routes是一個array，但一般沒有特別specify的話只會有一個route
-            for route in routes
-            {
-                let routeOverviewPolyline = route[&quot;overview_polyline&quot;].dictionary
-                let points = routeOverviewPolyline?[&quot;points&quot;]?.stringValue
-                // 這裡的points就是那條encoded string
-                let path = GMSPath.init(fromEncodedPath: points!)
-                let polyline = GMSPolyline.init(path: path)
-                polyline.map = self.mapView
-            }
-        }
-    }
-}
+<p>最終我選擇了django-crontab，快樂使用中。</p>
+
+<h3 id="toc_12">原理解釋</h3>
+
+<p>詳細用法就參照<a href="https://github.com/kraiz/django-crontab">Doc</a>吧，這裡只介紹一下原理。</p>
+
+<p>在<code>settings.py</code>設置CRONJOBS：</p>
+
+<pre><code class="language-python">CRONJOBS = [
+    (&#39;*/15 18-23 * * *&#39;, &#39;some_app.cron.some_cron_job&#39;, &#39;&gt;&gt; /var/log/cron_job.log 2&gt;&amp;1&#39;),
+]
 </code></pre>
 
-<p><em>注意由於Directions API Key只能使用server restriction，如果要在iOS上直接使用，只能用沒有restriction的API Key，所以較好的做法是經自己的server去處理這些request。</em></p>
+<p>加到crontab：</p>
+
+<pre><code class="language-bash">./manage.py crontab add
+</code></pre>
+
+<p>然後打開<code>crontab -e</code>，可以看到最底有一行：</p>
+
+<pre><code class="language-bash">*/15 18-23 * * * /home/ubuntu/my_project/env/bin/python /home/ubuntu/my_project/manage.py crontab run xxxxxxxxxxxxx # django-cronjobs for my_project
+</code></pre>
+
+<ul>
+<li>這代表django-crontab其實是幫你注冊了一個<strong>cron job</strong>到linux的<strong>crontab</strong></li>
+<li><code>/home/ubuntu/my_project/env/bin/python</code>代表使用你的<strong>virtualenv</strong>（虛擬環境）中的python去執行<code>manage.py</code></li>
+<li><code>manage.py crontab run xxxxxxxxxxx</code>執行django-crontab裡的<code>run</code></li>
+<li>我看了看源碼，django-crontab會把cron job的設置<strong>hash</strong>成一條字串（就是那個<code>xxxxx</code>），<code>run</code>的時候會那個hash，在<code>settings.py</code>找回要執行的cron job，最後執行它</li>
+</ul>
+
+<p><a href="15213187969378.html">延伸閱讀：建置python虛擬環境(Virtual Environment)</a></p>
+
+<h3 id="toc_13">Cron job logging注意事項</h3>
 
 <blockquote>
-<p>Versions:<br/>
-- XCode 9.2<br/>
-- Swift 4</p>
+<p>要小心輸出到<strong>stdout</strong>和<strong>stderr</strong>的分別。</p>
 </blockquote>
+
+<p>如果你的Django設置了<code>StreamHandler</code>處理logging，要確保cron job的suffix（後綴）是例如以下：</p>
+
+<pre><code>(&#39;*/15 18-23 * * *&#39;, &#39;some_app.cron.some_cron_job&#39;, &#39;&gt;&gt; /var/log/cron_job.log 2&gt;&amp;1&#39;)
+</code></pre>
+
+<p><em>（<code>&gt;</code>代表覆蓋原有檔案，<code>&gt;&gt;</code>代表append到原有檔案）</em></p>
+
+<p><code>&gt;&gt;</code>或<code>1&gt;&gt;</code>都代表Redirect <strong>stdout</strong>，但<code>StreamHandler</code><a href="https://docs.python.org/3/library/logging.handlers.html#streamhandler">預設輸出到<strong>stderr</strong></a>，所以<strong>緊記</strong>加上<code>2&gt;&amp;1</code>，把stderr也輸出到同一地方，這樣才會看到cron job的logging。</p>
+
+<p>詳細可參照我在django-crontab開的<a href="https://github.com/kraiz/django-crontab/issues/83">issue</a>。</p>
+
+<p><a href="django-logging.html">延伸閱讀：在Django使用Logging製作紀錄檔</a></p>
+
+<h4 id="toc_14">更多關於redirect script</h4>
+
+<p><a href="https://superuser.com/questions/436586/why-redirect-output-to-21-and-12">Related: Default file decriptor 1, 2</a><br/>
+<a href="https://docs.python.org/3/library/logging.handlers.html#streamhandler">If stream is specified, the instance will use it for logging output; otherwise, sys.stderr will be used.</a><br/>
+<a href="https://stackoverflow.com/questions/876239/how-can-i-redirect-and-append-both-stdout-and-stderr-to-a-file-with-bash">How can I redirect and append both stdout and stderr to a file with Bash?</a></p>
 
 
     
@@ -372,16 +319,16 @@ class RouteDetailViewController: UIViewController {
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="2018-03-18-react-native-handling-permissions.html" 
-          title="Previous Post: 在React Native處理Permissions">&laquo; 在React Native處理Permissions</a>
+          <a href="django-logging.html" 
+          title="Previous Post: 在Django使用Logging製作紀錄檔">&laquo; 在Django使用Logging製作紀錄檔</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15213187968464.html" 
-          title="Next Post: 由零建立Vue.js WebApp及專案結構解釋">由零建立Vue.js WebApp及專案結構解釋 &raquo;</a>
+          <a  href="django-unit-testing-part2-mocking.html" 
+          title="Next Post: Django Unit Testing - Part 2 Mocking">Django Unit Testing - Part 2 Mocking &raquo;</a>
       
       </p>
         </div>

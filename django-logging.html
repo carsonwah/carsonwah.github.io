@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  在iOS app裡加入Google Maps (Swift 4) - Carson's Tech Note
+  在Django使用Logging製作紀錄檔 - Carson's Tech Note
   
   </title>
   
@@ -136,19 +136,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>在iOS app裡加入Google Maps (Swift 4)</h1>
+          <h1>在Django使用Logging製作紀錄檔</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/6/8</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='ios.html'>iOS</a></span>
+              <span class="posted-in"><a href='Django.html'>Django</a></span>
            
          
           <span class="comments">
             
-              <a href="15213187968335.html#disqus_thread">comments</a>
+              <a href="django-logging.html#disqus_thread">comments</a>
             
 
             
@@ -158,210 +158,212 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>相信很多App都需要用到地圖功能，除了Apple原生的MapKit之外，功能齊全的Google Map SDK也是不錯的選擇。<br/>
-本篇blog介紹如何開始使用Google Map SDK，和一些常用但官方沒有教的功能。</p>
+      <p>Logging是作為backend server必備的工具，透過log file，你可以知道程式執行了甚麼。如果你的server有unexpected error發生，最好的做法就是到server查看log file，找出發生甚麼事。</p>
+
+<p>這篇就紀錄在Django設置logging的種種細節吧。</p>
 
 <span id="more"></span><!-- more -->
 
-<h2 id="toc_0">安裝 (Installation)</h2>
+<h2 id="toc_0">認識Python logging</h2>
 
-<p>主要步驟：</p>
-
-<ol>
-<li>安裝SDK</li>
-<li>取得API</li>
-<li>在初始化App的時候(AppDelegate.swift)設定好API Key</li>
-</ol>
-
-<p>跟隨<a href="https://developers.google.com/maps/documentation/ios-sdk/start">官方文檔</a>照做就可以了。</p>
-
-<p>建議使用Cocoapods安裝SDK，一個非常熱門又方便ios dependencies管理工具。</p>
-
-<h2 id="toc_1">開始使用 (Quickstart)</h2>
-
-<h3 id="toc_2">顯示地圖</h3>
-
-<p>官方的<a href="https://developers.google.com/maps/documentation/ios-sdk/start#6">新手教學</a>只教你如何將MapView填滿整個ViewController，<br/>
-但很多時候MapView只是一個ViewController的subview，<br/>
-這時候就不能跟官方教學做。</p>
-
-<h4 id="toc_3">1. 在Storyboard裡建立一個MapView</h4>
-
-<p>先把UIView拖到ViewController之上<br/>
-<img src="media/15213187968335/ui_view.png" alt="UIView"/></p>
-
-<p>設置好layout contraints<br/>
-<img src="media/15213187968335/constraints.png" alt="Constraints"/></p>
-
-<p>關於怎樣控制XCode裡的Auto Layout，可以看看<a href="https://www.raywenderlich.com/160527/auto-layout-tutorial-ios-11-getting-started">Raywenderlich的一篇教學</a>。</p>
-
-<p><strong>重點：把UIView的Class改成GMSMapView</strong><br/>
-<img src="media/15213187968335/map_view.png" alt="MapView"/></p>
-
-<h4 id="toc_4">2. 在ViewController裡建立IBOutlet</h4>
-
-<blockquote>
-<p>用途：在ViewController裡建立IBOutlet var，讓它可以在code裡面控制storyboard裡的view。這是一個常做的動作。</p>
-</blockquote>
-
-<p>開啟Storyboard，開啟&quot;Assistant Editor&quot;<br/>
-<img src="media/15213187968335/assistant_editor.png" alt="Assistant Editor"/></p>
-
-<p>把你的MapView &quot;control+drag&quot; 到ViewController裡，將它命名為<code>mapView</code>。</p>
-
-<p>應該會產生以下的variable：</p>
-
-<pre><code class="language-swift">import GoogleMaps
-
-class SomeViewController: UIViewController {
-  @IBOutlet weak var mapView: GMSMapView!
-  // ...
-}
-</code></pre>
-
-<p>現在我們可以從ViewController裡控制這個mapView了。</p>
-
-<h4 id="toc_5">3. 設置MapView的初始位置</h4>
-
-<p>在<code>ViewDidLoad()</code>裡初始化mapView的camera：</p>
-
-<pre><code class="language-swift">let camera = GMSCameraPosition.camera(withLatitude: 123.123123, longitude: 123.123123, zoom: 15)
-mapView.camera = camera
-</code></pre>
-
-<p>到這裡就完成初始化了，可以Run app看一看成果。</p>
-
-<p><img src="media/15213187968335/run_app.png" alt="run_app" class="mw_img_center" style="width:300px;display: block; clear:both; margin: 0 auto;"/></p>
-
-<h3 id="toc_6">顯示Markers</h3>
-
-<pre><code class="language-swift">let position = CLLocationCoordinate2D(latitude: lat, longitude: long)  // lat &amp; long must be Double
-let marker = GMSMarker(position: position)
-marker.title = &quot;Hello World&quot;  // 用家按下marker時會顯示出來
-marker.map = routeDetailMapView
-</code></pre>
-
-<p><em>(我本來以為會是類似<code>mapView.add(marker)</code>，但原來是反過來，把<code>mapView</code> assign到<code>marker.map</code>當中。)</em></p>
-
-<h2 id="toc_7">其他常用功能 (Other frequently used features)</h2>
-
-<p>以下是一些很常用到的功能，但官方竟然<strong>沒有教</strong>！</p>
-
-<h3 id="toc_8">以Markers的位置決定初始範圍 (Rescale MapView to fit markers)</h3>
-
-<p>剛才我們使用<code>GMSCameraPosition.camera(withLatitude:, longitude:, zoom:)</code>來初始化地圖的視角，<br/>
-但實際情況下，我地通常會有一堆點要顯示，但中心點的lat, long, zoom level全部都很難計算出來。</p>
-
-<p>這時可以使用<code>GMSCoordinateBounds</code>，它提供了<code>includingCoordinate()</code>，會自動計算新的bounds去迎合新的location。<br/>
-最後把MapView <code>animate</code> 到這個bound。（<code>GMSCoordinateBounds</code> object好像只能用在<code>.animate()</code>這個方法，而且可以fit into location的只有這種方法）</p>
-
-<pre><code class="language-swift">// 假設有個這樣的structure
-struct Location {
-    var lat: Double
-    var long: Double
-}
-
-// Loop through所有locations，讓每個location都fit進bounds裡面
-let initialBounds = GMSCoordinateBounds()
-let bounds = locations.reduce(initialBounds) { bound, location in
-    bound.includingCoordinate(CLLocationCoordinate2D(latitude: location.lat, longitude: location.long))
-}
-mapView.animate(with: .fit(bounds, withPadding: 30.0))  // 如果沒有padding你的markers就會貼著地圖邊緣
-</code></pre>
-
-<p>這裡使用了&quot;reduce&quot;和&quot;closure&quot;的syntax，如果看不懂可以看看<a href="https://useyourloaf.com/blog/swift-guide-to-map-filter-reduce/">這篇教學</a>。</p>
-
-<h3 id="toc_9">繪畫點對點路線 (Draw point-to-point routes)</h3>
-
-<p>我本來以為畫路線直接<code>.drawRoute()</code>就能完成，但原來Google Map iOS SDK<strong>竟然沒有這個功能</strong>。</p>
-
-<p>要達到這個目的，需要另外動用到<a href="https://developers.google.com/maps/documentation/directions/start">Google Directions API</a>。<br/>
-詳細就不多談了，我把我的implementation放在這裡，有興趣的話可以參考使用。</p>
-
-<p>步驟簡述：</p>
-
-<ol>
-<li>準備好GET Request的params，包括：origin, destination, waypoints</li>
-<li>Send GET Request到Google Directions API，然後得到某條encoded string，裡面帶有整條路線的資訊
+<h3 id="toc_1">為甚麼要用logging，不用print？</h3>
 
 <ul>
-<li>詳細的response格式可參考<a href="https://developers.google.com/maps/documentation/directions/intro#DirectionsResponses">官方文件</a></li>
-<li>下面使用了<a href="https://github.com/Alamofire/Alamofire">Alamofire</a>和<a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a>來處理request和response</li>
+<li>Custom log format</li>
+<li>不同程度的logging + custom handler
+
+<ul>
+<li>例如把<code>debug</code>和<code>error</code> message log到不同的file</li>
+<li>用email匯報某個module的<code>error</code></li>
 </ul></li>
-<li>使用<code>GMSPath.init(fromEncodedPath:)</code>和<code>GMSPolyline.init(path:)</code>把encoded string變成<code>GMSPolyline</code> object</li>
-<li>把polyline畫在地圖上</li>
+<li>Custom filter</li>
+<li>Per-module level settings</li>
+</ul>
+
+<pre><code class="language-python">print(&#39;Something happened!&#39;)
+# Something happened!
+
+logger.debug(&#39;Something happened!&#39;)
+# [INFO] 2018-06-08 22:00:01,850 | module_a.function_b:26 | Something happened!
+</code></pre>
+
+<h3 id="toc_2">用法</h3>
+
+<p>可以直接<code>logging.debug()</code>，但一般都會建立一個instance來使用：</p>
+
+<pre><code class="language-python"># import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
+
+logger.debug(&#39;&#39;)
+logger.info(&#39;&#39;)
+logger.warning(&#39;&#39;)
+logger.error(&#39;&#39;)
+logger.critical(&#39;&#39;)
+logger.exception(&#39;&#39;)
+</code></pre>
+
+<h3 id="toc_3"><strong>name</strong></h3>
+
+<p>用例子解釋：</p>
+
+<h4 id="toc_4">Files</h4>
+
+<pre><code class="language-python"># b.py
+def print_b_namespace():
+    print(__name__)
+</code></pre>
+
+<pre><code class="language-python"># c/d.py
+def print_d_namespace():
+    print(__name__)
+
+if __name__ == &#39;__main__&#39;:
+    print(__name__)
+</code></pre>
+
+<pre><code class="language-python"># a.py
+from b import print_b_namespace
+from c.d import print_d_namespace
+
+print(__name__)
+print_b_namespace()
+print_d_namespace()
+</code></pre>
+
+<p><a href="15213187969322.html">延伸閱讀：理解Python的 relative 和 absolute import</a></p>
+
+<h4 id="toc_5">執行</h4>
+
+<pre><code class="language-bash">$ python a.py
+__main__
+b
+c.d
+
+$ python c/d.py
+__main__
+</code></pre>
+
+<h4 id="toc_6">結論</h4>
+
+<ul>
+<li>Entry point的<code>__name__</code>是<code>__main__</code></li>
+<li>所有被entry point &quot;import&quot;的module都會一層一層地命名下去
+
+<ul>
+<li>例如django中的<code>models.py</code>，<code>__name__</code>就是<code>some_app.models</code></li>
+</ul></li>
+</ul>
+
+<h4 id="toc_7">好處</h4>
+
+<p>logger使用自己的<code>__name__</code>來分類，可以：</p>
+
+<ol>
+<li>在log file中分辨出這些log來自哪裡</li>
+<li>可以逐個module決定如何log、log到哪裡等等這些設定</li>
 </ol>
 
-<pre><code class="language-swift">import Alamofire
-import SwiftyJSON
-// ...
-class RouteDetailViewController: UIViewController {
-    @IBOutlet weak var mapView: GMSMapView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // initialize map, etc...
-        drawRouteOnMap()
-    }
-    func drawRouteOnMap() {
-        let stops = self.route.stops  // 每個stop裡面都有lat和long
-        let numberOfStops = stops.count
-        
-        guard numberOfStops &gt; 2 else {
-            print(&quot;numberOfStops less than 2, cannot draw route&quot;)
-            return
-        }
-        
-        let origin = &quot;\(stops[0].lat),\(stops[0].long)&quot;
-        let destination = &quot;\(stops[numberOfStops-1].lat),\(stops[numberOfStops-1].long)&quot;
-        let waypoints = stops.map() { &quot;\(String($0.lat)),\(String($0.long))&quot; } .joined(separator: &quot;|&quot;)
-        
-        let parameters: Parameters = [
-            &quot;origin&quot;: origin,
-            &quot;destination&quot;: destination,
-            &quot;waypoints&quot;: waypoints,
-            &quot;mode&quot;: &quot;driving&quot;,
-            &quot;key&quot;: &quot;xxxxxxx&quot;
-        ]
-        
-        let url = &quot;https://maps.googleapis.com/maps/api/directions/json&quot;
-        
-        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { response in
-            debugPrint(response)
-            
-            guard let data = response.data else {
-                print(&quot;Invalid data response&quot;)
-                return
-            }
-            
-            // 把data轉換成SwiftyJSON format
-            guard let json = try? JSON(data: data) else {
-                print(&quot;Parse JSON error&quot;)
-                return
-            }
-            
-            let routes = json[&quot;routes&quot;].arrayValue
-            // routes是一個array，但一般沒有特別specify的話只會有一個route
-            for route in routes
-            {
-                let routeOverviewPolyline = route[&quot;overview_polyline&quot;].dictionary
-                let points = routeOverviewPolyline?[&quot;points&quot;]?.stringValue
-                // 這裡的points就是那條encoded string
-                let path = GMSPath.init(fromEncodedPath: points!)
-                let polyline = GMSPolyline.init(path: path)
-                polyline.map = self.mapView
-            }
-        }
-    }
+<p><a href="https://docs.python.org/3/library/logging.html">logging module的更多用法</a></p>
+
+<h2 id="toc_8">設置Django logging</h2>
+
+<p>Django支援python <code>logging</code>的設定。</p>
+
+<p><a href="https://docs.djangoproject.com/en/1.11/topics/logging/">Django logging</a></p>
+
+<h3 id="toc_9">Sample config</h3>
+
+<pre><code class="language-python"># In settings.py
+LOGGING = {
+    &#39;version&#39;: 1,
+    &#39;disable_existing_loggers&#39;: False,
+    &#39;formatters&#39;: {
+        &#39;normal&#39;: {
+            &#39;format&#39;: &#39;[%(levelname)s] %(asctime)s | %(name)s:%(lineno)d | %(message)s&#39;
+        },
+        &#39;simple&#39;: {
+            &#39;format&#39;: &#39;[%(levelname)s] %(message)s&#39;
+        },
+    },
+    # &#39;filters&#39;: {
+    #     &#39;require_debug_true&#39;: {
+    #         &#39;()&#39;: &#39;django.utils.log.RequireDebugTrue&#39;,
+    #     },
+    # },
+    &#39;handlers&#39;: {
+        &#39;console&#39;: {
+            &#39;class&#39;: &#39;logging.StreamHandler&#39;,  # Default logs to stderr
+            &#39;formatter&#39;: &#39;normal&#39;,  # use the above &quot;normal&quot; formatter
+            # &#39;filters&#39;: [&#39;require_debug_true&#39;],  # add filters
+        },
+    },
+    &#39;loggers&#39;: {
+        &#39;&#39;: {  # means &quot;root logger&quot;
+            &#39;handlers&#39;: [&#39;console&#39;],  # use the above &quot;console&quot; handler
+            &#39;level&#39;: &#39;INFO&#39;,  # logging level
+        },
+        &#39;some_app.some_module&#39;: {  # Modify logger in some modules
+            &#39;handlers&#39;: [&#39;console&#39;],
+            &#39;level&#39;: &#39;DEBUG&#39;,
+            &#39;propagate&#39;: True, 
+        },
+    },
 }
 </code></pre>
 
-<p><em>注意由於Directions API Key只能使用server restriction，如果要在iOS上直接使用，只能用沒有restriction的API Key，所以較好的做法是經自己的server去處理這些request。</em></p>
+<p>詳細設定要同時查找<a href="https://docs.djangoproject.com/en/1.11/topics/logging/">Django doc</a>和<a href="https://docs.python.org/3/library/logging.html">Python doc</a></p>
 
-<blockquote>
-<p>Versions:<br/>
-- XCode 9.2<br/>
-- Swift 4</p>
-</blockquote>
+<h2 id="toc_10">Sentry</h2>
+
+<p><a href="https://sentry.io">Sentry</a>是一個error tracking工具，提供dashboard、email等功能，讓你可以即時查看server發生甚麼error。</p>
+
+<p>Sentry支援各種語言和框架，<a href="https://docs.sentry.io/clients/python/integrations/django/">官方也有django的整合教學</a>，輕鬆設置後就可以隨時收到server的error消息，及早發現就能及早修復。</p>
+
+<h2 id="toc_11">UWSGI</h2>
+
+<p>一般開發時，會使用<code>manage.py runserver</code>啟動server，這時logs就會output到console (for <code>StreamHandler</code>)。</p>
+
+<p>但到實際production使用，多數會deploy到WSGI server，例如uWSGI，然後就不會再由console查看log訊息了。</p>
+
+<p><a href="15213187968753.html">延伸閱讀：入門理解WSGI</a><br/>
+<a href="https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-ubuntu-16-04">簡單教學：How To Serve Django Applications with uWSGI and Nginx on Ubuntu 16.04</a></p>
+
+<p>此時Django有兩個做法：</p>
+
+<ol>
+<li>在settings使用<code>FileHandler</code>等等，自行處理；或</li>
+<li>在settings使用<code>StreamHandler</code>，把logs傳給uWSGI，然後uWSGI負責建立紀錄檔等等。</li>
+</ol>
+
+<p>下面會講解如何使用第二種做法。</p>
+
+<h3 id="toc_12">設定uWSGI</h3>
+
+<p>uWSGI的設定檔應該會在<code>/etc/uwsgi/sites/your_project.ini</code>，在設定檔加入：</p>
+
+<pre><code class="language-ini"># logging
+logto = /var/log/uwsgi/this_is_a_log.log
+log-maxsize = 1000000 # 每到達1MB，就會自動split一個新檔案出來
+</code></pre>
+
+<p>然後準備logging用的directory</p>
+
+<pre><code class="language-bash">sudo mkdir -p /var/log/uwsgi
+sudo chown -R user:user /var/log/uwsgi  # 確保設定檔裡的user有權限
+</code></pre>
+
+<pre><code class="language-bash"># 重啟uWSGI
+sudo systemctl restart uwsgi
+</code></pre>
+
+<p>然後就可以查看<code>/var/log/uwsgi/this_is_a_log.log</code>了！</p>
+
+<h2 id="toc_13">References</h2>
+
+<p><a href="https://lincolnloop.com/blog/django-logging-right-way/">https://lincolnloop.com/blog/django-logging-right-way/</a></p>
 
 
     
@@ -372,16 +374,13 @@ class RouteDetailViewController: UIViewController {
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="2018-03-18-react-native-handling-permissions.html" 
-          title="Previous Post: 在React Native處理Permissions">&laquo; 在React Native處理Permissions</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="15213187968464.html" 
-          title="Next Post: 由零建立Vue.js WebApp及專案結構解釋">由零建立Vue.js WebApp及專案結構解釋 &raquo;</a>
+          <a  href="django-cron-jobs.html" 
+          title="Next Post: 在Django建立定時執行的Cron jobs（工作排程）">在Django建立定時執行的Cron jobs（工作排程） &raquo;</a>
       
       </p>
         </div>

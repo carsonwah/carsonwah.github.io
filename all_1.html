@@ -136,6 +136,131 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
+                <a class="clearlink" href="15213187968640.html">
+                
+                  <h1>建置eslint開發環境</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">1. 前言</h2>
+
+<blockquote>
+<p>對於所有Project來說，&quot;Coding Style&quot;都很重要，尤其是多人協作時，應該大家一起follow某些共同的coding style，才方便互相查看及修改其他人的code。  </p>
+</blockquote>
+
+<p>這時候我們可以使用<code>eslint</code>，來規範整個project的code，雖不能統一各人的個人風格，但它可以確保所有code都consistently follow某些syntax，不會亂糟糟。</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="15213187968640.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2018/3/18</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='nodejs.html'>nodejs</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+                        <a href="15213187968640.html#disqus_thread">comments</a>
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="15213187968700.html">
+                
+                  <h1>解決nodejs的relative import地獄</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>nodejs和npm是很模組化(modular)的framework，經常需要import其他package和檔案，但隨著專案規模越來越大，一不小心就會進入relative import的地獄：</p>
+
+<pre><code class="language-javascript">import { Something } from &#39;../../../../../../../../../HelloWorld&#39;;
+</code></pre>
+
+<p>以下是這個情況的解決良方。</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="15213187968700.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2018/3/18</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='nodejs.html'>nodejs</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+                        <a href="15213187968700.html#disqus_thread">comments</a>
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="15213187968753.html">
+                
+                  <h1>入門理解WSGI</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>WSGI全名是&quot;Web Server Gateway Interface&quot;，就是一個規範python server的interface。</p>
+
+<p>傳統Web server如Apache+php會直接在runtime處理請求並return response，但python server通常只能長run一個python process，這樣會造成server脆弱，容易crash等等壞處。</p>
+
+<p>但要配上Apache/nginx這些server，它們不會知道你的application怎樣運作，必須有個統一規範：WSGI。</p>
+
+<p>簡單來說在WSGI架構底下，你的python server(WSGI Application)不會直接接收requests，而是會有多一層server(WSGI server)。</p>
+
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                   <a href="15213187968753.html">Read more</a>&nbsp;&nbsp; 
+                    <span class="date">2018/3/18</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='python.html'>python</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+                        <a href="15213187968753.html#disqus_thread">comments</a>
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
                 <a class="clearlink" href="15213187968804.html">
                 
                   <h1>Git的常用指令和工作流程</h1>
@@ -598,6 +723,18 @@ $ git push -u origin master
 	      
 		      
 			      <li class="post">
+			        <a href="django-logging.html">在Django使用Logging製作紀錄檔</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="django-cron-jobs.html">在Django建立定時執行的Cron jobs（工作排程）</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
 			        <a href="django-unit-testing-part2-mocking.html">Django Unit Testing - Part 2 Mocking</a>
 			      </li>
 		     
@@ -611,18 +748,6 @@ $ git push -u origin master
 		      
 			      <li class="post">
 			        <a href="laravel-part1-basics.html">Laravel教學 Part 1 - 新手入門</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="django-admin-open-source-research.html">Django Admin Libraries彙總筆記</a>
-			      </li>
-		     
-		  
-		      
-			      <li class="post">
-			        <a href="react-native-part3.5-declarative.html">React Native教學 Part 3.5 - 概念分析：Declarative Programming</a>
 			      </li>
 		     
 		  
