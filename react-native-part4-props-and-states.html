@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  在Django建立定時執行的Cron jobs（工作排程） - Carson's Tech Note
+  React Native教學 Part 4 - Props & States - Carson's Tech Note
   
   </title>
   
@@ -136,19 +136,19 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>在Django建立定時執行的Cron jobs（工作排程）</h1>
+          <h1>React Native教學 Part 4 - Props & States</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/6/8</span>
+          <span class="date">2018/6/12</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Django.html'>Django</a></span>
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
            
          
           <span class="comments">
             
-              <a href="django-cron-jobs.html#disqus_thread">comments</a>
+              <a href="react-native-part4-props-and-states.html#disqus_thread">comments</a>
             
 
             
@@ -158,157 +158,232 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>有時候我們需要server定時做某些東西，例如每天凌晨計算一天的營業額。</p>
-
-<p>一般Web Server只會在收到請求時作出相應行動，所以最簡單做法，就是開一個Admin endpoint，人手「激活」server去做某些事。</p>
-
-<p><strong>這當然很蠢啊。</strong></p>
-
-<p>這時候我們可以用Linux上的<code>crontab</code>去讓他「自動」、「定時」執行某些工作。</p>
+      <p><strong>Props</strong>和<strong>States</strong>是React的重要概念，在Component化的架構內，所有data都以這兩種形式存在，它們見證著一個Component的起承轉合。</p>
 
 <span id="more"></span><!-- more -->
 
-<h2 id="toc_0">Cron</h2>
+<h2 id="toc_0">Overview</h2>
 
-<p><strong>Cron</strong>常見於Unix和Unix-like系統（下略稱Linux），<a href="https://zh.wikipedia.org/wiki/Cron">名字來源於希臘語chronos（χρόνος）</a>，原意是時間。一般透過<code>crontab</code>指令操作。</p>
+<p><img src="media/15223234381598/React%20Props%20States.jpg" alt="React Props States"/></p>
 
-<p>Linux會在背景長期執行<code>cron daemon</code>，不斷檢查當前有沒有需要執行的<strong>Cron job</strong>。</p>
+<h2 id="toc_1">Props</h2>
 
-<p>所以我們要建立工作排程，需要告訴<code>cron daemon</code>甚麼時候/頻率，需要做哪些事情。</p>
+<p><em>Props</em>全寫是<em>Properties</em>，可以解作資產，一般來自Parent component，例如：</p>
 
-<h3 id="toc_1">使用crontab</h3>
-
-<h4 id="toc_2">修改crontab檔案</h4>
-
-<pre><code class="language-bash">crontab -e  # e代表edit
+<pre><code class="language-javascript">// Parent
+render(){
+  return (
+    &lt;ChildComponent text={&#39;123&#39;} /&gt;
+  );
+}
 </code></pre>
 
-<h4 id="toc_3">基本格式</h4>
+<p>這樣ChildComponent就得到了一個props，可以在各種lifecycle methods裡使用（例如<code>render()</code>）：</p>
 
-<pre><code class="language-bash">min hr day month weekday command
-</code></pre>
-
-<h4 id="toc_4">透過例子學習</h4>
-
-<pre><code class="language-bash">*/25 20,21 1-10 12 1-6 /bin/sh backup.sh
-</code></pre>
-
-<p>以上cron job代表：</p>
-
-<p>每逢<strong>12月</strong>的<strong>1-10號</strong>（同時當天<strong>不是星期日</strong>）的<strong>20:00, 20:25, 20:50, 21:00, 21:25, 21:50</strong>執行<code>/bin/sh backup.sh</code>。</p>
-
-<h4 id="toc_5">Crontab格式教學</h4>
-
-<p><a href="http://crontab.guru/">http://crontab.guru/</a><br/>
-<a href="https://tecadmin.net/crontab-in-linux-with-20-examples-of-cron-schedule/">https://tecadmin.net/crontab-in-linux-with-20-examples-of-cron-schedule/</a><br/>
-<a href="https://stackoverflow.com/questions/16094545/how-can-i-run-a-cron-job-every-5-minutes-starting-from-a-time-other-than-0-minut">Special case</a></p>
-
-<h4 id="toc_6">列出當前Cron jobs</h4>
-
-<pre><code class="language-bash">crontab -l  # l代表list
-# 會列出已注冊的cron jobs
-</code></pre>
-
-<h4 id="toc_7">時區</h4>
-
-<p><strong>時區是crontab的天敵。</strong>很多時候我們用的linux機都是雲端機，例如在AWS、GCP、Azure等等地方租用linux，全都是海外地方，時區不同，所以crontab裡的17:00，可能是亞洲的05:00，要多加留意，尤其cron job很難test。</p>
-
-<h5 id="toc_8">更改時區</h5>
-
-<p>例如改成香港時區：</p>
-
-<pre><code class="language-bash">sudo ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime  # ln = link, -s = symbolic, -f = --force
-sudo service cron restart
-</code></pre>
-
-<p>其他時區都可以在<code>/usr/share/zoneinfo/</code>找到。</p>
-
-<p><a href="https://serverfault.com/questions/848829/how-to-use-timezone-with-cron-tab/848833">Reference: how to use TimeZone with Cron tab</a></p>
-
-<h2 id="toc_9">建立Django cron job</h2>
-
-<h3 id="toc_10">Naive做法</h3>
-
-<p>以上例子只能執行shell script，要開啟django執行工作，可以：</p>
-
-<pre><code class="language-bash"># run_django.sh
-cd ~/my_project/
-source env/bin/activate/
-./manage.py shell -c &quot;from some_app.models import Food; blahblahblah&quot;  # -c代表command
-</code></pre>
-
-<pre><code class="language-bash"># crontab
-*/10 * * * * /bin/sh /path/to/run_django.sh
-</code></pre>
-
-<p><strong>這樣也是太蠢了。</strong></p>
-
-<h3 id="toc_11">Open source tool</h3>
-
-<p>經過一些research，有以下三個Django插件做到這功能：</p>
-
-<ul>
-<li><a href="http://www.celeryproject.org">Celery: Distributed Task Queue</a>：殺雞焉用牛刀？</li>
-<li><a href="https://github.com/Tivix/django-cron">Tivix/django-cron</a>：Setup有點麻煩，多了一層多餘的Abstraction</li>
-<li><a href="https://github.com/kraiz/django-crontab">kraiz/django-crontab</a>：Dead simple</li>
-</ul>
-
-<p>最終我選擇了django-crontab，快樂使用中。</p>
-
-<h3 id="toc_12">原理解釋</h3>
-
-<p>詳細用法就參照<a href="https://github.com/kraiz/django-crontab">Doc</a>吧，這裡只介紹一下原理。</p>
-
-<p>在<code>settings.py</code>設置CRONJOBS：</p>
-
-<pre><code class="language-python">CRONJOBS = [
-    (&#39;*/15 18-23 * * *&#39;, &#39;some_app.cron.some_cron_job&#39;, &#39;&gt;&gt; /var/log/cron_job.log 2&gt;&amp;1&#39;),
-]
-</code></pre>
-
-<p>加到crontab：</p>
-
-<pre><code class="language-bash">./manage.py crontab add
-</code></pre>
-
-<p>然後打開<code>crontab -e</code>，可以看到最底有一行：</p>
-
-<pre><code class="language-bash">*/15 18-23 * * * /home/ubuntu/my_project/env/bin/python /home/ubuntu/my_project/manage.py crontab run xxxxxxxxxxxxx # django-cronjobs for my_project
+<pre><code class="language-javascript">// Child
+render(){
+  return (
+    &lt;Text&gt;{this.props.text}&lt;/Text&gt;
+  );
+}
 </code></pre>
 
 <ul>
-<li>這代表django-crontab其實是幫你注冊了一個<strong>cron job</strong>到linux的<strong>crontab</strong></li>
-<li><code>/home/ubuntu/my_project/env/bin/python</code>代表使用你的<strong>virtualenv</strong>（虛擬環境）中的python去執行<code>manage.py</code></li>
-<li><code>manage.py crontab run xxxxxxxxxxx</code>執行django-crontab裡的<code>run</code></li>
-<li>我看了看源碼，django-crontab會把cron job的設置<strong>hash</strong>成一條字串（就是那個<code>xxxxx</code>），<code>run</code>的時候會以那個hash，在<code>settings.py</code>找回要執行的cron job，最後執行它</li>
+<li><code>{}</code>是JSX裡的syntax，裡面可以寫任何js，例如可以<code>{getSomeString()}</code>等等</li>
+<li><code>this</code>是指「現在這個component instance」，<code>this.props</code>就是它收到的所有props</li>
 </ul>
 
-<p><a href="15213187969378.html">延伸閱讀：建置python虛擬環境(Virtual Environment)</a></p>
+<h2 id="toc_2">States</h2>
 
-<h3 id="toc_13">Cron job logging注意事項</h3>
+<p>States是Component內儲存的data，一般會在<code>constructor()</code>建立：</p>
 
-<blockquote>
-<p>要小心輸出到<strong>stdout</strong>和<strong>stderr</strong>的分別。</p>
-</blockquote>
-
-<p>如果你的Django設置了<code>StreamHandler</code>處理logging，要確保cron job的suffix（後綴）是例如以下：</p>
-
-<pre><code>(&#39;*/15 18-23 * * *&#39;, &#39;some_app.cron.some_cron_job&#39;, &#39;&gt;&gt; /var/log/cron_job.log 2&gt;&amp;1&#39;)
+<pre><code class="language-javascript">class SomeComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: &#39;Hello World!&#39;,
+    };
+  }
+}
 </code></pre>
 
-<p><em>（<code>&gt;</code>代表覆蓋原有檔案，<code>&gt;&gt;</code>代表append到原有檔案）</em></p>
+<pre><code class="language-javascript">render(){
+  return (
+    &lt;Text&gt;{this.state.text}&lt;/Text&gt;
+  );
+}
+</code></pre>
 
-<p><code>&gt;&gt;</code>或<code>1&gt;&gt;</code>都代表Redirect <strong>stdout</strong>，但<code>StreamHandler</code><a href="https://docs.python.org/3/library/logging.handlers.html#streamhandler">預設輸出到<strong>stderr</strong></a>，所以<strong>緊記</strong>加上<code>2&gt;&amp;1</code>，把stderr也輸出到同一地方，這樣才會看到cron job的logging。</p>
+<h3 id="toc_3">setState()</h3>
 
-<p>詳細可參照我在django-crontab開的<a href="https://github.com/kraiz/django-crontab/issues/83">issue</a>。</p>
+<p>要改變state，不能直接<code>this.state.text = &#39;something&#39;</code>，必須通過<code>setState()</code>：</p>
 
-<p><a href="django-logging.html">延伸閱讀：在Django使用Logging製作紀錄檔</a></p>
+<pre><code class="language-javascript">setState(stateChange[, callback])
+// 或
+setState(updater[, callback])
+</code></pre>
 
-<h4 id="toc_14">更多關於redirect script</h4>
+<h4 id="toc_4">例子</h4>
 
-<p><a href="https://superuser.com/questions/436586/why-redirect-output-to-21-and-12">Related: Default file decriptor 1, 2</a><br/>
-<a href="https://docs.python.org/3/library/logging.handlers.html#streamhandler">If stream is specified, the instance will use it for logging output; otherwise, sys.stderr will be used.</a><br/>
-<a href="https://stackoverflow.com/questions/876239/how-can-i-redirect-and-append-both-stdout-and-stderr-to-a-file-with-bash">How can I redirect and append both stdout and stderr to a file with Bash?</a></p>
+<p>可以直接pass一個object進去：</p>
+
+<pre><code class="language-javascript">// states: { text: &#39;abc&#39;, counter: 0 }
+
+this.setState({ text: &#39;hello&#39; });
+
+// states: { text: &#39;hello&#39;, counter: 0 }
+</code></pre>
+
+<p>留意stateChange並不直接是新的state，stateChange會和舊state融合。</p>
+
+<p>也可以詳細define一個updater：</p>
+
+<pre><code class="language-javascript">// states: { text: &#39;abc&#39;, counter: 0 }
+// props: { step: 2 }
+
+this.setState((prevState, props) =&gt; {
+  return {counter: prevState.counter + props.step};
+});
+
+// states: { text: &#39;abc&#39;, counter: 2 }
+// props: { step: 2 }
+</code></pre>
+
+<h4 id="toc_5"><code>setState()</code>是異步執行的（asynchronous）</h4>
+
+<p><strong>這是很多bug的來源，請謹記<code>setState()</code>是異步的。</strong></p>
+
+<p>例如：</p>
+
+<pre><code class="language-javascript">// state: { quantity: 0 }
+const updateState = () =&gt; {
+  this.setState({ quantity: this.state.quantity + 1 })
+}
+
+updateState();
+updateState();
+updateState();
+</code></pre>
+
+<p>React會嘗試把多個setState融合成一次update，所以可能<code>this.state.quantity</code>一直沒有變，一直都是0+1。這樣我們expect quantity是3，但結果會變成1。</p>
+
+<p>這情況需要用updater，確保每次update都基於上一個update：</p>
+
+<pre><code class="language-javascript">this.setState((prevState) =&gt; {
+  return {quantity: prevState.quantity + 1};
+});
+</code></pre>
+
+<h4 id="toc_6">Callback</h4>
+
+<p>由於<code>setState()</code>的異步特性，所以提供了callback param，執行<code>setState()</code>完成後的工作。</p>
+
+<pre><code class="language-javascript">// 錯誤示範
+this.setState()
+
+// 正確示範
+this.setState({quantity: 1}, () =&gt; {
+  console.log(this.state.quantity);
+})
+</code></pre>
+
+<h4 id="toc_7">為甚麼會是異步？</h4>
+
+<p>因為每次state改動都會觸發re-render頁面，基於效能（performance）的考慮，React會盡可能減少需要重新render的次數。</p>
+
+<p>雖然是異步，但update的次序還是按照原本的，例如：</p>
+
+<pre><code class="language-javascript">this.setState({ quantity: 1 });
+this.setState({ quantity: 2 });
+this.setState({ quantity: 3 });
+// 最後必定等於3
+</code></pre>
+
+<p><a href="https://reactjs.org/docs/react-component.html#setstate">setState() Doc</a></p>
+
+<h3 id="toc_8">Props是不可變的（Immutable）</h3>
+
+<p>Child是不可以改動Parent給你的props的，如果真的要改動，可以先變成自己的states：</p>
+
+<pre><code class="language-javascript">class SomeComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: props.text,
+    };
+  }
+}
+</code></pre>
+
+<p>然後再用<code>setState()</code>去改動它。</p>
+
+<h4 id="toc_9">為甚麼Immutable？</h4>
+
+<p>React跟從<strong>Unidirectional Data Flow</strong>的設計理念，所有data由上而下、由Parent到Child，一層一層把props傳下去，而且只會向單一方向傳，而不會傳回頭。</p>
+
+<p>目的在於令所有data的改變都十分清晰和可以預見，各Component之間不會有副作用（side-effect），也方便debug。</p>
+
+<h4 id="toc_10">那Child可以如何改變Parent？</h4>
+
+<p>Parent可以給Child一個callback function，這種做法最常見於button，要處理button按下去後的工作，必須給它一個callback，例如：</p>
+
+<pre><code class="language-javascript">class SomeComponent extends PureComponent {
+  onPressButton = () =&gt; {
+    console.log(&#39;Button pressed!&#39;);
+  }
+  render() {
+    return (
+      &lt;Button onPress={this.onPressButton} /&gt;
+    );
+  }
+}
+</code></pre>
+
+<p>注意是<code>this.onPressButton</code>，而不是<code>this.onPressButton()</code>（這個在render的時候就會直接被call了）。</p>
+
+<p>再來一個例子：</p>
+
+<pre><code class="language-javascript">// Parent
+class ParentComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: &#39;Hello World!&#39;,
+    };
+  }
+  changeText = (text) =&gt; {
+    this.setState({ text });  // 這是ES6的語法，等於{ text: text }
+  }
+  render(){
+    return (
+      &lt;ChildComponent text={this.state.text} onChangeText={this.changeText} /&gt;
+    );
+  }
+}
+
+// Child
+class ChildComponent extends PureComponent {
+  render(){
+    const { text, onChangeText } = this.props;  // 也是ES6的語法
+    return (
+      &lt;TextInput value={text} onChangeText={onChangeText} /&gt;
+    );
+  }
+}
+</code></pre>
+
+<ol>
+<li>User在child的input box輸入文字</li>
+<li>改動parent的state</li>
+<li>然後parent re-render</li>
+<li>又傳新的text給child</li>
+<li>最後input box的value就會更新</li>
+</ol>
+
+<h2 id="toc_11">Reference</h2>
+
+<p><a href="https://reactjs.org/docs/state-and-lifecycle.html">React - State and Lifecycle</a><br/>
+<a href="https://reactjs.org/docs/react-component.html">React.Component API Reference</a></p>
 
 
     
@@ -319,16 +394,13 @@ source env/bin/activate/
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="django-logging.html" 
-          title="Previous Post: 在Django使用Logging製作紀錄檔">&laquo; 在Django使用Logging製作紀錄檔</a>
-      
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="django-unit-testing-part2-mocking.html" 
-          title="Next Post: Django Unit Testing - Part 2 Mocking">Django Unit Testing - Part 2 Mocking &raquo;</a>
+          <a  href="django-logging.html" 
+          title="Next Post: 在Django使用Logging製作紀錄檔">在Django使用Logging製作紀錄檔 &raquo;</a>
       
       </p>
         </div>
