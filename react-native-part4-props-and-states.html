@@ -274,22 +274,7 @@ updateState();
 });
 </code></pre>
 
-<h4 id="toc_6">Callback</h4>
-
-<p>由於<code>setState()</code>的異步特性，所以提供了callback param，執行<code>setState()</code>完成後的工作。</p>
-
-<pre><code class="language-javascript">// 錯誤示範
-this.setState()
-
-// 正確示範
-this.setState({quantity: 1}, () =&gt; {
-  console.log(this.state.quantity);
-})
-</code></pre>
-
-<h4 id="toc_7">為甚麼會是異步？</h4>
-
-<p>因為每次state改動都會觸發re-render頁面，基於效能（performance）的考慮，React會盡可能減少需要重新render的次數。</p>
+<h4 id="toc_6">更新次序</h4>
 
 <p>雖然是異步，但update的次序還是按照原本的，例如：</p>
 
@@ -299,9 +284,27 @@ this.setState({ quantity: 3 });
 // 最後必定等於3
 </code></pre>
 
+<h4 id="toc_7">Callback</h4>
+
+<p>由於<code>setState()</code>的異步特性，所以提供了callback param，執行<code>setState()</code>完成後的工作。</p>
+
+<pre><code class="language-javascript">// 錯誤示範
+this.setState({quantity: 1});
+console.log(this.state.quantity);
+
+// 正確示範
+this.setState({quantity: 1}, () =&gt; {
+  console.log(this.state.quantity);
+})
+</code></pre>
+
+<h4 id="toc_8">為甚麼會是異步？</h4>
+
+<p>因為每次state改動都會觸發re-render頁面，基於效能（performance）的考慮，React會盡可能減少需要重新render的次數。</p>
+
 <p><a href="https://reactjs.org/docs/react-component.html#setstate">setState() Doc</a></p>
 
-<h3 id="toc_8">Props是不可變的（Immutable）</h3>
+<h3 id="toc_9">Props是不可變的（Immutable）</h3>
 
 <p>Child是不可以改動Parent給你的props的，如果真的要改動，可以先變成自己的states：</p>
 
@@ -317,13 +320,13 @@ this.setState({ quantity: 3 });
 
 <p>然後再用<code>setState()</code>去改動它。</p>
 
-<h4 id="toc_9">為甚麼Immutable？</h4>
+<h4 id="toc_10">為甚麼Immutable？</h4>
 
 <p>React跟從<strong>Unidirectional Data Flow</strong>的設計理念，所有data由上而下、由Parent到Child，一層一層把props傳下去，而且只會向單一方向傳，而不會傳回頭。</p>
 
 <p>目的在於令所有data的改變都十分清晰和可以預見，各Component之間不會有副作用（side-effect），也方便debug。</p>
 
-<h4 id="toc_10">那Child可以如何改變Parent？</h4>
+<h4 id="toc_11">那Child可以如何改變Parent？</h4>
 
 <p>Parent可以給Child一個callback function，這種做法最常見於button，要處理button按下去後的工作，必須給它一個callback，例如：</p>
 
@@ -380,7 +383,7 @@ class ChildComponent extends PureComponent {
 <li>最後input box的value就會更新</li>
 </ol>
 
-<h2 id="toc_11">Reference</h2>
+<h2 id="toc_12">Reference</h2>
 
 <p><a href="https://reactjs.org/docs/state-and-lifecycle.html">React - State and Lifecycle</a><br/>
 <a href="https://reactjs.org/docs/react-component.html">React.Component API Reference</a></p>
