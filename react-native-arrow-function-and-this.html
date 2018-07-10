@@ -1,0 +1,661 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/asset/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/asset/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/asset/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/asset/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/asset/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/asset/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/asset/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- /Favicon -->
+    <title>
+    
+  React Native教學 Part 4.5 - This Binding和Arrow Function（箭頭函式） - Carson's Tech Note
+  
+  </title>
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111343902-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111343902-1');
+</script>
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+        
+            <li><a href="software-engineering.html">Software Engineering</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>React Native教學 Part 4.5 - This Binding和Arrow Function（箭頭函式）</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/6/12</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="react-native-arrow-function-and-this.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>在React的世界，Callback經常會被當作props傳給child，裡面通常帶有<code>this.setState()</code>等改變parent的語句。但在Javascript的世界，<strong>this</strong>是一個比較複雜的概念，不同情況會產生不同的this，很容易撞上有關的bug（Google一下已經一大堆）。而且使用this前要先進行<strong>binding</strong>，十分麻煩。</p>
+
+<p>Arrow function（箭頭函式），又名<em>fat-arrow function</em>，是Javascript ES6的新syntax，是<a href="http://2ality.com/2015/07/favorite-es6-features.html">最受歡迎的ES6功能</a>。<del>臨床證實，有效改善this binding的問題。</del></p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">Javascript基礎知識</h2>
+
+<p>不要急，先確保自己理解以下概念：</p>
+
+<h3 id="toc_1">甚麼是this？</h3>
+
+<blockquote>
+<p>In a function definition, this refers to the <strong>&quot;owner&quot;</strong> of the function.</p>
+</blockquote>
+
+<p>有點像其他語言如python的self。</p>
+
+<pre><code class="language-javascript">var x = this;  // Global object，如果在browser裡，this就是[object Window]
+
+function display(){
+    console.log(this);
+}
+display(); // 也是global
+
+var person = {
+    firstName: &quot;John&quot;,
+    lastName : &quot;Doe&quot;,
+    id       : 5566,
+    fullName : function() {
+        return this.firstName + &quot; &quot; + this.lastName;  // this就是當前的person object (owner)
+    }
+};
+console.log(person.fullName);
+
+// ES6
+class Person {
+    name = &quot;Hello&quot;
+}
+var personObj = new Person();
+console.log(personObj.name);
+</code></pre>
+
+<p><a href="https://www.w3schools.com/js/js_this.asp">https://www.w3schools.com/js/js_this.asp</a></p>
+
+<h3 id="toc_2">Callback裡的this, that</h3>
+
+<p>使用callback時，我們需要用that來取用owner的owner的this，否則會是undefined，例如：</p>
+
+<pre><code class="language-javascript">var jane = {
+    name: &quot;Jane&quot;,
+    
+    logHello: function (friends) {
+        var that = this;  // 必須
+        friends.forEach(function (friend) {
+            console.log(that.name + &quot; says hello to &quot; + friend)  // 使用來自owner的that
+        });
+    }
+}
+</code></pre>
+
+<h3 id="toc_3">Non-method function vs method function</h3>
+
+<pre><code class="language-javascript">// Method function
+var obj = {
+    name: &quot;Hello&quot;,
+    methodFunction: function() {
+        console.log(this);
+    }
+}
+obj.methodFunction(); // {name: &quot;Hello&quot;, methodFunction: function}
+</code></pre>
+
+<pre><code class="language-javascript">// Non-method function
+var nonMethodFunction = function(){ console.log(this); }
+nonMethodFunction(); // Window {0: Window}
+</code></pre>
+
+<h3 id="toc_4">小結</h3>
+
+<p>沒錯，在JS中this這個概念是非常複雜的，ES5前、ES6、Experimental、strict mode、不同browser，有各式各樣的rules去決定究竟this是甚麼。</p>
+
+<p>但這篇最重要還是在React裡的用法，幸好React中一般用this都是取用component，變化不算太多。</p>
+
+<h2 id="toc_5">class method中的this</h2>
+
+<p><code>this.setState()</code>是React很常見的function，但在class-based React中，要很小心this是指甚麼。</p>
+
+<h3 id="toc_6">this陷阱</h3>
+
+<blockquote>
+<p>All function calls in Javascript set a new value of this <strong>according to how the function is called</strong>.</p>
+</blockquote>
+
+<p>由於component life cycle methods（e.g. render）是由class instance invoke的，this就等於自己這個component，可以使用<code>this.setState()</code>等等。</p>
+
+<p>但其他Class method未必一定直接由component invoke（例如作為callback），有機會失去<code>this</code>的context，例如：</p>
+
+<pre><code class="language-javascript">class Hello {
+  constructor(){
+    this.name = &quot;Hello&quot;;
+  }
+  display(){
+    console.log(this.name);
+  }
+}
+var helloObj = new helloObj();
+helloObj.display(); // Hello
+
+var display = helloObj.display; 
+display(); // TypeError Error: &quot;this&quot; is undefined
+</code></pre>
+
+<p>有關文章：</p>
+
+<ul>
+<li><a href="https://medium.freecodecamp.org/this-is-why-we-need-to-bind-event-handlers-in-class-components-in-react-f7ea1a6f93eb">為甚麼需要bind this?</a></li>
+<li><a href="https://stackoverflow.com/questions/3127429/how-does-the-this-keyword-work">https://stackoverflow.com/questions/3127429/how-does-the-this-keyword-work</a></li>
+<li><a href="https://stackoverflow.com/a/28016676/6025730">https://stackoverflow.com/a/28016676/6025730</a></li>
+<li><a href="https://stackoverflow.com/questions/36489579/this-within-es6-class-method">https://stackoverflow.com/questions/36489579/this-within-es6-class-method</a></li>
+</ul>
+
+<h3 id="toc_7">.bind()</h3>
+
+<p>本來this是不能被assignment改變的，<code>.bind()</code>是ES5推出的功能，可以用在function上，強行指定this的目標。所以要在method裡使用<code>this</code>前，可以在<code>constructor</code>先強行綁定。</p>
+
+<pre><code class="language-javascript">class SomeComponent extends Component {
+    handleClickError() {
+        // this = ???
+        this.setState({ value: 1 });
+    }
+    constructor() {
+        // 這時 this = SomeComponent
+        this.state = {
+            value: 0
+        }
+        this.handleClickSuccessful = this.handleClickError.bind(this);
+    }
+    render() {
+        return (
+            {/* 這裡用的是constructor裡新建的function */}
+            &lt;button onClick={this.handleClickSuccessful} /&gt;
+            
+            {/* 沒有bind的普通method function */}
+            {/* Error: &quot;this.setState&quot; is not a function */}
+            &lt;button onClick={this.handleClickError} /&gt;
+        );
+    }
+}
+</code></pre>
+
+<h4 id="toc_8">甚麼時候需要bind？</h4>
+
+<p><img src="media/15288098442965/1*3EY_Z2JtfGe71d_Hi4fokQ.png" alt="1*3EY_Z2JtfGe71d_Hi4fokQ"/></p>
+
+<p><em><a href="https://medium.com/shoutem/react-to-bind-or-not-to-bind-7bf58327e22a">出處</a></em></p>
+
+<h4 id="toc_9">不夠簡潔</h4>
+
+<p>使用<code>.bind()</code>需要在constructor把所有用作callback的function bind一次。如果有10個，那就是要bind十次，像這樣：</p>
+
+<pre><code class="language-javascript">constructor() {
+    this.callback1 = this.callback1.bind(this);
+    this.callback2 = this.callback2.bind(this);
+    this.callback3 = this.callback3.bind(this);
+    this.callback4 = this.callback4.bind(this);
+    this.callback5 = this.callback5.bind(this);
+    this.callback6 = this.callback6.bind(this);
+    // ...
+}
+</code></pre>
+
+<p>作為完美主義者最討厭這種重複又多餘的做法了。</p>
+
+<h2 id="toc_10">Arrow function</h2>
+
+<p>使用Arrow function可以幫助我們解決<code>.bind()</code>帶來的麻煩。</p>
+
+<h3 id="toc_11">Arrow Function和一般Function有甚麼分別？</h3>
+
+<p>先看看Arrow function的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">簡介</a>：</p>
+
+<blockquote>
+<p>Two factors influenced the introduction of arrow functions: <strong>shorter functions</strong> and <strong>non-binding of this</strong>.</p>
+
+<p>An arrow function expression has a shorter syntax than a function expression and does not have its own this, arguments, super, or new.target. These function expressions are <strong>best suited for non-method functions</strong>, and they cannot be used as constructors.</p>
+
+<p>An arrow function <strong>does not have its own this</strong>; the &quot;this&quot; value of the <strong>enclosing execution context</strong> is used.</p>
+</blockquote>
+
+<p>總的來說就是：</p>
+
+<ul>
+<li>更方便地define function</li>
+<li>沒有自己的<code>this</code>（重點）</li>
+</ul>
+
+<p>arrow function會自動使用這個function被declare時的環境作為this（而非被Call時的環境）。</p>
+
+<h3 id="toc_12">直接在render使用</h3>
+
+<pre><code class="language-javascript">class LoggingButton extends React.Component {
+  handleClick() {
+    console.log(&#39;this is:&#39;, this);
+  }
+
+  render() {
+    // This syntax ensures `this` is bound within handleClick
+    return (
+      &lt;button onClick={(e) =&gt; this.handleClick(e)}&gt;
+        Click me
+      &lt;/button&gt;
+    );
+  }
+}
+</code></pre>
+
+<p>這麼做<code>(e)=&gt;{}</code>會得到<code>render()</code> context裡的this，而handleClick就會使用這個context中的this。</p>
+
+<p><a href="https://reactjs.org/docs/handling-events.html">https://reactjs.org/docs/handling-events.html</a></p>
+
+<h4 id="toc_13">缺陷</h4>
+
+<p>這做法有它的缺陷，由於<code>render()</code>是一個高使用率的method（每次數據有變都會re-render），而剛才的寫法等同於以下：</p>
+
+<pre><code class="language-javascript">render() {
+    const _handleClick = (e) =&gt; this.handleClick(e);
+    return (
+      &lt;button onClick={_handleClick}&gt;
+        Click me
+      &lt;/button&gt;
+    );
+  }
+</code></pre>
+
+<p>每次render時都會產生一個新的function，不是最好的做法。</p>
+
+<h3 id="toc_14">Babel Transform</h3>
+
+<p>Javascript的ES標準是一直更新的，而有<a href="https://babeljs.io/docs/en/babel-plugin-transform-class-properties/">一個proposal</a>正在stage-3階段，其中一項建議是在class使用arrow function，可以確保this的binding是class instance。</p>
+
+<pre><code class="language-javascript">class LoggingButton extends React.Component {
+  // This syntax ensures `this` is bound within handleClick.
+  // Warning: this is *experimental* syntax.
+  handleClick = () =&gt; {
+    console.log(&#39;this is:&#39;, this);
+  }
+
+  render() {
+    return (
+      &lt;button onClick={this.handleClick}&gt;
+        Click me
+      &lt;/button&gt;
+    );
+  }
+}
+</code></pre>
+
+<p><a href="https://reactjs.org/docs/handling-events.html">https://reactjs.org/docs/handling-events.html</a></p>
+
+<p>此功能還在ES Stage-3 Proposal，日後會被加入成為JS Standard。在原生未支援的時間，我們可以透過<a href="(https://babeljs.io)">Babel</a>使用這功能。</p>
+
+<blockquote>
+<p>Babel是一個幫助transpile javascript的plugin，一般建立react native project時都會自帶babel，可以把一些javascript引擎不支持的功能加進去，然後輸出時讓babel transpile成valid js。</p>
+</blockquote>
+
+<p>Babel transform是目前為止我認為最好的解決辦法，可以免除binding的問題，不用每個function都bind一次。</p>
+
+<h2 id="toc_15">結語</h2>
+
+<p><img src="media/15288098442965/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7%202018-07-10%2009.00.46.png" alt="螢幕快照 2018-07-10 09.00.46"/><br/>
+<em>已經越來越多developer傾向使用arrow function</em></p>
+
+<p>binding這問題是源自於javascript自身，已經源遠流長了，那時候js還沒有class這概念，希望新proposal可以盡快成為標準吧。</p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="react-native-part4-props-and-states.html" 
+          title="Next Post: React Native教學 Part 4 - Props & States">React Native教學 Part 4 - Props & States &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">「坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。」- 《學問與遊歷》</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+        
+            <a href="software-engineering.html"><strong>Software Engineering</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="react-native-arrow-function-and-this.html">React Native教學 Part 4.5 - This Binding和Arrow Function（箭頭函式）</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="react-native-part4-props-and-states.html">React Native教學 Part 4 - Props & States</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="django-logging.html">在Django使用Logging製作紀錄檔</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="django-cron-jobs.html">在Django建立定時執行的Cron jobs（工作排程）</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="django-unit-testing-part2-mocking.html">Django Unit Testing - Part 2 Mocking</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>
