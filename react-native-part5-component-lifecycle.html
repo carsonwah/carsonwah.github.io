@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  vuejs - Carson's Tech Note
+  React Native教學 - Part 5 Component Lifecycle - Carson's Tech Note
   
   </title>
   
@@ -127,69 +127,181 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="15213187968464.html">
-                
-                  <h1>由零建立Vue.js WebApp及專案結構解釋</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>Vue.js是一個負責View layer的javascript framework，可以用來render html的內容。Vue可以加入到現有網頁，但更多情況是用Vue由頭建立一個<a href="https://en.wikipedia.org/wiki/Single-page_application">SPA(Single-page application)</a>。</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>React Native教學 - Part 5 Component Lifecycle</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/7/11</span>
 
-<p>這裡紀錄了如何建立一個用上 <code>node.js</code>, <code>npm</code>, <code>webpack</code>, <code>vue-router</code>, <code>vuex</code> 的Vue.js專案。</p>
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='react-native.html'>React Native</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="react-native-part5-component-lifecycle.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p><a href="2018-03-28-react-native-part3-component.html">Part 3</a>介紹了React Component的基本用法，包括<code>render()</code>、custom styles和layouts，這些都是顯示UI用到的，但要處理數據、回應user input等等，就要先理解Component的<strong>Lifecycle</strong>。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">Overview</h2>
+
+<p><strong>Lifecycle methods</strong>是React提供的原生功能，component有任何變動時，React會按情況執行各種lifecycle methods。所以，幾乎所有component需要做的事，都會寫在這些method裡。</p>
+
+<h3 id="toc_1">官方介紹</h3>
+
+<p><a href="https://reactjs.org/docs/state-and-lifecycle.html">React - State and Lifecycle</a><br/>
+<a href="https://reactjs.org/docs/react-component.html">React.Component API Reference</a></p>
+
+<h3 id="toc_2">總覽圖</h3>
+
+<p>以下是「甚麼情況會trigger甚麼method」的總覽：</p>
+
+<p><img src="media/15223237992470/1*u8hTumGAPQMYZIvfgQMfPA.jpg" alt="1*u8hTumGAPQMYZIvfgQMfPA"/><br/>
+<em><a href="https://levelup.gitconnected.com/componentdidmakesense-react-lifecycle-explanation-393dcb19e459">Reference</a></em></p>
+
+<p>（注：由React 16.0.0開始Lifecycle有小改動，但原理一樣，所以這篇按原本的架構講解）</p>
+
+<p>最常用到的有：</p>
+
+<ul>
+<li>constructor：建立state等等</li>
+<li>render：這個必須的啦</li>
+<li>componentDidMount：Ajax call拿data，然後觸發re-render</li>
+</ul>
+
+<h2 id="toc_3">常用Methods</h2>
+
+<h3 id="toc_4">constructor</h3>
+
+<pre><code class="language-javascript">constructor(props) {
+    super(props);
+    this.state = {
+        value: 0
+    }
+}
+</code></pre>
+
+<h3 id="toc_5">componentDidMount</h3>
+
+<pre><code class="language-javascript">componentDidMount() {
+    axios
+        .get(&quot;https://mybackend.com/api/v1/data&quot;)
+        .then(response =&gt; {
+            this.setState({ value: response.value });
+            })
+        .catch(err =&gt; {
+            console.log(&quot;Error&quot;);
+            });
+    
+}
+</code></pre>
+
+<h3 id="toc_6">shouldComponentUpdate</h3>
+
+<p>每次data有改動，React都會<a href="https://reactjs.org/docs/reconciliation.html">計算DOM diff</a>，決定甚麼component需要update，預設這些component收到訊號後會直接update。</p>
+
+<p>但有時這些受影響的component也不一定需要re-render，這樣的話很浪費效能。這時我們可以用<code>shouldComponentUpdate</code>來自行決定甚麼情況才update這個component，提前return，免除多餘的comparison。</p>
+
+<pre><code class="language-javascript">shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.id === this.props.id) return false;
+    return true;
+}
+</code></pre>
+
+<h4 id="toc_7">PureComponent</h4>
+
+<p>一般component的<code>shouldComponentUpdate</code>會自動return true，我們在可以override它來自定規則，但如果每個component都寫一次那就很麻煩了。</p>
+
+<p>於是React提供了一個方便又提升效能的component - PureComponent。</p>
+
+<blockquote>
+<p>PureComponent is exactly the same as Component except that it handles the shouldComponentUpdate method for you. When props or state changes, PureComponent will do a <strong>shallow comparison on both props and state</strong>. <a href="https://codeburst.io/when-to-use-component-or-purecomponent-a60cfad01a81">Ref</a></p>
+</blockquote>
+
+<h5 id="toc_8">不要mutate object</h5>
+
+<p>用PureComponent要很小心確保你的props和state裡的object不會mutate，意思就是如果object有任何改動，都會成為一個新的object，例如：</p>
+
+<pre><code class="language-javascript">const obj = {name: &quot;hello world&quot;};
+
+// Mutated
+obj.name = &quot;Changed&quot;;
+
+// New object
+const new_obj = {...obj, name: &quot;Changed&quot;};
+// or
+const new_obj2 = Object.assign(obj, { name: &quot;Changed&quot; });
+</code></pre>
+
+<h4 id="toc_9">小結</h4>
+
+<ol>
+<li>Component - 計算diff後按需要re-render</li>
+<li>Component with shouldComponentUpdate - 計算diff後自行決定甚麼情況要update</li>
+<li>PureComponent - 計算diff後shallow compare所有props和state</li>
+</ol>
+
+<h2 id="toc_10">Reference</h2>
+
+<ul>
+<li><a href="https://reactjs.org/docs/optimizing-performance.html#avoid-reconciliation">https://reactjs.org/docs/optimizing-performance.html#avoid-reconciliation</a></li>
+</ul>
 
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="15213187968464.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/3/18</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='vuejs.html'>vuejs</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="15213187968464.html#disqus_thread">comments</a>
-                      
+    
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-              
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="react-native-arrow-function-and-this.html" 
+          title="Next Post: React Native教學 Part 4.5 - This Binding和Arrow Function（箭頭函式）">React Native教學 Part 4.5 - This Binding和Arrow Function（箭頭函式） &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
