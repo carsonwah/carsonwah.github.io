@@ -197,10 +197,13 @@ console.log(person.fullName);
 
 // ES6
 class Person {
-    name = &quot;Hello&quot;
+    constructor() {
+        super();
+        this.name = &quot;Hello&quot;;
+    }
 }
 var personObj = new Person();
-console.log(personObj.name);
+console.log(personObj.name);  // Hello
 </code></pre>
 
 <p><a href="https://www.w3schools.com/js/js_this.asp">https://www.w3schools.com/js/js_this.asp</a></p>
