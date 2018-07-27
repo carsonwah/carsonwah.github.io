@@ -1,0 +1,549 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/asset/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/asset/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/asset/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/asset/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/asset/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/asset/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/asset/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- /Favicon -->
+    <title>
+    
+  翻牆專題：Proxy、VPN、Shadowsocks概念解釋 - Carson's Tech Note
+  
+  </title>
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111343902-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111343902-1');
+</script>
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+        
+            <li><a href="software-engineering.html">Software Engineering</a></li>
+        
+            <li><a href="Web%20Technology.html">Web Technology</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>翻牆專題：Proxy、VPN、Shadowsocks概念解釋</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/7/25</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='%E7%BF%BB%E7%89%86.html'>翻牆</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="proxy-vpn-shadowsocks-concept.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>大家都知道，內地是封閉的網絡環境，政府的防火長城會隔擋嘗試連到外國網站的連線。然而人總是追求自由，人們一直找尋各種翻牆方法，成熟的proxy和vpn技術便成為了翻牆的主要工具。</p>
+
+<p>然而在防火長城日漸完善下，proxy和vpn逐漸失效，這時開源社群出現了一個名為shadowsocks的專案，專為翻牆而生。雖然作者已刪除源碼，但ss已經成為了其中一種主流的翻牆工具了。</p>
+
+<p>以下會解釋Proxy、VPN、Shadowsocks的原理和歷史。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">Proxy</h2>
+
+<h3 id="toc_1">1. Gateway / Tunneling proxy</h3>
+
+<p>不修改任何檔案，只做傳送的中間人。</p>
+
+<h3 id="toc_2">2. Forward proxy</h3>
+
+<p>代替用家發送request，然後把response傳回用家。</p>
+
+<p><img src="media/15309649464786/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7%202018-07-26%2015.22.35.png" alt="" style="width:400px;"/></p>
+
+<h4 id="toc_3">用途</h4>
+
+<ul>
+<li>隱藏身份</li>
+<li>突破防火牆限制</li>
+<li>caching</li>
+</ul>
+
+<h3 id="toc_4">3. Reverse proxy</h3>
+
+<p>通常放在server前面，代替server接收和傳送network request到外面的世界。</p>
+
+<p><img src="media/15309649464786/15325896021038.jpg" alt="" style="width:400px;"/></p>
+
+<h4 id="toc_5">用途</h4>
+
+<ul>
+<li>保護private network中的server</li>
+<li>load-balancing</li>
+<li>authentication</li>
+<li>decryption</li>
+<li>caching</li>
+</ul>
+
+<h3 id="toc_6">Proxy種類</h3>
+
+<h4 id="toc_7">HTTP Proxy</h4>
+
+<ul>
+<li>一般用於代理Browser request</li>
+<li>理解http packet中的內容
+
+<ul>
+<li>可以替換http header內容</li>
+<li>可以把重複的request結果cache起</li>
+</ul></li>
+</ul>
+
+<h4 id="toc_8">Socks Proxy</h4>
+
+<ul>
+<li>一般是全局代理所有TCP request</li>
+<li>只負責數據傳輸，不理會應用層協定</li>
+<li>最新協定是版本5，又稱Socks5</li>
+</ul>
+
+<h2 id="toc_9">VPN</h2>
+
+<p>公司、學校很多時候都有私人網絡（Private network），一般都會封鎖外部、不在這個network裡的機使用內部資源。</p>
+
+<p>VPN（Virtual private network）原本目的就是，讓不在private network之中的用家，都可以透過VPN連上其中一部裡面的機，然後透過這台機進入內部網絡。</p>
+
+<p><img src="media/15309649464786/15325916933365.jpg" alt=""/></p>
+
+<h2 id="toc_10">Proxy vs VPN</h2>
+
+<p>Proxy與VPN一樣，都可以代替使用者上網，替換封包IP，藉以隱藏使用者的身份。但兩者在安全性上卻有很大差別。</p>
+
+<p>一般Proxy協議不涉及加密，封包是原封不動到達proxy server的，缺點是欠缺安全性，不過用上https協定預先加密，其實也沒有很不安全，而且proxy過程簡單，速度快。</p>
+
+<p><img src="media/15309649464786/15325938225552.png" alt="" style="width:500px;"/></p>
+
+<p>由於VPN原本是用在進入私人網絡，所以其協議對安全性的要求較高。連接時會經過幾次來回的認證和交換密鑰，才會連接上，而且所有到達VPN server的封包都是被加密的。缺點就是需要更大效能在加密和解密之上。</p>
+
+<p><img src="media/15309649464786/15325938634523.png" alt="" style="width:500px;"/></p>
+
+<ul>
+<li><a href="https://www.howtogeek.com/247190/whats-the-difference-between-a-vpn-and-a-proxy/">What’s the Difference Between a VPN and a Proxy?</a></li>
+</ul>
+
+<h2 id="toc_11">翻牆</h2>
+
+<p>一般proxy和VPN已經不是可以穩定翻牆的工具了。</p>
+
+<p>首先Proxy沒有加密，封包容易辨認。而VPN的封包有些特徵，例如VPN連接時的幾次交換、常用的連接port等等，GFW都可以透過這些分辨出翻牆流量，加上機器學習，確認是用作翻牆server的話直接封掉。</p>
+
+<h3 id="toc_12">Shadowsocks</h3>
+
+<p><img src="media/15309649464786/15326545367263.jpg" alt="" style="width:200px;"/></p>
+
+<p>現在最火的翻牆工具莫過於Shadowsocks了，作者為<a href="https://github.com/clowwindy">@clowwindy</a>（已被請去喝茶）。Shadowsocks基於Socks5協定，與一般Socks proxy一樣，只負責傳送數據，不理會應用層內容。</p>
+
+<p>Shadowsocks為翻牆而生，可以算作proxy，但又不同於一般proxy，有些專為翻牆而設的特性：</p>
+
+<ul>
+<li>Socks5協定是對browser和local ss client之間的，不需要握手（Hand-shaking），封包沒有明顯特徵，使GFW無法分辨。</li>
+<li>ss client和server的流量都會被加密，client和server之間以密碼作密鑰。</li>
+<li>雖然以密碼作加密手段遠不及VPN安全，但這樣做比VPN更難偵察流量。</li>
+<li>比VPN效能需求低</li>
+</ul>
+
+<p><img src="media/15309649464786/15326174821847.png" alt=""/></p>
+
+<p><a href="https://bingtaoli.github.io/2016/11/23/shadowsocks%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">shadowsocks实现原理</a></p>
+
+<h3 id="toc_13">SSR</h3>
+
+<p><img src="media/15309649464786/15326547951847.jpg" alt="" style="width:300px;"/></p>
+
+<p>SSR是另一作者<a href="https://github.com/breakwa11">@breakwa11</a>（破娃）推出的「改良版」，他認為SS不夠隱蔽性，於是又加入了一些數據混淆，並兼容ss協議（理論上）。</p>
+
+<h2 id="toc_14">延伸閱讀</h2>
+
+<ul>
+<li><p>自由戰士奮鬥史：<a href="https://blog.yandere.moe/moe/gfw-vs-proxy/97.html">墙与梯的较量——那些年我们一起用过的翻墙手段</a></p>
+
+<ul>
+<li>以前出現過的翻牆工具和各種手法，真的是道高一尺，魔高一丈。</li>
+</ul></li>
+<li><p>防火長城技術：<a href="https://zh.wikipedia.org/wiki/%E9%98%B2%E7%81%AB%E9%95%BF%E5%9F%8E">防火長城Wiki</a></p></li>
+<li><p>Shadowsocks技術：</p>
+
+<ul>
+<li><a href="http://vc2tea.com/whats-shadowsocks/">写给非专业人士看的 Shadowsocks 简介</a></li>
+<li><a href="https://segmentfault.com/a/1190000011862912">你也能写个 Shadowsocks</a></li>
+<li><a href="https://doub.io/ss-jc35/">关于Shadowsocks的小白常见问题 总结篇</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Shadowsocks">Shadowsocks Wiki</a></li>
+</ul></li>
+<li><p>SS和SSR的歷史：</p>
+
+<ul>
+<li><a href="https://ssr.plus/271.html">科普：SSR和SS的区别</a></li>
+<li><a href="https://deeponion.org/community/threads/vpnss-ssr.901/">Vpn与ss/ssr的区别</a></li>
+</ul></li>
+<li><p><a href="https://github.com/shadowsocks/shadowsocks/issues/988">ss已经被特征识别了，请大家跑路</a></p></li>
+<li><p>Firefly Proxy</p>
+
+<ul>
+<li><a href="https://pao-pao.net/article/309">原理</a></li>
+</ul></li>
+</ul>
+
+<hr/>
+
+<p>如果想看如何使用shadowsocks，可以到 <a href="shadowsocks-setup-tutorial.html">翻牆必備：Shadowsocks建置教學</a>。</p>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="shadowsocks-setup-tutorial.html" 
+          title="Previous Post: 翻牆必備：Shadowsocks建置教學">&laquo; 翻牆必備：Shadowsocks建置教學</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="react-native-part5-component-lifecycle.html" 
+          title="Next Post: React Native教學 - Part 5 Component Lifecycle">React Native教學 - Part 5 Component Lifecycle &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">「坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。」- 《學問與遊歷》</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+        
+            <a href="software-engineering.html"><strong>Software Engineering</strong></a>
+        
+            <a href="Web%20Technology.html"><strong>Web Technology</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="shadowsocks-setup-tutorial.html">翻牆必備：Shadowsocks建置教學</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="proxy-vpn-shadowsocks-concept.html">翻牆專題：Proxy、VPN、Shadowsocks概念解釋</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="react-native-part5-component-lifecycle.html">React Native教學 - Part 5 Component Lifecycle</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="react-native-arrow-function-and-this.html">React Native教學 Part 4.5 - This Binding和Arrow Function（箭頭函式）</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="react-native-part4-props-and-states.html">React Native教學 Part 4 - Props & States</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>
