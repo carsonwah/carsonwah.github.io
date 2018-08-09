@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  Laravel - Carson's Tech Note
+  如何使用Android RecyclerView建立一個List列表 - Carson's Tech Note
   
   </title>
   
@@ -129,67 +129,297 @@
        
 
  <script type="text/javascript">
-	$(function(){
-		$('#menu_item_index').addClass('is_active');
-	});
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
 </script>
 <div class="row">
-	<div class="large-8 medium-8 columns">
-		<div class="markdown-body home-categories">
-		
-			<div class="article">
-                <a class="clearlink" href="laravel-part1-basics.html">
-                
-                  <h1>Laravel教學 Part 1 - 新手入門</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>以下介紹初學Laravel需要知道的檔案結構和概念。</p>
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>如何使用Android RecyclerView建立一個List列表</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/8/8</span>
 
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='android.html'>Android</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="android-list-recycler-view.html#disqus_thread">comments</a>
+            
 
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                   <a href="laravel-part1-basics.html">Read more</a>&nbsp;&nbsp; 
-                    <span class="date">2018/5/30</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='laravel.html'>Laravel</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-                        <a href="laravel-part1-basics.html#disqus_thread">comments</a>
-                      
+            
+          </span>
 
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>List是Mobile app的一個基本元素，幾乎應用在每一個app裡面。這篇教學會講解一下如何用RecyclerView建立一個簡單的列表。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">前言：ListView vs RecycleView</h2>
+
+<p>ListView是一個歷史較悠久的component，簡單直接顯示所有data。而RecyclerView是它的改良版，主要提升了效能和提供更大Layout彈性。</p>
+
+<p>相關閱讀：<a href="https://stackoverflow.com/questions/26728651/recyclerview-vs-listview">RecyclerView vs. ListView</a></p>
+
+<h3 id="toc_1">BaseAdapter vs RecyclerView.Adpater</h3>
+
+<p>RecyclerView需要使用比較特別的Adapter，以配合它reuse ViewHolder的需要。</p>
+
+<p>它們的concrete class分別需要override以下methods：</p>
+
+<p>BaseAdapter:</p>
+
+<ul>
+<li>int getCount()</li>
+<li>Object getItem(int position)</li>
+<li>long getItemId(int position)</li>
+<li>View getView(int position, View convertView, ViewGroup parent)</li>
+</ul>
+
+<p>RecyclerView.Adpater:</p>
+
+<ul>
+<li>ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)</li>
+<li>void onBindViewHolder(ViewHolder holder, int position)</li>
+<li>int getItemCount()</li>
+</ul>
+
+<p>在這篇我們會使用RecyclerView和它的Adapter。</p>
+
+<h2 id="toc_2">建立一個基本的RecyclerView</h2>
+
+<p><a href="https://developer.android.com/guide/topics/ui/layout/recyclerview#java">Android Developer Guide - Create a List with RecyclerView</a></p>
+
+<h3 id="toc_3">結構</h3>
+
+<ul>
+<li>Fragment
+
+<ul>
+<li>layout xml</li>
+<li>RecyclerView
+
+<ul>
+<li>Adapter
+
+<ul>
+<li>ViewHolder
+
+<ul>
+<li>layout xml</li>
+<li>TextView, etc</li>
+</ul></li>
+</ul></li>
+<li>LayoutManager</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h3 id="toc_4">Layout</h3>
+
+<p>總共需要在<code>res/</code>裡建立兩個layout檔：</p>
+
+<ol>
+<li>person_fragment.xml：Fragment的layout，裡面放一個RecyclerView</li>
+<li>person_list_item.xml：ViewHolder的layout，也等於每個List item的layout</li>
+</ol>
+
+<p>建立完成後應該有齊以下材料：</p>
+
+<ul>
+<li><code>R.layout.person_fragment</code></li>
+<li><code>R.id.person_list_view</code></li>
+<li><code>R.layout.person_list_item</code></li>
+<li><code>R.id.person_name_text_view</code></li>
+</ul>
+
+<p>都是之後會用到的。</p>
+
+<h3 id="toc_5">建立一個Adapter</h3>
+
+<p>每個RecyclerView都會有一個Adapter，Adapter是處理data，製作list item的地方。與一般ListView的adapter不同，RecyclerView的Adapter必須跟從<a href="https://developer.android.com/training/improving-layouts/smooth-scrolling#ViewHolder">ViewHolder pattern</a>。</p>
+
+<h4 id="toc_6">ViewHolder pattern流程簡介</h4>
+
+<ol>
+<li>Adapter製作<strong>少量</strong>所需的ViewHolder，它們只有相關的View，<strong>裡面沒有任何data</strong></li>
+<li>Adapter根據需要（如頁面滾動）自動bind和unbind這些ViewHolder
+
+<ul>
+<li>bind的時候一般以<code>position</code>來找data，然後用來設置ViewHolder裡的各個View應該顯示甚麼</li>
+</ul></li>
+</ol>
+
+<p>透過拆開「建立View」和「設置View」的logic，Adapter可以重用ViewHolder，減少View的數量，在顯示長列表時效能會顯著提升。</p>
+
+<p>相關閱讀：<a href="https://stackoverflow.com/questions/32704825/oncreateviewholder-of-recyclerview-adapter-is-called-twice-or-more-multiple-tim">StackOverflow - onCreateViewHolder of RecyclerView.Adapter is called twice or more, multiple times</a></p>
+
+<h4 id="toc_7">建立初始Adapter</h4>
+
+<p>Adapter的constructor裡應接收list data並存起備用。</p>
+
+<pre><code class="language-java">public class PersonListAdapter {
+
+    private List&lt;Person&gt; personList;
+
+    public RouteListAdapter(List&lt;Person&gt; personList) {
+        this.personList = personList;
+    }
+}
+</code></pre>
+
+<h4 id="toc_8">繼承RecyclerView.Adapter</h4>
+
+<p>Adapter需要繼承<code>RecyclerView.Adapter</code>：</p>
+
+<pre><code class="language-java">public class PersonListAdapter extends RecyclerView.Adapter&lt;PersonListAdapter.ViewHolder&gt; {
+    // ...
+}
+</code></pre>
+
+<p><em>留意<PersonListAdapter.ViewHolder>定義了這個Adapter所使用的ViewHolder類型，之後會在下面建立這個class。</em></p>
+
+<p>然後override三個相關的methods：</p>
+
+<ol>
+<li>onCreateViewHolder：調用R.layout建立View，以此建立一個新的ViewHolder</li>
+<li>onBindViewHolder：透過position找到data，以此設置ViewHolder裡的View</li>
+<li>getItemCount</li>
+</ol>
+
+<pre><code class="language-java">// ...
+    @NonNull
+    @Override
+    public PersonListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.person_list_item, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Route route = mRoutes.get(position);
+        holder.routeName.setText(route.getName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mRoutes.size();
+    }
+// ...
+</code></pre>
+
+<h4 id="toc_9">建立ViewHolder</h4>
+
+<p>在一般convention下，我們會在Adapter裡建立一個<code>ViewHolder</code> class，它的功能十分簡單，只需要在constructor裡存儲起自己用到的View即可。</p>
+
+<pre><code class="language-java">public class PersonListAdapter extends RecyclerView.Adapter&lt;PersonListAdapter.ViewHolder&gt; {
+    // ...
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView personNameTextView;
         
-              
+        public ViewHolder(View v) {
+            super(v);
+            personTextView = v.findViewById(R.id.person_name);
+        }
+    }
+}
+</code></pre>
+
+<p>到此我們已經完成了Adapter，接下來可以在Activity/Fragment裡使用了。</p>
+
+<h3 id="toc_10">在Fragment裡使用</h3>
+
+<p>流程非常簡單：</p>
+
+<ol>
+<li>找出RecyclerView</li>
+<li>建立LayoutManager</li>
+<li>設定到RecyclerView</li>
+<li>獲取data，建立Adapter</li>
+<li>設定到RecyclerView</li>
+</ol>
+
+<pre><code class="language-java">public class RouteListFragment extends Fragment {
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.my_fragment, container, false);
+        initRecyclerView(view);
+        return view;
+    }
+
+    private void initRecyclerView(View view) {
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+
+        // Layout manager
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        
+        // Retrieve data: e.g. Query data from SQLite
+        List&lt;Route&gt; routes = SQLite.select().from(Route.class).queryList();
+        
+        // Set an Adapter
+        mAdapter = new RouteListAdapter(routes);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+}
+</code></pre>
+
+<p><em>注意：與Activity不同，Fragment無法直接使用<code>findViewById</code>。我們仍可<a href="https://stackoverflow.com/questions/6495898/findviewbyid-in-fragment">透過inflate出來的View去找到我們的RecyclerView</a></em></p>
 
 
-			<div class="row">
-			  <div class="large-6 columns">
-			  <p class="text-left" style="padding-top:25px;">
-			   
-			  </p>
-			  </div>
-			  <div class="large-6 columns">
-			<p class="text-right" style="padding-top:25px;">
-			
-			</p>
-			  </div>
-			</div>
-		</div>
-	</div><!-- large 8 -->
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="shadowsocks-setup-tutorial.html" 
+          title="Next Post: 翻牆必備：Shadowsocks建置教學">翻牆必備：Shadowsocks建置教學 &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
