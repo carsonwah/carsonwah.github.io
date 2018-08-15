@@ -278,30 +278,46 @@
 <li>utils/：就是普通util functions</li>
 </ul>
 
-<h2 id="toc_8">II. 善用package.json</h2>
+<h2 id="toc_8">II. 解決大型專案的Import問題</h2>
 
+<blockquote>
 <p><code>package.json</code>是<a href="15213187968700.html">解決無限&#39;../../../&#39;地獄的良藥</a>。</p>
+</blockquote>
 
-<p>一般node project只會在top-level有一個<code>package.json</code>，但這裡的<code>src/</code>也有一個：</p>
+<p><strong>Import</strong>是nodejs的一大痛處，因為它使用relative path，一般從一個檔案import另一個檔案，需要像這樣：</p>
+
+<pre><code class="language-javascript">// src/containers/Home/SliderSection.js
+import MyButton from &#39;../../../components/MyButton&#39;;
+</code></pre>
+
+<h3 id="toc_9">解決辦法</h3>
+
+<p>React Native使用了<a href="https://github.com/facebook/metro">Metro bundler</a>來打包js檔，它提供了一個<a href="https://stackoverflow.com/a/50041634/6025730">預設功能</a>，只要<strong>在任何一個地方中建立一個package.json</strong>，就可以命名該path，就像一般node_modules一樣。</p>
+
+<p>例如建立<code>src/package.json</code>：</p>
 
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;@&quot;
 }
 </code></pre>
 
-<p>這個其實是React Native所使用的<a href="https://github.com/facebook/metro">Metro bundler</a>提供的一個<a href="https://stackoverflow.com/a/50041634/6025730">預設功能</a>，只要在任何一個灺方中建立一個這樣的<code>package.json</code>，就可以命名當前的path為這個名字。日後可以直接用<code>import xxx from &#39;@/xxx&#39;</code>，而不用<code>from &#39;../../../xxx&#39;</code>。</p>
+<p>然後所有檔案都可以這樣使用：</p>
 
-<p>由於所有js檔都在<code>src/</code>當中，所以所有import都可以由<code>@/</code>開始了。</p>
+<pre><code class="language-javascript">import MyButton from &#39;@/src/components/MyButton&#39;;
+</code></pre>
 
-<p>你也可以把所有folder都命名一遍，但建議加&#39;@&#39;在前面，例如&#39;@component&#39;, &#39;@utils&#39;等去命名，避免與npm packages撞名</p>
+<p>你也可以把所有folder都命名一遍，例如：</p>
 
-<p><em>(packager就是類似webpack的工具，幫你打包起整個專案（連同用到的libraries）成一個單獨的js檔)</em></p>
+<pre><code class="language-javascript">import MyButton from &#39;@components/MyButton&#39;;
+</code></pre>
 
-<h2 id="toc_9">III. 用axios來進行API Requests</h2>
+<p><em>建議加&#39;@&#39;在前面，例如&#39;@component&#39;, &#39;@utils&#39;等去命名，避免與npm packages撞名</em></p>
+
+<h2 id="toc_10">III. Network Request （網絡請求）</h2>
 
 <p>個人推薦使用<a href="https://facebook.github.io/react-native/docs/network.html">axios</a>來進行ajax requests，以Promise的形式處理所有response，非常方便，而且Github stars已經突破40000，顯示它現在有多受歡迎。</p>
 
-<h3 id="toc_10">Basic Usage</h3>
+<h3 id="toc_11">基本用法</h3>
 
 <pre><code>axios.post(&#39;/user&#39;, {
     firstName: &#39;Fred&#39;,
@@ -317,7 +333,7 @@
 
 <p><a href="https://github.com/axios/axios#example">axios doc - Example</a></p>
 
-<h3 id="toc_11">Interceptor</h3>
+<h3 id="toc_12">個人化axios service</h3>
 
 <p>通常app都會有個對應的backend server，這時我們可以建立一個instance，專門負責對應這個server的requests：</p>
 
@@ -346,9 +362,11 @@ service.get(&#39;/login/&#39;)
 
 <p>建立了以上的instance後，我們可以做更多只屬於這個instance的customization。</p>
 
-<h3 id="toc_12">Interceptor</h3>
+<h3 id="toc_13">使用Interceptor</h3>
 
-<h4 id="toc_13">處理API Token</h4>
+<p>Interceptor可以確保所有request都經過同樣的處理，例如在<strong>處理API Token</strong>時有很大幫助。</p>
+
+<h4 id="toc_14">處理API Token</h4>
 
 <p>一般Login後得到的<strong>API Token</strong>都會放在<code>redux store</code>裡儲起，以後每次request到server都會放在header來認證使用者的身分。</p>
 
@@ -370,7 +388,7 @@ export const getUserProfile = () =&gt; {
 
 <p>每個endpoint都要做一次，實在太麻煩了，我們可以加入<strong>Request Interceptor</strong>來幫忙。</p>
 
-<h4 id="toc_14">Request Interceptor</h4>
+<h4 id="toc_15">使用Request Interceptor</h4>
 
 <pre><code class="language-javascript">const service = axios.create(...);
 
@@ -396,7 +414,7 @@ service.get(&#39;/me/&#39;)
     .catch(error =&gt; {});
 </code></pre>
 
-<h4 id="toc_15">Response Interceptor</h4>
+<h4 id="toc_16">使用Response Interceptor</h4>
 
 <p>同樣Response也可以使用interceptor。最常處理的case就是<strong>authentication過期</strong>，需要移除token和重新登入。</p>
 
