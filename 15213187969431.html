@@ -160,7 +160,7 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p><em>(Updated on 2018-01-20)</em></p>
+      <p><em>(Updated on 2018-08-15)</em></p>
 
 <blockquote>
 <p><a href="http://jupyter.org/">Jupyter Notebook</a> (前身ipython notebook)是個很好用的coding工具，它可以：</p>
@@ -176,6 +176,8 @@
 <span id="more"></span><!-- more -->
 
 <h2 id="toc_0">1. 安裝Jupyter Notebook</h2>
+
+<p><em>如果你已安裝Jupyter，可以跳到下一部分。</em></p>
 
 <h3 id="toc_1">以pip安裝</h3>
 
@@ -246,27 +248,31 @@ optional arguments:
 
 <p><a href="http://ipython.readthedocs.io/en/stable/install/kernel_install.html">官方Doc</a></p>
 
-<h3 id="toc_7">直接加入python3 kernel</h3>
+<h3 id="toc_7">修改使用ipykernel</h3>
 
-<h4 id="toc_8">pip</h4>
+<h4 id="toc_8">(a) 以pip安裝python3</h4>
 
 <ol>
-<li>假設已<code>brew install python3</code></li>
-<li>安裝global env中的python3到jupyter</li>
-</ol>
+<li>先安裝<code>python3</code>，例如<code>brew install python3</code>。</li>
+<li>安裝ipykernel到pip3
 
-<pre><code class="language-bash">$ python3 -m pip install ipykernel
-$ python3 -m ipykernel install --user
-</code></pre>
+<ul>
+<li><code>python3 -m pip install ipykernel</code></li>
+</ul></li>
+<li>使用pip3安裝python3到jupyter
+
+<ul>
+<li><code>python3 -m ipykernel install --user</code></li>
+</ul></li>
+</ol>
 
 <p>現在打開<code>jupyter notebook</code>，應該已經有<code>python2</code>和<code>python3</code>兩個kernel了。</p>
 
-<h4 id="toc_9">conda</h4>
+<h4 id="toc_9">(b) 以conda安裝python3</h4>
 
 <ol>
-<li>新增一個python3 environment （或python2）</li>
-<li>進入env</li>
-<li>安裝這env中的kernel到jupyter</li>
+<li>新增一個python3 environment （或python2），conda會自動順便幫你安裝python3</li>
+<li>安裝這個env的kernel到jupyter</li>
 </ol>
 
 <pre><code class="language-bash"># conda
