@@ -16,7 +16,7 @@
     <!-- /Favicon -->
     <title>
     
-  Django Admin Libraries彙總筆記 - Carson's Tech Note
+  javascript - Carson's Tech Note
   
   </title>
   
@@ -129,140 +129,190 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>Django Admin Libraries彙總筆記</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2018/5/28</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="babel-preprocess-this-arrow-function.html">
+                
+                  <h1>使用Babel處理ES6的 this 和 Arrow Function（箭頭函式）</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2 id="toc_0">為甚麼要使用arrow function</h2>
 
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='Django.html'>Django</a></span>
-           
-         
-          <span class="comments">
-            
-              <a href="django-admin-open-source-research.html#disqus_thread">comments</a>
-            
+<p>在<a href="react-native-arrow-function-and-this.html">之前一篇文章</a>，我們談到this在各種情況下會指不同的object。在ES6的class裡，經常需要用到this來指定class自身，但這並不是件容易的事，因為this會取決於執行時的環境而定。</p>
 
-            
-          </span>
+<p>一般我們需要在constructor裡bind this來確保得到正確的this：</p>
 
-        </div>
-      </div><!-- article -->
+<pre><code class="language-javascript">class Example {
+    constructor() {
+        this.something = &quot;Hello World&quot;;
+        this.printSomething = this.printSomething.bind(this);
+    }
+    printSomething() {
+        console.log(this.something);
+    }
+}
+</code></pre>
 
-      <div class="article-content">
-      <p>紀錄一些擴充、改進django admin的open source libraries。</p>
+<p>當你有十個function，就需要bind十次。很麻煩是吧。</p>
 
-<span id="more"></span><!-- more -->
+<p>但使用了ES6的arrow function，class fucntion裡面的this必然會是class自身：</p>
 
-<h2 id="toc_0">總覽</h2>
+<pre><code class="language-javascript">class Example {
+    something = &quot;Hello World&quot;
+    printSomething = () =&gt; {
+        console.log(this.something);
+    }
+}
+</code></pre>
 
-<ul>
-<li><a href="http://awesome-django.com/#awesome-django-admin-interface">http://awesome-django.com/#awesome-django-admin-interface</a></li>
-<li><a href="https://djangopackages.org/grids/g/admin-styling/">https://djangopackages.org/grids/g/admin-styling/</a></li>
-</ul>
+<h3 id="toc_1">向下兼容問題</h3>
 
-<h2 id="toc_1">精選</h2>
+<p>Arrow function是ES6的其中一個feature，而ES6算是比較新的語法，所以未必所有瀏覽器都支援新語法。</p>
 
-<h3 id="toc_2">I. 美化介面類</h3>
+<p>為了讓更多使用者能用到我們的Application，我們可以用<strong>Babel</strong>來<strong>轉譯ES6語法</strong>成為ES5甚至以前的語法。</p>
 
-<h4 id="toc_3">Django Grappelli (~2400 stars)</h4>
+<h2 id="toc_2">Babel transform</h2>
 
-<p><a href="https://github.com/sehmaschine/django-grappelli">https://github.com/sehmaschine/django-grappelli</a></p>
+<p><a href="https://babeljs.io">Babel</a>是一個JS編譯器，主要用途就是把一些用新語法（例如ES6）寫成的JS編譯成兼容的舊語法，讓未更新的browser都可以執行。</p>
 
-<p><img src="media/15275029253423/15275046463247.jpg" alt=""/></p>
+<p>以下是Babel對arrow function所做的轉譯。</p>
 
-<h4 id="toc_4">Django Jet (~1500 stars)</h4>
+<h3 id="toc_3">ES6</h3>
 
-<p><a href="https://github.com/geex-arts/django-jet">https://github.com/geex-arts/django-jet</a><br/>
-<a href="http://jet.readthedocs.io/en/latest/getting_started.html">http://jet.readthedocs.io/en/latest/getting_started.html</a></p>
+<pre><code class="language-javascript">class Test {
+  world = 1
+  hello = () =&gt; {
+    console.log(this.world);
+  }
+}
+</code></pre>
 
-<p><img src="media/15275029253423/15275030331192.png" alt=""/></p>
+<h3 id="toc_4">轉譯後</h3>
 
-<h4 id="toc_5">Django Suit (~1500 stars)</h4>
+<pre><code class="language-javascript">&quot;use strict&quot;;
 
-<p><a href="https://github.com/darklow/django-suit">https://github.com/darklow/django-suit</a></p>
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(&quot;Cannot call a class as a function&quot;); } }
 
-<p><img src="media/15275029253423/15275047269206.png" alt=""/></p>
+var Test = function Test() {
+  var _this = this;
 
-<h4 id="toc_6">Responsive Django Admin (~600 stars)</h4>
+  _classCallCheck(this, Test);
 
-<p><a href="https://github.com/douglasmiranda/django-admin-bootstrap">https://github.com/douglasmiranda/django-admin-bootstrap</a></p>
+  this.world = 1;
 
-<p><img src="media/15275029253423/15275032297057.jpg" alt=""/></p>
+  this.hello = function () {
+    console.log(_this.world);
+  };
+};
+</code></pre>
 
-<h4 id="toc_7">django-admin-interface (~200 stars)</h4>
+<p>大家也可以到<a href="https://babeljs.io/repl">官方online compiler</a>自己試一下。</p>
 
-<p><a href="https://github.com/fabiocaccamo/django-admin-interface">https://github.com/fabiocaccamo/django-admin-interface</a></p>
+<p>我們可以看出主要有幾個重點：</p>
 
-<p><img src="media/15275029253423/15275032978161.gif" alt=""/></p>
+<ol>
+<li>Class會變成function</li>
+<li>這個function會define所有class properties（就像constructor一樣做法）</li>
+<li>Arrow function裡的<code>this</code>會變成local的<code>_this</code>來確保正確reference</li>
+</ol>
 
-<h3 id="toc_8">II. 改進功能類</h3>
+<p>知道多一點Babel的背後運作，用起來就更得心應手了。</p>
 
-<h4 id="toc_9">django-admin2 (~1000 stars)</h4>
+<h2 id="toc_5">Appendix: .bind(this)</h2>
 
-<p><a href="https://github.com/jazzband/django-admin2/">https://github.com/jazzband/django-admin2/</a></p>
+<p>以下附上bind this的例子：</p>
 
-<p><img src="media/15275029253423/15275043369435.png" alt=""/></p>
+<h3 id="toc_6">ES6</h3>
 
-<h3 id="toc_10">III. 特異功能類</h3>
+<pre><code class="language-javascript">class Example {
+    constructor() {
+        this.something = &quot;Hello World&quot;;
+        this.printSomething = this.printSomething.bind(this);
+    }
+    printSomething() {
+        console.log(this.something);
+    }
+}
+</code></pre>
 
-<h4 id="toc_11">Wagtail CMS (~5500 stars)</h4>
+<h3 id="toc_7">轉譯後</h3>
 
-<p><a href="https://github.com/wagtail/wagtail">https://github.com/wagtail/wagtail</a></p>
+<pre><code class="language-javascript">&quot;use strict&quot;;
 
-<p>Articles Website用，有很多自訂Page components，可以直接在admin panel publish <strong>rich text format</strong> articles。</p>
+var _createClass = function () {...}();
 
-<p><img src="media/15275029253423/15275033801084.jpg" alt=""/></p>
+function _classCallCheck(instance, Constructor) { ... }
+
+var Example = function () {
+    function Example() {
+        _classCallCheck(this, Example);
+
+        this.something = &quot;Hello World&quot;;
+        this.printSomething = this.printSomething.bind(this);
+    }
+
+    _createClass(Example, [{
+        key: &quot;printSomething&quot;,
+        value: function printSomething() {
+            console.log(this.something);
+        }
+    }]);
+
+    return Example;
+}();
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2018/9/5</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='javascript.html'>javascript</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+                        <a href="babel-preprocess-this-arrow-function.html#disqus_thread">comments</a>
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
 
 
-    
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="laravel-part1-basics.html" 
-          title="Previous Post: Laravel教學 Part 1 - 新手入門">&laquo; Laravel教學 Part 1 - 新手入門</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="react-native-part3.5-declarative.html" 
-          title="Next Post: React Native教學 Part 3.5 - 概念分析：Declarative Programming">React Native教學 Part 3.5 - 概念分析：Declarative Programming &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          
-
-          
-            <div id="disqus_thread"></div>
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
-
-
-
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">
