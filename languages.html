@@ -145,131 +145,10 @@
                       
                       <div class="a-content-text">
                         
-                        	<h2 id="toc_0">為甚麼要使用arrow function</h2>
+                        	<p>在Javascript ES6標準中，我們可以用Arrow function來幫助我們解決bind的問題，但由於user的browser不一定support ES6，我們需要用Babel來向下兼容。</p>
 
-<p>在<a href="react-native-arrow-function-and-this.html">之前一篇文章</a>，我們談到this在各種情況下會指不同的object。在ES6的class裡，經常需要用到this來指定class自身，但這並不是件容易的事，因為this會取決於執行時的環境而定。</p>
+<p>以下會詳述有關<code>.bind()</code>、Arrow function和Babel的原理。</p>
 
-<p>一般我們需要在constructor裡bind this來確保得到正確的this：</p>
-
-<pre><code class="language-javascript">class Example {
-    constructor() {
-        this.something = &quot;Hello World&quot;;
-        this.printSomething = this.printSomething.bind(this);
-    }
-    printSomething() {
-        console.log(this.something);
-    }
-}
-</code></pre>
-
-<p>當你有十個function，就需要bind十次。很麻煩是吧。</p>
-
-<p>但使用了ES6的arrow function，class fucntion裡面的this必然會是class自身：</p>
-
-<pre><code class="language-javascript">class Example {
-    something = &quot;Hello World&quot;
-    printSomething = () =&gt; {
-        console.log(this.something);
-    }
-}
-</code></pre>
-
-<h3 id="toc_1">向下兼容問題</h3>
-
-<p>Arrow function是ES6的其中一個feature，而ES6算是比較新的語法，所以未必所有瀏覽器都支援新語法。</p>
-
-<p>為了讓更多使用者能用到我們的Application，我們可以用<strong>Babel</strong>來<strong>轉譯ES6語法</strong>成為ES5甚至以前的語法。</p>
-
-<h2 id="toc_2">Babel transform</h2>
-
-<p><a href="https://babeljs.io">Babel</a>是一個JS編譯器，主要用途就是把一些用新語法（例如ES6）寫成的JS編譯成兼容的舊語法，讓未更新的browser都可以執行。</p>
-
-<p>以下是Babel對arrow function所做的轉譯。</p>
-
-<h3 id="toc_3">ES6</h3>
-
-<pre><code class="language-javascript">class Test {
-  world = 1
-  hello = () =&gt; {
-    console.log(this.world);
-  }
-}
-</code></pre>
-
-<h3 id="toc_4">轉譯後</h3>
-
-<pre><code class="language-javascript">&quot;use strict&quot;;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(&quot;Cannot call a class as a function&quot;); } }
-
-var Test = function Test() {
-  var _this = this;
-
-  _classCallCheck(this, Test);
-
-  this.world = 1;
-
-  this.hello = function () {
-    console.log(_this.world);
-  };
-};
-</code></pre>
-
-<p>大家也可以到<a href="https://babeljs.io/repl">官方online compiler</a>自己試一下。</p>
-
-<p>我們可以看出主要有幾個重點：</p>
-
-<ol>
-<li>Class會變成function</li>
-<li>這個function會define所有class properties（就像constructor一樣做法）</li>
-<li>Arrow function裡的<code>this</code>會變成local的<code>_this</code>來確保正確reference</li>
-</ol>
-
-<p>知道多一點Babel的背後運作，用起來就更得心應手了。</p>
-
-<h2 id="toc_5">Appendix: .bind(this)</h2>
-
-<p>以下附上bind this的例子：</p>
-
-<h3 id="toc_6">ES6</h3>
-
-<pre><code class="language-javascript">class Example {
-    constructor() {
-        this.something = &quot;Hello World&quot;;
-        this.printSomething = this.printSomething.bind(this);
-    }
-    printSomething() {
-        console.log(this.something);
-    }
-}
-</code></pre>
-
-<h3 id="toc_7">轉譯後</h3>
-
-<pre><code class="language-javascript">&quot;use strict&quot;;
-
-var _createClass = function () {...}();
-
-function _classCallCheck(instance, Constructor) { ... }
-
-var Example = function () {
-    function Example() {
-        _classCallCheck(this, Example);
-
-        this.something = &quot;Hello World&quot;;
-        this.printSomething = this.printSomething.bind(this);
-    }
-
-    _createClass(Example, [{
-        key: &quot;printSomething&quot;,
-        value: function printSomething() {
-            console.log(this.something);
-        }
-    }]);
-
-    return Example;
-}();
-</code></pre>
 
                         
                       </div>
@@ -277,7 +156,7 @@ var Example = function () {
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="babel-preprocess-this-arrow-function.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2018/9/5</span>
                     <span>posted in&nbsp;</span> 
           				  

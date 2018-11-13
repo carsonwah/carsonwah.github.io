@@ -160,7 +160,13 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h2 id="toc_0">為甚麼要使用arrow function</h2>
+      <p>在Javascript ES6標準中，我們可以用Arrow function來幫助我們解決bind的問題，但由於user的browser不一定support ES6，我們需要用Babel來向下兼容。</p>
+
+<p>以下會詳述有關<code>.bind()</code>、Arrow function和Babel的原理。</p>
+
+<span id="more"></span><!-- more -->
+
+<h2 id="toc_0">為甚麼要使用arrow function</h2>
 
 <p>在<a href="react-native-arrow-function-and-this.html">之前一篇文章</a>，我們談到this在各種情況下會指不同的object。在ES6的class裡，經常需要用到this來指定class自身，但這並不是件容易的事，因為this會取決於執行時的環境而定。</p>
 
