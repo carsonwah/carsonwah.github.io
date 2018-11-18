@@ -1,0 +1,730 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/asset/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/asset/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/asset/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/asset/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/asset/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/asset/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/asset/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- /Favicon -->
+    <title>
+    
+  開發者必備知識 - HTTP認證（HTTP Authentication） - Carson's Tech Note
+  
+  </title>
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111343902-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111343902-1');
+</script>
+  
+  <link href="atom.xml" rel="alternate" title="Carson's Tech Note" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site: ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="_self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About Me</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; Carson's Tech Note</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="_self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About Me</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="mobile.html">App Development</a></li>
+        
+            <li><a href="blogging.html">Blogging</a></li>
+        
+            <li><a href="developer_tools.html">Developer Tools</a></li>
+        
+            <li><a href="frameworks.html">Web Frameworks</a></li>
+        
+            <li><a href="languages.html">Languages Related</a></li>
+        
+            <li><a href="software-engineering.html">Software Engineering</a></li>
+        
+            <li><a href="Web%20Technology.html">Web Technology</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>開發者必備知識 - HTTP認證（HTTP Authentication）</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2018/11/18</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='security.html'>Security</a></span>
+           
+         
+          <span class="comments">
+            
+              <a href="http-authentication.html#disqus_thread">comments</a>
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <p>認證（Authentication）是建構Web應用或Web伺服器不可或缺的一環。以下簡單介紹一下各種常見的HTTP Authentication方式。</p>
+
+<h2 id="toc_0">總覽 Overview</h2>
+
+<ul>
+<li>Basic: <a href="https://tools.ietf.org/html/rfc2617">RFC 2617</a> (1999) -&gt; <a href="https://tools.ietf.org/html/rfc7617">RFC 7617</a> (2015)</li>
+<li>Digest: <a href="https://tools.ietf.org/html/rfc2069">RFC 2069</a> (1997) -&gt; <a href="https://tools.ietf.org/html/rfc2617">RFC 2617</a> (1999) -&gt; <a href="https://tools.ietf.org/html/rfc7617">RFC 7617</a> (2015)</li>
+<li>OAuth 1.0 (Twitter, 2007)</li>
+<li>OAuth 2.0 (2012)
+
+<ul>
+<li>Bearer (OAuth 2.0): <a href="https://tools.ietf.org/html/rfc6750">RFC 6750</a> (2012)</li>
+</ul></li>
+<li>JSON Web Tokens (JWT): <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a> (2015)</li>
+</ul>
+
+<span id="more"></span><!-- more -->
+
+<p><em>參照<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication">MDN - HTTP authentication</a></em></p>
+
+<h2 id="toc_1">業界標準</h2>
+
+<p>W3C在 <a href="https://tools.ietf.org/html/rfc1945">RFC 1945: HTTP/1.0 (1996)</a> 中，定義了HTTP架構的認證方式。</p>
+
+<h3 id="toc_2">Server - 認證提示</h3>
+
+<p>如果Client傳送了未認證的request，Server會回應：</p>
+
+<pre><code class="language-http">HTTP 401 Unauthorized
+WWW-Authenticate: &lt;type&gt; realm=&quot;xxx&quot; ...
+</code></pre>
+
+<p>例如：</p>
+
+<pre><code class="language-http">WWW-Authenticate: Basic realm=&quot;User Visible Realm&quot;
+</code></pre>
+
+<h3 id="toc_3">Client - 認證</h3>
+
+<p>Client會在request header加入以下資料來認證自己：</p>
+
+<pre><code class="language-http">Authorization: &lt;type&gt; &lt;credentials&gt;
+</code></pre>
+
+<ul>
+<li>type：認證方式，例如Basic, Digest...</li>
+<li>credentials：與type相符的密碼</li>
+</ul>
+
+<p>例如：</p>
+
+<pre><code class="language-http">Authorization: Basic YWxpY2U6c3VwZXJtYW4=
+</code></pre>
+
+<h2 id="toc_4">I. Basic Authentication</h2>
+
+<p>由username和password來組成認證碼，例如：</p>
+
+<ul>
+<li>username: <code>alice</code>, pw: <code>superman</code></li>
+<li><code>alice:superman</code></li>
+<li>Base64 encoded: <code>YWxpY2U6c3VwZXJtYW4=</code></li>
+<li>HTTP request header:</li>
+</ul>
+
+<pre><code class="language-http">Authorization: Basic YWxpY2U6c3VwZXJtYW4=
+</code></pre>
+
+<p>Basic故名思義，是最簡單方便快捷的方法，user甚至不用經過login page來登入。</p>
+
+<h3 id="toc_5">問題</h3>
+
+<ul>
+<li>Server只能確認帳號密碼，無法控制例如登入時效（session），只能靠browser的cookie expiration</li>
+<li>Attacker可以Decode header並得到username和password</li>
+<li>Replay attack</li>
+</ul>
+
+<p>於是又有了比較複雜一點的方法：Digest。</p>
+
+<h2 id="toc_6">II. Digest Authentication</h2>
+
+<p>以下是Digest的密鑰產生方法：</p>
+
+<pre><code>HA1 = MD5(username:realm:password)
+HA2 = MD5(method:digestURI)
+response = MD5(HA1:nonce:HA2)
+</code></pre>
+
+<h3 id="toc_7">實際使用</h3>
+
+<p>Server返回<code>401 Unauthorized</code>：</p>
+
+<pre><code class="language-http">HTTP/1.0 401 Unauthorized
+WWW-Authenticate: Digest realm=&quot;testrealm@host.com&quot;,
+                        qop=&quot;auth,auth-int&quot;,
+                        nonce=&quot;dcd98b7102dd2f0e8b11d0f600bfb0c093&quot;,
+                        opaque=&quot;5ccc069c403ebaf9f0171e9517f40e41&quot;
+</code></pre>
+
+<p>然後User計算一下Digest的<code>response</code>再傳到server：</p>
+
+<pre><code class="language-http">Authorization: Digest username=&quot;Mufasa&quot;,
+                     realm=&quot;testrealm@host.com&quot;,
+                     nonce=&quot;dcd98b7102dd2f0e8b11d0f600bfb0c093&quot;,
+                     uri=&quot;/dir/index.html&quot;,
+                     qop=auth,
+                     nc=00000001,
+                     cnonce=&quot;0a4f113b&quot;,
+                     response=&quot;6629fae49393a05397450978507c4ef1&quot;,
+                     opaque=&quot;5ccc069c403ebaf9f0171e9517f40e41&quot;
+</code></pre>
+
+<p><em><a href="https://en.wikipedia.org/wiki/Digest_access_authentication">Wikipedia - Digest Authentication</a></em></p>
+
+<h3 id="toc_8">好處</h3>
+
+<ul>
+<li>可以加入其他資訊，如URI可以控制File-level的存取</li>
+<li>加入Nonce，防止了Chosen plaintext attack和Replay attack</li>
+</ul>
+
+<h3 id="toc_9">問題</h3>
+
+<ul>
+<li>要先取得nonce，所以需要多一個Request</li>
+<li>Server依然不能控制user session</li>
+</ul>
+
+<h2 id="toc_10">III. OAuth 1.0</h2>
+
+<p>Basic和Digest同樣是以user的帳號密碼來組成Credential，然後交給網站認證身份。但在Google、Facebook、Twitter的流行下，網站會想</p>
+
+<ol>
+<li>借助它們來方便user登入自己的網站</li>
+<li>代user在這些平台執行某些動作（如發帖）</li>
+</ol>
+
+<p>於是便誕生了OAuth架構。</p>
+
+<p>比起Basic和Digest，OAuth主要的不同，是分開了用來認證身份的User credential（如username、password）和實際執行權限的Access token。此概念容許了「以Facebook登入」等等的應用，而且是安全地。</p>
+
+<h3 id="toc_11">認證流程</h3>
+
+<p>OAuth流程牽涉三個持分者：</p>
+
+<ul>
+<li>User</li>
+<li>Consumer
+
+<ul>
+<li>一般是你正在使用的網站或App</li>
+</ul></li>
+<li>Server / Service Provider
+
+<ul>
+<li>Facebook、Twitter等網站</li>
+</ul></li>
+</ul>
+
+<p>OAuth使用俗稱「3-legged OAuth」，分別代表三個階段，以下用Twitter作為例子：</p>
+
+<ul>
+<li>前設
+
+<ul>
+<li>網站已在Twitter注冊了自己是Consumer</li>
+</ul></li>
+<li>Temporary Credentials Acquisition
+
+<ul>
+<li>網站從Twitter獲得未認證的Request Token（暫時性）</li>
+</ul></li>
+<li>Authorization
+
+<ul>
+<li>Redirect user到Twitter</li>
+<li>User登入並認證之前的Request Token</li>
+<li>Redirect user回到網站</li>
+</ul></li>
+<li>Token Exchange
+
+<ul>
+<li>網站把Request Token傳到Twitter</li>
+<li>取得Access Token（長時效的）</li>
+</ul></li>
+</ul>
+
+<p>流程圖：</p>
+
+<p><img src="media/15402008250829/UmvA7.png" alt="UmvA7"/><br/>
+<a href="https://docs.spring.io/spring-social/docs/1.1.0.RELEASE/reference/htmlsingle/#section_oauth2ServiceProviders"><em>Image Source</em></a></p>
+
+<ul>
+<li><a href="https://developer.twitter.com/en/docs/twitter-for-websites/log-in-with-twitter/guides/implementing-sign-in-with-twitter.html">Implementing Sign in with Twitter</a></li>
+<li><a href="https://developer.twitter.com/en/docs/basics/authentication/guides/authorizing-a-request.html">Twitter API Authentication - OAuth 1.0</a></li>
+<li><a href="https://www.youtube.com/watch?v=SXDce0e3Ue4">OAuth - what it is and how it works</a></li>
+</ul>
+
+<h2 id="toc_12">IV. OAuth 2.0</h2>
+
+<p>OAuth 2.0建基於1.0，簡化了流程，並更好地支援App或SPA開發。</p>
+
+<h3 id="toc_13">認證流程</h3>
+
+<p>3-legged簡化為2-legged，Consumer不用再獲取Request Token。</p>
+
+<p>流程圖：</p>
+
+<p><img src="media/15402008250829/Xn4c0.png" alt="Xn4c0"/><br/>
+<a href="https://docs.spring.io/spring-social/docs/1.1.0.RELEASE/reference/htmlsingle/#section_oauth2ServiceProviders"><em>Image Source</em></a></p>
+
+<h4 id="toc_14">Bearer Token</h4>
+
+<p>OAuth 2.0使用Bearer Token作為認證後的Access token，大大簡化了Request header的結構。</p>
+
+<p>OAuth 1.0:</p>
+
+<pre><code class="language-http">Authorization: OAuth oauth_consumer_key=&quot;cChZNFj6T5R0TigYB9yd1w&quot;,
+                     oauth_nonce=&quot;a9900fe68e2573b27a37f10fbad6a755&quot;,
+                     oauth_signature=&quot;39cipBtIOHEEnybAR4sATQTpl2I%3D&quot;,
+                     oauth_signature_method=&quot;HMAC-SHA1&quot;,
+                     oauth_timestamp=&quot;1318467427&quot;,
+                     oauth_token=&quot;NPcudxy0yU5T3tBzho7iCotZ3cnetKwcTIRlX0iwRl0&quot;,
+                     oauth_version=&quot;1.0&quot;
+</code></pre>
+
+<p>太醜了吧。</p>
+
+<p>而OAuth 2.0:</p>
+
+<pre><code class="language-http">Authorization : Bearer cn389ncoiwuencr
+</code></pre>
+
+<p>看著都感到精神爽利。</p>
+
+<p>不同於Basic和Digest，Bearer Token並沒有規定的建立方法，只要最後server能verify就可以了。</p>
+
+<ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2">An Introduction to OAuth 2</a></li>
+</ul>
+
+<h2 id="toc_15">V. JSON Web Tokens (JWT)</h2>
+
+<p>Basic和Digest token是由username、password等等資訊來構成，而<a href="https://jwt.io">JWT</a>也相似。不同的是：</p>
+
+<ul>
+<li>JWT可以存更多（任意）資訊</li>
+<li>採用Hash、Signature的驗證方法</li>
+<li>加入Server的<code>secret</code>，由Server生產Token，Client不會知道如何建立這token</li>
+</ul>
+
+<h3 id="toc_16">Token組成方式</h3>
+
+<p>JWT由兩部分組成，由<code>.</code>串連起來，然後用Secret hash起來，成為Signature：</p>
+
+<pre><code class="language-javascript">data = base64urlEncode( header ) + “.” + base64urlEncode( payload )
+hashedData = hash( data, secret )
+signature = base64urlEncode( hashedData )
+</code></pre>
+
+<p><em><a href="https://medium.com/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec">Source</a></em></p>
+
+<h4 id="toc_17">例子</h4>
+
+<p>Header: 有關JWT的資料</p>
+
+<pre><code class="language-json">{
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
+</code></pre>
+
+<p>Payload: 可以存起任意用戶資料</p>
+
+<pre><code class="language-json">{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;admin&quot;: true
+}
+</code></pre>
+
+<p>Secret: </p>
+
+<pre><code>KKF2QT4fwpMeJf36POk6yJV_adQssw5c
+</code></pre>
+
+<p>結果：</p>
+
+<pre><code class="language-JWT">Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.tImCzvIkqaNmGB5mMAG1DZRnZO56sjoYO5nU2YUdRK4
+</code></pre>
+
+<p>上文說過Bearer沒有硬性的Algorithm規定，只要server能verify就可以了。JWT也可以是其中一種Bearer Token。事實上JWT一般都會使用<code>Bearer</code>為前綴。</p>
+
+<p><em><a href="https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.tImCzvIkqaNmGB5mMAG1DZRnZO56sjoYO5nU2YUdRK4">自己動手試試看</a></em></p>
+
+<h3 id="toc_18">認證流程</h3>
+
+<p>流程非常簡單，基本上就是一次Login Request，從Server取得JWT，就成功認證了。</p>
+
+<p>之後Server只需自己Hash一次，就能分辨用戶傳來的JWT是否正確，十分方便用在App裡面。</p>
+
+<p><img src="media/15402008250829/17.png" alt="17"/><br/>
+<em><a href="https://auth0.com/learn/json-web-tokens/">Image Source</a></em></p>
+
+<h3 id="toc_19">潛在問題：Replay Attack</h3>
+
+<p>JWT沒有nonce在裡面，attacker可以原封不動地重複傳送request，server會照樣認為是valid request。</p>
+
+<p>解決方案：</p>
+
+<ul>
+<li>JWT提出了<a href="https://github.com/auth0/node-jsonwebtoken/issues/36">使用JWT ID (JTI)加上黑名單</a>的方法（雖然是打破了stateless的前設）</li>
+<li>在JWT外再自己加上一個nonce系統</li>
+</ul>
+
+<p>Auth0寫了一篇<a href="https://auth0.com/blog/a-look-at-the-latest-draft-for-jwt-bcp/">JWT攻擊和防範</a>，想深入研究一下JWT的話值得一看。</p>
+
+<h3 id="toc_20">其他Token-based Authentication</h3>
+
+<p>JWT是一種Token-based Authentication，其實還有很多使用Token來認證的方法，例如<a href="https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication">Django REST Framework的TokenAuthentication</a>，基本上都是Login到Server，然後取得Access token。</p>
+
+<h2 id="toc_21">總結</h2>
+
+<p>這篇文章我們簡介了：</p>
+
+<ul>
+<li>Basic</li>
+<li>Digest</li>
+<li>OAuth 1.0</li>
+<li>OAuth 2.0</li>
+<li>JWT</li>
+</ul>
+
+<p>整個發展歷程，可以總結為：</p>
+
+<blockquote>
+<p>由依賴Browser的功能和RFC標準，發展成更簡單、更&quot;Separation of concerns&quot;的方式（直接一個request + 一個token），更好的支援Mobile和Single-page Application。</p>
+</blockquote>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="babel-preprocess-this-arrow-function.html" 
+          title="Next Post: 使用Babel處理ES6的 this 和 Arrow Function（箭頭函式）">使用Babel處理ES6的 this 和 Arrow Function（箭頭函式） &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+            <div id="disqus_thread"></div>
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <div class="site-a-logo"><img src="media/15217455147270/blog_icon_240x240.jpg" /></div>
+            
+                <h1>Carson's Tech Note</h1>
+                <div class="site-des">「坐井觀天，曰天小者，非天小也，其所見小也。夏蟲不可與語冰，非無冰也，以其未見冰也。」- 《學問與遊歷》</div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+<a target="_blank" class="github" target="_blank" href="https://github.com/carsonwah" title="GitHub">GitHub</a>
+<a target="_blank" class="email" href="mailto:carsonwah@gmail.com" title="Email">Email</a>
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="mobile.html"><strong>App Development</strong></a>
+        
+            <a href="blogging.html"><strong>Blogging</strong></a>
+        
+            <a href="developer_tools.html"><strong>Developer Tools</strong></a>
+        
+            <a href="frameworks.html"><strong>Web Frameworks</strong></a>
+        
+            <a href="languages.html"><strong>Languages Related</strong></a>
+        
+            <a href="software-engineering.html"><strong>Software Engineering</strong></a>
+        
+            <a href="Web%20Technology.html"><strong>Web Technology</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="http-authentication.html">開發者必備知識 - HTTP認證（HTTP Authentication）</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="babel-preprocess-this-arrow-function.html">使用Babel處理ES6的 this 和 Arrow Function（箭頭函式）</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="android-list-recycler-view.html">如何使用Android RecyclerView建立一個List列表</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="shadowsocks-setup-tutorial.html">翻牆必備：Shadowsocks建置教學</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="proxy-vpn-shadowsocks-concept.html">翻牆專題：Proxy、VPN、Shadowsocks概念解釋</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'carsonwah'; 
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+<script type="text/javascript">
+var disqus_shortname = 'carsonwah'; 
+
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+
+
+
+  </body>
+</html>
