@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -169,7 +169,6 @@
 <li>Digest: <a href="https://tools.ietf.org/html/rfc2069">RFC 2069</a> (1997) -&gt; <a href="https://tools.ietf.org/html/rfc2617">RFC 2617</a> (1999) -&gt; <a href="https://tools.ietf.org/html/rfc7617">RFC 7617</a> (2015)</li>
 <li>OAuth 1.0 (Twitter, 2007)</li>
 <li>OAuth 2.0 (2012)
-
 <ul>
 <li>Bearer (OAuth 2.0): <a href="https://tools.ietf.org/html/rfc6750">RFC 6750</a> (2012)</li>
 </ul></li>
@@ -244,7 +243,7 @@ WWW-Authenticate: &lt;type&gt; realm=&quot;xxx&quot; ...
 
 <p>以下是Digest的密鑰產生方法：</p>
 
-<pre><code>HA1 = MD5(username:realm:password)
+<pre><code class="language-text">HA1 = MD5(username:realm:password)
 HA2 = MD5(method:digestURI)
 response = MD5(HA1:nonce:HA2)
 </code></pre>
@@ -309,12 +308,10 @@ WWW-Authenticate: Digest realm=&quot;testrealm@host.com&quot;,
 <ul>
 <li>User</li>
 <li>Consumer
-
 <ul>
 <li>一般是你正在使用的網站或App</li>
 </ul></li>
 <li>Server / Service Provider
-
 <ul>
 <li>Facebook、Twitter等網站</li>
 </ul></li>
@@ -324,24 +321,20 @@ WWW-Authenticate: Digest realm=&quot;testrealm@host.com&quot;,
 
 <ul>
 <li>前設
-
 <ul>
 <li>網站已在Twitter注冊了自己是Consumer</li>
 </ul></li>
 <li>Temporary Credentials Acquisition
-
 <ul>
 <li>網站從Twitter獲得未認證的Request Token（暫時性）</li>
 </ul></li>
 <li>Authorization
-
 <ul>
 <li>Redirect user到Twitter</li>
 <li>User登入並認證之前的Request Token</li>
 <li>Redirect user回到網站</li>
 </ul></li>
 <li>Token Exchange
-
 <ul>
 <li>網站把Request Token傳到Twitter</li>
 <li>取得Access Token（長時效的）</li>
@@ -427,7 +420,7 @@ signature = base64urlEncode( hashedData )
 
 <p>Header: 有關JWT的資料</p>
 
-<pre><code class="language-json">{
+<pre><code class="language-javascript">{
   &quot;alg&quot;: &quot;HS256&quot;,
   &quot;typ&quot;: &quot;JWT&quot;
 }
@@ -435,7 +428,7 @@ signature = base64urlEncode( hashedData )
 
 <p>Payload: 可以存起任意用戶資料</p>
 
-<pre><code class="language-json">{
+<pre><code class="language-javascript">{
   &quot;sub&quot;: &quot;1234567890&quot;,
   &quot;name&quot;: &quot;John Doe&quot;,
   &quot;admin&quot;: true
@@ -444,12 +437,12 @@ signature = base64urlEncode( hashedData )
 
 <p>Secret: </p>
 
-<pre><code>KKF2QT4fwpMeJf36POk6yJV_adQssw5c
+<pre><code class="language-text">KKF2QT4fwpMeJf36POk6yJV_adQssw5c
 </code></pre>
 
 <p>結果：</p>
 
-<pre><code class="language-JWT">Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.tImCzvIkqaNmGB5mMAG1DZRnZO56sjoYO5nU2YUdRK4
+<pre><code class="language-jwt">Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.tImCzvIkqaNmGB5mMAG1DZRnZO56sjoYO5nU2YUdRK4
 </code></pre>
 
 <p>上文說過Bearer沒有硬性的Algorithm規定，只要server能verify就可以了。JWT也可以是其中一種Bearer Token。事實上JWT一般都會使用<code>Bearer</code>為前綴。</p>

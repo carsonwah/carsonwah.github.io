@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>在Django建立定時執行的Cron jobs（工作排程）</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/6/8</span>
+          <span class="date">2018/06/08</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -295,7 +295,7 @@ source env/bin/activate/
 
 <p>如果你的Django設置了<code>StreamHandler</code>處理logging，要確保cron job的suffix（後綴）是例如以下：</p>
 
-<pre><code>(&#39;*/15 18-23 * * *&#39;, &#39;some_app.cron.some_cron_job&#39;, &#39;&gt;&gt; /var/log/cron_job.log 2&gt;&amp;1&#39;)
+<pre><code class="language-text">(&#39;*/15 18-23 * * *&#39;, &#39;some_app.cron.some_cron_job&#39;, &#39;&gt;&gt; /var/log/cron_job.log 2&gt;&amp;1&#39;)
 </code></pre>
 
 <p><em>（<code>&gt;</code>代表覆蓋原有檔案，<code>&gt;&gt;</code>代表append到原有檔案）</em></p>

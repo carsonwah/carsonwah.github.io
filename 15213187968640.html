@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>建置eslint開發環境</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/03/18</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -269,7 +269,7 @@ $ yarn add babel-eslint --dev  # 如果你有用babel (i.e. 有個.babelrc的con
 <li>和一堆新的dependencies</li>
 </ul>
 
-<pre><code class="language-json">&quot;devDependencies&quot;: {
+<pre><code class="language-javascript">&quot;devDependencies&quot;: {
   &quot;babel-eslint&quot;: &quot;^8.2.1&quot;,
   &quot;babel-preset-expo&quot;: &quot;^2.0.0&quot;,
   &quot;eslint&quot;: &quot;^4.15.0&quot;,
@@ -322,22 +322,22 @@ $ ./node_modules/.bin/eslint some_folder/
 
 <h4 id="toc_9">indent</h4>
 
-<p>我習慣使用2 spaces indent，把<code>rules</code>裡的<code>indent</code>改改<br/>
-<code>javascript<br/>
-&quot;rules&quot;: {<br/>
-        &quot;indent&quot;: [<br/>
-            &quot;error&quot;,  // 也可以改做&quot;warn&quot;<br/>
-            2  // 2 spaces<br/>
-        ],<br/>
-        ...<br/>
-</code></p>
+<p>我習慣使用2 spaces indent，把<code>rules</code>裡的<code>indent</code>改改</p>
+
+<pre><code class="language-javascript">&quot;rules&quot;: {
+        &quot;indent&quot;: [
+            &quot;error&quot;,  // 也可以改做&quot;warn&quot;
+            2  // 2 spaces
+        ],
+        ...
+</code></pre>
 
 <h4 id="toc_10">no-unused-vars</h4>
 
-<p>React那些是never used也要import的，例如<br/>
-<code>javascript<br/>
-import React, { Component } from &#39;react&#39;;  // 沒有import React會error<br/>
-</code></p>
+<p>React那些是never used也要import的，例如</p>
+
+<pre><code class="language-javascript">import React, { Component } from &#39;react&#39;;  // 沒有import React會error
+</code></pre>
 
 <p>把</p>
 
@@ -372,7 +372,7 @@ import React, { Component } from &#39;react&#39;;  // 沒有import React會error
 
 <p>最後還是有以下error：</p>
 
-<pre><code>   2:8   error  &#39;Expo&#39; is defined but never used        no-unused-vars
+<pre><code class="language-text">   2:8   error  &#39;Expo&#39; is defined but never used        no-unused-vars
    5:10  error  &#39;Image&#39; is defined but never used       no-unused-vars
    6:10  error  &#39;Ionicons&#39; is defined but never used    no-unused-vars
   26:10  error  &#39;cacheFonts&#39; is defined but never used  no-unused-vars

@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>在iOS app裡加入Google Maps (Swift 4)</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/03/18</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -285,7 +285,6 @@ mapView.animate(with: .fit(bounds, withPadding: 30.0))  // 如果沒有padding�
 <ol>
 <li>準備好GET Request的params，包括：origin, destination, waypoints</li>
 <li>Send GET Request到Google Directions API，然後得到某條encoded string，裡面帶有整條路線的資訊
-
 <ul>
 <li>詳細的response格式可參考<a href="https://developers.google.com/maps/documentation/directions/intro#DirectionsResponses">官方文件</a></li>
 <li>下面使用了<a href="https://github.com/Alamofire/Alamofire">Alamofire</a>和<a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a>來處理request和response</li>
@@ -360,9 +359,12 @@ class RouteDetailViewController: UIViewController {
 <p><em>注意由於Directions API Key只能使用server restriction，如果要在iOS上直接使用，只能用沒有restriction的API Key，所以較好的做法是經自己的server去處理這些request。</em></p>
 
 <blockquote>
-<p>Versions:<br/>
-- XCode 9.2<br/>
-- Swift 4</p>
+<p>Versions:</p>
+
+<ul>
+<li>XCode 9.2</li>
+<li>Swift 4</li>
+</ul>
 </blockquote>
 
 

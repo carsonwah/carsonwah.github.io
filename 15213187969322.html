@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>理解Python的 relative 和 absolute import</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/03/18</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -184,7 +184,7 @@
 
 <p>建立一個<code>__init__.py</code>檔，如：</p>
 
-<pre><code>.
+<pre><code class="language-text">.
 └── some_package
     ├── some_module.py
     └── __init__.py
@@ -236,7 +236,7 @@ it is proposed that foo will always be a module or package reachable from sys.pa
 
 <h4 id="toc_4">把<code>file_b.py</code>變成package</h4>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── file_a.py
 └── file_b
     └── __init__.py
@@ -254,7 +254,7 @@ it is proposed that foo will always be a module or package reachable from sys.pa
 
 <p>把整個directory變成module：</p>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── __init__.py
 ├── file_a.py
 └── file_b.py
@@ -288,7 +288,7 @@ ValueError: Attempted relative import in non-package
 
 <p>假設掉過頭來，你想在<code>file_b</code>取用<code>file_a</code>：</p>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── file_a.py
 └── file_b
     └── __init__.py
@@ -318,7 +318,7 @@ hello()
 
 <p>例如可以加一層parent：</p>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── main.py
 └── some_package
     ├── __init__.py

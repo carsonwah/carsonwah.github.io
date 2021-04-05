@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>git pull或push不用再打密碼</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/03/18</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -208,14 +208,15 @@
 <h4 id="toc_4">1. 創建ssh用的key</h4>
 
 <blockquote>
-<p>先檢查原本機內有沒有ssh key<br/><br/>
-<code>sh<br/>
-ls -al ~/.ssh<br/>
-</code><br/>
-如果發現<code>id_rsa.pub</code>可以跳過這步驟。</p>
+<p>先檢查原本機內有沒有ssh key  </p>
+
+<pre><code class="language-bash">ls -al ~/.ssh
+</code></pre>
+
+<p>如果發現<code>id_rsa.pub</code>可以跳過這步驟。</p>
 </blockquote>
 
-<pre><code class="language-sh">ssh-keygen -t rsa -b 4096 -C &quot;xxx@xxx.com&quot; # 換成你的Github account
+<pre><code class="language-bash">ssh-keygen -t rsa -b 4096 -C &quot;xxx@xxx.com&quot; # 換成你的Github account
 Enter a file in which to save the key (/Users/xxx/.ssh/id_rsa): # 把enter按下去就是了
 Enter passphrase (empty for no passphrase): # 可不填，這是用來加密你的private key讓其不會plain text地儲存在電腦
 </code></pre>
@@ -234,10 +235,9 @@ Enter passphrase (empty for no passphrase): # 可不填，這是用來加密你�
 <ol>
 <li>在背景開啟ssh-agent: <code>eval &quot;$(ssh-agent -s)&quot;</code><br/></li>
 <li><p>更改<code>~/.ssh/config</code>:  </p>
-
-<pre><code class="language-sh">Host *
-AddKeysToAgent yes
-UseKeychain yes
+<pre><code class="language-bash">Host *
+AddKeysToAgent yes<br/>
+UseKeychain yes<br/>
 IdentityFile ~/.ssh/id_rsa
 </code></pre></li>
 <li><p><code>ssh-add -K ~/.ssh/id_rsa</code><br/><br/>
@@ -255,7 +255,6 @@ IdentityFile ~/.ssh/id_rsa
 <ol>
 <li>複製<code>~/.ssh/id_rsa.pub</code>檔的內容: <code>pbcopy &lt; ~/.ssh/id_rsa.pub</code><br/></li>
 <li>到Github repo setting加入新Deploy key<br/>
-
 <ul>
 <li>Title只是用來分辨的名稱<br/></li>
 <li>Key就是剛才複製的的public key</li>

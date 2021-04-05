@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>Ruby on Rails教學 Part 1 - Hello World Project</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/5/22</span>
+          <span class="date">2018/05/22</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -243,7 +243,6 @@ create      app/assets/stylesheets/welcome.scss
 <li>新controller：<code>app/controllers/welcome_controller.rb</code></li>
 <li>新view：<code>app/views/welcome/index.html.erb</code></li>
 <li>其他：
-
 <ul>
 <li><code>app/helpers/welcome_helper.rb</code></li>
 <li><code>app/assets/javascripts/welcome.coffee</code></li>
@@ -269,7 +268,7 @@ create      app/assets/stylesheets/welcome.scss
 
 <p>改一下這個新的<strong>view</strong>:</p>
 
-<pre><code class="language-html">&lt;h1&gt;Hello, Rails!&lt;/h1&gt;
+<pre><code class="language-markup">&lt;h1&gt;Hello, Rails!&lt;/h1&gt;
 </code></pre>
 
 <h4 id="toc_10">怎樣到達這個view？</h4>
@@ -287,7 +286,6 @@ end
 
 <ul>
 <li><code>get welcome/index</code>代表將<code>/welcome/index</code>的request都交給<code>welcome</code> <strong>controller</strong>中的<code>index</code> <strong>action</strong>處理。
-
 <ul>
 <li>如<code>/welcome/hello</code>就是同一controller的<code>hello</code> action，如此類推。</li>
 </ul></li>

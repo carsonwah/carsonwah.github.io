@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>解決nodejs的relative import地獄</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/03/18</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -173,7 +173,7 @@
 
 <p>一般的npm project長這樣：</p>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── src/
 ├── node_modules/
 └── package.json
@@ -190,7 +190,7 @@
 
 <p>例如一個project長這樣：</p>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── src/
 │   └── components/
 │       └── Button/
@@ -224,7 +224,7 @@
 
 <p><em>(有點像python的__init__.py)</em></p>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── src/
 │   └── components/
 │       ├── Button/
@@ -240,7 +240,7 @@
 
 <p>components/package.json：</p>
 
-<pre><code class="language-json">{
+<pre><code class="language-javascript">{
   &quot;name&quot;: &quot;@components&quot;
 }
 </code></pre>

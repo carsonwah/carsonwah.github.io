@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>React Native教學 Part 2 - Project Structure</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/4/1</span>
+          <span class="date">2018/04/01</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -186,7 +186,7 @@
 
 <h3 id="toc_2">src/</h3>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── AppStartUpWrapper.js
 ├── ReduxWrapper.js
 ├── common/
@@ -204,19 +204,14 @@
 
 <ul>
 <li><code>App.js</code>：root
-
 <ul>
 <li><code>ReduxWrapper.js</code>：加入Redux store
-
 <ul>
 <li><code>AppStartUpWrapper.js</code>：加入notification listener / deeplink listener等等
-
 <ul>
 <li><code>navigation/</code>：加入Navigation
-
 <ul>
 <li>各個containers/screens
-
 <ul>
 <li>各個components</li>
 </ul></li>
@@ -240,7 +235,6 @@
 
 <ul>
 <li>TabNavigator
-
 <ul>
 <li>StackNavigator</li>
 <li>StackNavigator</li>
@@ -256,12 +250,10 @@
 
 <ul>
 <li>components/：
-
 <ul>
 <li>放置Reusable、不依賴Redux、收到甚麼props就顯示甚麼的<strong>Components</strong></li>
 </ul></li>
 <li>containers/ (或者叫screens/或views/)：
-
 <ul>
 <li><strong>Containers</strong>負責使用各種Components，排版，處理data的互動</li>
 <li>可以是頁面，也可以是頁面的一部分</li>
@@ -296,7 +288,7 @@ import MyButton from &#39;../../../components/MyButton&#39;;
 
 <p>例如建立<code>src/package.json</code>：</p>
 
-<pre><code class="language-json">{
+<pre><code class="language-javascript">{
   &quot;name&quot;: &quot;@&quot;
 }
 </code></pre>
@@ -319,7 +311,7 @@ import MyButton from &#39;../../../components/MyButton&#39;;
 
 <h3 id="toc_11">基本用法</h3>
 
-<pre><code>axios.post(&#39;/user&#39;, {
+<pre><code class="language-text">axios.post(&#39;/user&#39;, {
     firstName: &#39;Fred&#39;,
     lastName: &#39;Flintstone&#39;
   })

@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>Hugo的專案結構</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/03/18</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -170,7 +170,7 @@
 
 <p>執行<code>hugo new site</code>後的專案：</p>
 
-<pre><code>.
+<pre><code class="language-text">.
 ├── archetypes/
 ├── content/
 ├── data/
@@ -234,7 +234,7 @@ enableRobotsTXT = true
 
 <p>安裝主題的地方。例如最基本的<code>ananke</code>主題：</p>
 
-<pre><code>themes/
+<pre><code class="language-text">themes/
 └── ananke
     ├── LICENSE.md
     ├── README.md
@@ -275,7 +275,7 @@ enableRobotsTXT = true
 
 <p>這裡是放置你寫的blog post的地方。官方建議起碼加一個<code>post/</code>的sub-directory，我自己是會用很多sub-directory為文章分類，檔名用日期作prefix方便排序。例如：</p>
 
-<pre><code>content/
+<pre><code class="language-text">content/
 └── post
     └── blogging
         └── hugo
@@ -337,17 +337,18 @@ Your markdown here, blahblahblah...
 
 <p><a href="https://gohugo.io/content-management/cross-references/">Hugo內置功能</a>，可以產生連結到其他page的link。</p>
 
-<p>例如在此處，我可以用<br/>
-<code>markdown<br/>
-{{&lt;/* ref &quot;post/blogging/hugo/2017-11-13-set-up-hugo.md&quot; */&gt;}}<br/>
-</code><br/>
-來render出<code>{{&lt; ref &quot;post/blogging/hugo/2017-11-13-set-up-hugo.md&quot; &gt;}}</code>。</p>
+<p>例如在此處，我可以用</p>
+
+<pre><code class="language-markdown">{{&lt;/* ref &quot;post/blogging/hugo/2017-11-13-set-up-hugo.md&quot; */&gt;}}
+</code></pre>
+
+<p>來render出<code>{{&lt; ref &quot;post/blogging/hugo/2017-11-13-set-up-hugo.md&quot; &gt;}}</code>。</p>
 
 <h3 id="toc_10">static/</h3>
 
 <p>這裡一般是用來放css, js, images。例如：</p>
 
-<pre><code>static/
+<pre><code class="language-text">static/
 └── images
     └── abc.png
 </code></pre>
@@ -358,7 +359,7 @@ Your markdown here, blahblahblah...
 
 <p>此處可放一些網頁的data，例如<code>data/somedata.toml</code>：</p>
 
-<pre><code>food = [&quot;Bread&quot;, &quot;Pasta&quot;, &quot;Rice&quot;]
+<pre><code class="language-text">food = [&quot;Bread&quot;, &quot;Pasta&quot;, &quot;Rice&quot;]
 </code></pre>
 
 <p>然後可以用<code>{{ .Site.Data.somedata.food }}</code>獲取data。</p>

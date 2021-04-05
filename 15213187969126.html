@@ -72,7 +72,7 @@
 
         <ul class="right" id="search-wrap">
           <li>
-<form target="_blank" onsubmit="return before_search();" action="http://google.com/search" method="get">
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
     <input type="hidden" id="search_q" name="q" value="" />
     <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
 </form>
@@ -141,7 +141,7 @@
           <h1>透過Hugo快速建置個人Blog</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2018/3/18</span>
+          <span class="date">2018/03/18</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -186,19 +186,19 @@
 
 <h3 id="toc_4">1. 安裝hugo:</h3>
 
-<pre><code class="language-sh">brew install hugo
+<pre><code class="language-bash">brew install hugo
 </code></pre>
 
 <p>（macOS，其他系統可參考<a href="https://gohugo.io/getting-started/installing">官網</a>）  </p>
 
 <h3 id="toc_5">2. 建立網站:</h3>
 
-<pre><code class="language-sh">hugo new site quickstart # quickstart只是新folder的名稱
+<pre><code class="language-bash">hugo new site quickstart # quickstart只是新folder的名稱
 </code></pre>
 
 <h3 id="toc_6">3. 加入主題:</h3>
 
-<pre><code class="language-sh">cd quickstart
+<pre><code class="language-bash">cd quickstart
 git init
 git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
 echo &#39;theme = &quot;ananke&quot;&#39; &gt;&gt; config.toml # 在config中設定使用ananke
@@ -212,7 +212,7 @@ echo &#39;theme = &quot;ananke&quot;&#39; &gt;&gt; config.toml # 在config中設
 
 <h3 id="toc_7">4. 新增內容:</h3>
 
-<pre><code class="language-sh">hugo new posts/my-first-post.md
+<pre><code class="language-bash">hugo new posts/my-first-post.md
 </code></pre>
 
 <ul>
@@ -222,7 +222,7 @@ echo &#39;theme = &quot;ananke&quot;&#39; &gt;&gt; config.toml # 在config中設
 
 <h3 id="toc_8">5. 開啟hugo server:</h3>
 
-<pre><code class="language-sh">hugo server -D # `-D`代表包括所有draft=true的內容
+<pre><code class="language-bash">hugo server -D # `-D`代表包括所有draft=true的內容
 # ...
 # Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 </code></pre>
